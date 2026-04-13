@@ -1,0 +1,267 @@
+""" unique signup times in users """
+users created_at :grp;;
+
+""" unique locations in profiles """
+profiles location :grp;;
+
+""" distinct websites in profiles """
+profiles website :grp;;
+
+""" unique visibilities in posts """
+posts visibility :grp;;
+
+""" authors in posts, unique """
+posts user_id :grp;;
+
+""" unique post ids with comments """
+comments post_id :grp;;
+
+""" unique liked posts in likes """
+likes post_id :grp;;
+
+""" distinct followers in follows """
+follows follower_id :grp;;
+
+""" distinct user ids that have send a message """
+messages sender_id :grp;;
+
+""" earliest post time by author """
+posts created_at :min;user_id :grp;;
+
+""" earliest comment time by parent post """
+comments created_at :min;post_id :grp;;
+
+""" earliest follow time by follower """
+follows created_at :min;follower_id :grp;;
+
+""" earliest message time by sender """
+messages created_at :min;sender_id :grp;;
+
+""" oldest birthday by location """
+profiles birthday :min;location :grp;;
+
+""" earliest post update by visibility """
+posts updated_at :min;visibility :grp;;
+
+""" lowest comment id by user """
+comments id :min;user_id :grp;;
+
+""" earliest like time by post """
+likes created_at :min;post_id :grp;;
+
+""" latest post time by author """
+posts created_at :max;user_id :grp;;
+
+""" latest comment time by parent post """
+comments created_at :max;post_id :grp;;
+
+""" latest follow time by follower """
+follows created_at :max;follower_id :grp;;
+
+""" latest message time by recipient """
+messages created_at :max;recipient_id :grp;;
+
+""" youngest birthday by location """
+profiles birthday :max;location :grp;;
+
+""" latest post update by visibility """
+posts updated_at :max;visibility :grp;;
+
+""" highest comment id by user """
+comments id :max;user_id :grp;;
+
+""" latest like time by post """
+likes created_at :max;post_id :grp;;
+
+""" count posts by author """
+posts id :cnt;user_id :grp;;
+
+""" count comments by parent post """
+comments id :cnt;post_id :grp;;
+
+""" count follows by follower """
+follows id :cnt;follower_id :grp;;
+
+""" count follows by followee """
+follows id :cnt;followee_id :grp;;
+
+""" count likes by post """
+likes id :cnt;post_id :grp;;
+
+""" count likes by user """
+likes id :cnt;user_id :grp;;
+
+""" count messages by sender """
+messages id :cnt;sender_id :grp;;
+
+""" count messages by recipient """
+messages id :cnt;recipient_id :grp;;
+
+""" count users by signup time """
+users id :cnt;created_at :grp;;
+
+""" count profiles by location """
+profiles id :cnt;location :grp;;
+
+""" posts since 2024-01-01, count by author """
+posts created_at >=2024-01-01;id :cnt;user_id :grp;;
+
+""" users updated by 2025-07-04, count by email """
+users updated_at <=2025-07-04;id :cnt;email :grp;;
+
+""" count profiles with location like San, by website """
+profiles location ~"San";id :cnt;website :grp;;
+
+""" comments since 2024-06-01, minimum id by post """
+comments created_at >=2024-06-01;id :min;post_id :grp;;
+
+""" likes since 2024-01-15, maximum id by post """
+likes id :max;created_at >=2024-01-15;post_id :grp;;
+
+""" follows with follower_id at least 100, followee count """
+follows follower_id :cnt>=100;followee_id :grp;;
+
+""" public posts, earliest creation by author """
+posts body _;visibility =public;created_at :min;user_id :grp;;
+
+""" profiles born after 1990-01-01, sum by location """
+profiles full_name _;birthday >=1990-01-01;id :sum;location :grp;;
+
+""" user count with .org email, by signup date """
+users email ~".org";id :cnt;created_at :grp;;
+
+""" profiles grouped by Austin only, count user_id """
+profiles user_id :cnt;location :grp="Austin";;
+
+""" count public posts """
+posts id :cnt;visibility :grp=public;;
+
+""" comments grouped by post ids at least 100, count comments """
+comments id :cnt;post_id :grp>=100;;
+
+""" likes grouped by post ids at most 1000, count likes """
+likes id :cnt;post_id :grp<=1000;;
+
+""" follows count grouped by follower ids not 10 """
+follows id :cnt;follower_id :grp!=10;;
+
+""" messages grouped by recipient id at least 100 """
+messages id :cnt;recipient_id :grp>=100;;
+
+""" count profiles grouped by bio similar to travel """
+profiles id :cnt;bio <=>"travel":grp;;
+
+""" users grouped by signups from 2024-01-01, count users """
+users id :cnt;created_at :grp>=2024-01-01;;
+
+""" posts grouped by image URLs containing .png, count posts """
+posts id :cnt;image_url :grp~".png";;
+
+""" profiles by location, keep groups with at least 10 users """
+profiles id :cnt>=10;location :grp;;
+
+""" post count by visibility, keep groups of at least 1000 """
+posts id :cnt>=1000;visibility :grp;;
+
+""" comments by post, keep groups with minimum id at least 100000 """
+comments id :min>=100000;post_id :grp;;
+
+""" likes by post with maximum id at most 5000 """
+likes id :max<=5000;post_id :grp;;
+
+""" follows by follower, keep groups with count at least 100 """
+follows id :cnt>=100;follower_id :grp;;
+
+""" messages by recipient, keep groups with count at most 50 """
+messages id :cnt<=50;recipient_id :grp;;
+
+""" profiles by birthday, keep groups with at least 100 """
+profiles id :cnt>=100;birthday :grp;;
+
+""" users by signup date, keep groups with count at least 5 """
+users id :cnt>=5;created_at :grp;;
+
+""" posts by author, keep groups with latest creation at least 2024-06-01 """
+posts created_at :max>=2024-06-01;user_id :grp;;
+
+""" profiles sorted groups by Austin, count user_id """
+profiles full_name _;user_id :cnt;location :grp:des="Austin";;
+
+""" posts sorted groups by public, count ids """
+posts id :cnt;visibility :grp:asc=public;;
+
+""" comments sorted groups with post ids at least 100, count ids """
+comments id :cnt;post_id :grp:des>=100;;
+
+""" likes sorted groups with post ids at most 1000, count ids """
+likes id :cnt;post_id :grp:asc<=1000;;
+
+""" followers sorted groups not follower 10 """
+follows id :cnt;follower_id :grp:asc!=10;;
+
+""" messages sorted groups recipients at least 100, counts under 1001 """
+messages id :cnt<1001;recipient_id :grp:des>=100;;
+
+""" profiles sort by bio similarity to travel, count user_id """
+profiles full_name _;user_id :cnt;bio <=>"travel":grp:des;;
+
+""" users sorted groups signups from 2024-01-01, count ids """
+users id :cnt;created_at :grp:asc>=2024-01-01;;
+
+""" posts sorted groups image URLs containing .png, count ids """
+posts id :cnt;image_url :grp:des~".png";;
+
+""" profiles by location, sort counts ascending, keep at least 10 """
+profiles full_name _;user_id :cnt:asc>=10;location :grp;;
+
+""" posts by visibility, sort descending, keep at least 1000 """
+posts id :cnt:des>=1000;visibility :grp;;
+
+""" comments by post, sort minima ascending, keep at least 10 """
+comments body _;id :min:asc>=10;post_id :grp;;
+
+""" likes by post, sort maxima descending, keep at most 5000 """
+likes id :max:des<=5000;post_id :grp;;
+
+""" follows by follower, sort ascending, keep at least 100 """
+follows id :cnt:asc>=100;follower_id :grp;;
+
+""" messages by recipient, sort counts descending, keep at most 50 """
+messages id :cnt:des<=50;recipient_id :grp;;
+
+""" profiles by birthday, sort descending, keep at least 100 """
+profiles full_name _;user_id :cnt:des>=100;birthday :grp;;
+
+""" users by signup date, sort counts ascending, keep at least 5 """
+users id :cnt:asc>=5;created_at :grp;;
+
+""" posts by author, sort latest creation descending, keep at least 2024-06-01 """
+posts body _;created_at :max:des>=2024-06-01;user_id :grp;;
+
+""" per post, project comment and like counts """
+posts body _;id :$x:grp;comments post_id $x;id :cnt;likes post_id $x;id :cnt;;
+
+""" per user, project post count and like count """
+users username _;id :$x:grp;posts user_id $x;id :cnt;likes user_id $x;id :cnt;;
+
+""" per user, project sent message count and latest post time """
+messages id :cnt;sender_id :grp;posts user_id @;created_at :max;;
+
+""" per post, project earliest comment time and like count """
+comments created_at :min;post_id :grp;likes post_id @;id :cnt;;
+
+""" per user, project profile last update and post count """
+profiles updated_at :max;user_id :grp;posts user_id @;id :cnt;;
+
+""" per user, project comments count and likes count """
+comments id :cnt;user_id :grp;likes user_id @;id :cnt;;
+
+""" per post, project comments count and latest comment time """
+comments id :cnt;created_at :max;post_id :grp;;
+
+""" per user, project follower count and followee post count """
+follows id :cnt;followee_id :grp;posts user_id @;posts id :cnt;;
+
+""" per user, project received message count and like count """
+messages id :cnt;recipient_id :grp;likes user_id @;id :cnt;;
+

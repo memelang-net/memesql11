@@ -1,0 +1,415 @@
+
+""" Followees 5 or 6 """
+follows followee_id 5,6;_;;
+
+""" Followees not 7 or 8 """
+follows followee_id !=7,8;_;;
+
+""" Followees 21 or 22 """
+follows followee_id 21,22;_;;
+
+""" Follows created 2024-02-01 or 2024-02-02 """
+follows created_at 2024-02-01,2024-02-02;_;;
+
+""" Follows not created 2023-12-24 or 2023-12-25 """
+follows created_at !=2023-12-24,2023-12-25;_;;
+
+""" Follows created 2025-01-01 or 2025-01-02 """
+follows created_at 2025-01-01,2025-01-02;_;;
+
+""" Posts id over 100 """
+posts id >100;_;;
+
+""" Post id equals 33 """
+posts id 33;_;;
+
+""" Post id under 1000 """
+posts id <1000;_;;
+
+""" Post author user_id equals 42 """
+posts user_id 42;_;;
+
+""" Post author user_id over 100 """
+posts user_id >100;_;;
+
+""" Post author user_id not 7 """
+posts user_id !=7;_;;
+
+""" Body semantic about "product launch" (sim>=0.60) """
+posts body <=>"product launch"<=0.60;_;;
+
+""" Body contains "sale" """
+posts body ~"sale";_;;
+
+""" Body not "hello world" """
+posts body !="hello world";_;;
+
+""" Image URL contains "http" """
+posts image_url ~"http";_;;
+
+""" Image URL equals "https://img.com/p1.jpg" """
+posts image_url "https://img.com/p1.jpg";_;;
+
+""" Image URL not "thumbnail" """
+posts image_url !="thumbnail";_;;
+
+""" Visibility public """
+posts visibility public;_;;
+
+""" Visibility equals friends """
+posts visibility friends;_;;
+
+""" Visibility not private """
+posts visibility !=private;_;;
+
+""" Post created after 2024-01-01 """
+posts created_at >2024-01-01;_;;
+
+""" Post created on 2023-10-10 """
+posts created_at 2023-10-10;_;;
+
+""" Post created before 2025-01-01 """
+posts created_at <2025-01-01;_;;
+
+""" Post updated on or after 2024-02-01 """
+posts updated_at >=2024-02-01;_;;
+
+""" Post updated on 2025-07-04 """
+posts updated_at 2025-07-04;_;;
+
+""" Post updated on or before 2025-08-01 """
+posts updated_at <=2025-08-01;_;;
+
+""" Posts id 7 or 9 """
+posts id 7,9;_;;
+
+""" Posts id not 10 or 11 """
+posts id !=10,11;_;;
+
+""" Posts id 100 or 101 """
+posts id 100,101;_;;
+
+""" Post authors 1 or 2 """
+posts user_id 1,2;_;;
+
+""" Post authors not 3 or 4 """
+posts user_id !=3,4;_;;
+
+""" Post authors 10 or 20 """
+posts user_id 10,20;_;;
+
+""" Bodies containing "update" or "bugfix" """
+posts body ~"update","bugfix";_;;
+
+""" Bodies "Hello" or "Hi" """
+posts body "Hello","Hi";_;;
+
+""" Bodies not "Draft" or "WIP" """
+posts body !="Draft","WIP";_;;
+
+""" Image URLs "https://a.co/p1" or "https://b.co/p2" """
+posts image_url "https://a.co/p1","https://b.co/p2";_;;
+
+""" Image URLs not "http://x/a" or "http://y/b" """
+posts image_url !="http://x/a","http://y/b";_;;
+
+""" Image URLs containing ".png" or ".jpg" """
+posts image_url ~".png",".jpg";_;;
+
+""" Visibility public or friends """
+posts visibility public,friends;_;;
+
+""" Visibility not private or friends """
+posts visibility !=private,friends;_;;
+
+""" Visibility equals public or private """
+posts visibility public,private;_;;
+
+""" Posts created 2024-03-01 or 2024-03-02 """
+posts created_at 2024-03-01,2024-03-02;_;;
+
+""" Posts not created 2023-12-24 or 2023-12-25 """
+posts created_at !=2023-12-24,2023-12-25;_;;
+
+""" Posts created 2025-01-10 or 2025-01-11 """
+posts created_at 2025-01-10,2025-01-11;_;;
+
+""" Posts updated 2025-01-01 or 2025-01-02 """
+posts updated_at 2025-01-01,2025-01-02;_;;
+
+""" Posts not updated 2024-07-04 or 2024-07-05 """
+posts updated_at !=2024-07-04,2024-07-05;_;;
+
+""" Posts updated 2024-06-01 or 2024-06-30 """
+posts updated_at 2024-06-01,2024-06-30;_;;
+
+""" users id over 100 """
+users id >100;_;;
+
+""" users id equals 42 """
+users id 42;_;;
+
+""" users id at most 1000 """
+users id <=1000;_;;
+
+""" users username containing dev """
+users username ~"dev";_;;
+
+""" users username equals "alice" """
+users username "alice";_;;
+
+""" users username not "admin" """
+users username !="admin";_;;
+
+""" users email containing @gmail.com """
+users email ~"@gmail.com";_;;
+
+""" users email equals "alice@example.com" """
+users email "alice@example.com";_;;
+
+""" users email not containing @spam.org """
+users email !~"@spam.org";_;;
+
+""" users password hash containing abc """
+users password_hash ~"abc";_;;
+
+""" users password hash equals "5f4dcc3b5aa765d61d8327deb882cf99" """
+users password_hash "5f4dcc3b5aa765d61d8327deb882cf99";_;;
+
+""" users password hash not "00000000000000000000000000000000" """
+users password_hash !="00000000000000000000000000000000";_;;
+
+""" users created on 2024-01-15 """
+users created_at 2024-01-15;_;;
+
+""" users created after 2023-06-01 """
+users created_at >2023-06-01;_;;
+
+""" users created on or before 2025-10-01 """
+users created_at <=2025-10-01;_;;
+
+""" users updated on or after 2024-02-01 """
+users updated_at >=2024-02-01;_;;
+
+""" users updated on 2025-07-04 """
+users updated_at 2025-07-04;_;;
+
+""" users updated before 2025-10-01 """
+users updated_at <2025-10-01;_;;
+
+""" profiles id over 100 """
+profiles id >100;_;;
+
+""" profiles id equals 55 """
+profiles id 55;_;;
+
+""" profiles id under 1000 """
+profiles id <1000;_;;
+
+""" profiles owner user_id equals 42 """
+profiles user_id 42;_;;
+
+""" profiles owner user_id over 100 """
+profiles user_id >100;_;;
+
+""" profiles owner user_id not 7 """
+profiles user_id !=7;_;;
+
+""" profiles full name contains Smith """
+profiles full_name ~"Smith";_;;
+
+""" profiles full name equals "Jane Doe" """
+profiles full_name "Jane Doe";_;;
+
+""" profiles full name not "Test User" """
+profiles full_name !="Test User";_;;
+
+""" profiles bio semantic about "photography" (sim>=0.60) """
+profiles bio <=>"photography"<=0.60;_;;
+
+""" profiles bio contains engineer """
+profiles bio ~"engineer";_;;
+
+""" profiles bio not "retired" """
+profiles bio !="retired";_;;
+
+""" profiles location contains York """
+profiles location ~"York";_;;
+
+""" profiles location equals "Austin" """
+profiles location "Austin";_;;
+
+""" profiles location not "Nowhere" """
+profiles location !="Nowhere";_;;
+
+""" profiles website contains https:// """
+profiles website ~"https://";_;;
+
+""" profiles website equals "https://example.com" """
+profiles website "https://example.com";_;;
+
+""" profiles website not containing old """
+profiles website !~"old";_;;
+
+""" profiles avatar url contains .png """
+profiles avatar_url ~".png";_;;
+
+""" profiles avatar url equals "https://img.example/a1.png" """
+profiles avatar_url "https://img.example/a1.png";_;;
+
+""" profiles avatar url not containing old """
+profiles avatar_url !~"old";_;;
+
+""" profiles birthday on 1990-05-15 """
+profiles birthday 1990-05-15;_;;
+
+""" profiles birthday after 1980-01-01 """
+profiles birthday >1980-01-01;_;;
+
+""" profiles birthday on or before 2005-12-31 """
+profiles birthday <=2005-12-31;_;;
+
+""" profiles created on 2024-01-10 """
+profiles created_at 2024-01-10;_;;
+
+""" profiles created after 2023-06-01 """
+profiles created_at >2023-06-01;_;;
+
+""" profiles created before 2025-01-01 """
+profiles created_at <2025-01-01;_;;
+
+""" profiles updated on or after 2024-02-01 """
+profiles updated_at >=2024-02-01;_;;
+
+""" profiles updated on 2025-07-04 """
+profiles updated_at 2025-07-04;_;;
+
+""" profiles updated on or before 2025-10-01 """
+profiles updated_at <=2025-10-01;_;;
+
+""" follows id over 100 """
+follows id >100;_;;
+
+""" follows id equals 55 """
+follows id 55;_;;
+
+""" follows id under 1000 """
+follows id <1000;_;;
+
+""" follower equals 10 """
+follows follower_id 10;_;;
+
+""" follower over 100 """
+follows follower_id >100;_;;
+
+""" follower not 42 """
+follows follower_id !=42;_;;
+
+""" followee equals 23 """
+follows followee_id 23;_;;
+
+""" followee at least 200 """
+follows followee_id >=200;_;;
+
+""" followee not 13 """
+follows followee_id !=13;_;;
+
+""" follow created on or after 2024-01-01 """
+follows created_at >=2024-01-01;_;;
+
+""" follow created on 2023-11-15 """
+follows created_at 2023-11-15;_;;
+
+""" follow created on or before 2025-10-01 """
+follows created_at <=2025-10-01;_;;
+
+""" posts id over 100 """
+posts id >100;_;;
+
+""" post id equals 33 """
+posts id 33;_;;
+
+""" post id under 1000 """
+posts id <1000;_;;
+
+""" post author user_id equals 42 """
+posts user_id 42;_;;
+
+""" post author user_id over 100 """
+posts user_id >100;_;;
+
+""" post author user_id not 7 """
+posts user_id !=7;_;;
+
+""" post body semantic about "product launch" (sim>=0.60) """
+posts body <=>"product launch"<=0.60;_;;
+
+""" post body contains sale """
+posts body ~"sale";_;;
+
+""" post body not "hello world" """
+posts body !="hello world";_;;
+
+""" image url contains http """
+posts image_url ~"http";_;;
+
+""" image url equals "https://img.com/p1.jpg" """
+posts image_url "https://img.com/p1.jpg";_;;
+
+""" image url not containing thumbnail """
+posts image_url !~"thumbnail";_;;
+
+""" visibility public """
+posts visibility public;_;;
+
+""" visibility equals friends """
+posts visibility friends;_;;
+
+""" visibility not private """
+posts visibility !=private;_;;
+
+""" post created after 2024-01-01 """
+posts created_at >2024-01-01;_;;
+
+""" post created on 2023-10-10 """
+posts created_at 2023-10-10;_;;
+
+""" post created before 2025-01-01 """
+posts created_at <2025-01-01;_;;
+
+""" post updated on or after 2024-02-01 """
+posts updated_at >=2024-02-01;_;;
+
+""" post updated on 2025-07-04 """
+posts updated_at 2025-07-04;_;;
+
+""" post updated on or before 2025-10-01 """
+posts updated_at <=2025-10-01;_;;
+
+""" comments id over 100 """
+comments id >100;_;;
+
+""" comment id equals 77 """
+comments id 77;_;;
+
+""" comment id under 2000 """
+comments id <2000;_;;
+
+""" comment post_id equals 33 """
+comments post_id 33;_;;
+
+""" comment post_id over 100 """
+comments post_id >100;_;;
+
+""" comment post_id not 7 """
+comments post_id !=7;_;;
+
+""" comment author user_id equals 42 """
+comments user_id 42;_;;
+
+""" comment author user_id at least 200 """
+comments user_id >=200;_;;
+
+""" comment author user_id not 3 """
+comments user_id !=3;_;;
+

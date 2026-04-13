@@ -1,0 +1,300 @@
+""" All customers """
+customers _ _;;
+
+""" customers table, all rows """
+customers _ _;;
+
+""" list every customer record """
+customers _ _;;
+
+""" show customers (all fields) """
+customers _ _;;
+
+""" All products """
+products _ _;;
+
+""" products table, full dataset """
+products _ _;;
+
+""" list every product entry """
+products _ _;;
+
+""" show products (all fields) """
+products _ _;;
+
+""" All invoices """
+invoices _ _;;
+
+""" invoices table, full dataset """
+invoices _ _;;
+
+""" every invoice record """
+invoices _ _;;
+
+""" show invoices (all fields) """
+invoices _ _;;
+
+""" All invoice items """
+invoice_items _ _;;
+
+""" invoice_items table, full dataset """
+invoice_items _ _;;
+
+""" list all invoice item rows """
+invoice_items _ _;;
+
+""" show invoice items (all fields) """
+invoice_items _ _;;
+
+""" customers whose name contains Martinez """
+customers name ~"Martinez";_;;
+
+""" customer email equals brenda@northco.com """
+customers email "brenda@northco.com";_;;
+
+""" customers created on 2024-06-15 """
+customers created 2024-06-15;_;;
+
+""" customers created after 2025-01-01 """
+customers created >2025-01-01;_;;
+
+""" customers created before 2023-03-01 """
+customers created <2023-03-01;_;;
+
+""" customer id equals 118 """
+customers id 118;_;;
+
+""" customers with phone matching 555-12 """
+customers phone ~"555-12";_;;
+
+""" customers whose name starts with Lee """
+customers name ~"Lee";_;;
+
+""" customers with email ending @northco.com """
+customers email ~"@northco.com";_;;
+
+""" customers with phone area 212- """
+customers phone ~"212-";_;;
+
+""" customers created on or after 2024-05-01 """
+customers created >=2024-05-01;_;;
+
+""" customers created on or before 2024-12-31 """
+customers created <=2024-12-31;_;;
+
+""" customers named exactly "Acme Corp" """
+customers name "Acme Corp";_;;
+
+""" customer id equals 250 """
+customers id 250;_;;
+
+""" customers with phone containing 404 """
+customers phone ~"404";_;;
+
+""" customers created on 2022-11-30 """
+customers created 2022-11-30;_;;
+
+""" customers with name including O'Neil """
+customers name ~"O'Neil";_;;
+
+""" customers with email info@eastside.io """
+customers email "info@eastside.io";_;;
+
+""" customers created after 2023-10-10 """
+customers created >2023-10-10;_;;
+
+""" customers created before 2021-01-01 """
+customers created <2021-01-01;_;;
+
+""" products flagged active """
+products active 1;_;;
+
+""" products not active """
+products active 0;_;;
+
+""" products priced above 25 """
+products unit_price >25;_;;
+
+""" products priced at most 5 """
+products unit_price <=5;_;;
+
+""" product sku equals ZX-500 """
+products sku "ZX-500";_;;
+
+""" product sku contains USB """
+products sku ~"USB";_;;
+
+""" product name includes Adapter """
+products name ~"Adapter";_;;
+
+""" product name exactly "HDMI Cable 2m" """
+products name "HDMI Cable 2m";_;;
+
+""" products created before 2024-07-01 """
+products created <2024-07-01;_;;
+
+""" products created after 2023-01-01 """
+products created >2023-01-01;_;;
+
+""" product id equals 2450 """
+products id 2450;_;;
+
+""" products priced equal 19.99 """
+products unit_price 19.99;_;;
+
+""" products created on 2024-09-09 """
+products created 2024-09-09;_;;
+
+""" products with name containing Cable """
+products name ~"Cable";_;;
+
+""" product sku equals INV-ADPT-01 """
+products sku "INV-ADPT-01";_;;
+
+""" products priced at least 100 """
+products unit_price >=100;_;;
+
+""" products priced under 1 """
+products unit_price <1;_;;
+
+""" product id equals 3003 """
+products id 3003;_;;
+
+""" products created on or before 2022-12-31 """
+products created <=2022-12-31;_;;
+
+""" invoices with status open """
+invoices status open;_;;
+
+""" invoices with status paid """
+invoices status paid;_;;
+
+""" invoice issued on 2025-09-15 """
+invoices invoice_date 2025-09-15;_;;
+
+""" invoices issued after 2025-01-01 """
+invoices invoice_date >2025-01-01;_;;
+
+""" invoices due before 2025-10-01 """
+invoices due_date <2025-10-01;_;;
+
+""" invoices where tax equals 0 """
+invoices tax 0;_;;
+
+""" invoices for customer id 101 """
+invoices customer_id 101;_;;
+
+""" invoice number equals INV-3020 """
+invoices invoice_no "INV-3020";_;;
+
+""" invoices with subtotal at least 500 """
+invoices subtotal >=500;_;;
+
+""" invoices with total less than 50 """
+invoices total <50;_;;
+
+""" invoices created on 2024-12-01 """
+invoices created 2024-12-01;_;;
+
+""" invoices created after 2024-12-01 """
+invoices created >2024-12-01;_;;
+
+""" invoice id equals 5001 """
+invoices id 5001;_;;
+
+""" invoices issued on or before 2023-06-30 """
+invoices invoice_date <=2023-06-30;_;;
+
+""" invoices due on 2025-11-15 """
+invoices due_date 2025-11-15;_;;
+
+""" invoices with total equal 1000 """
+invoices total 1000;_;;
+
+""" invoices with subtotal under 100 """
+invoices subtotal <100;_;;
+
+""" invoices for customer id 220 """
+invoices customer_id 220;_;;
+
+""" invoice number equals INV-0001 """
+invoices invoice_no "INV-0001";_;;
+
+""" invoices where tax at least 50 """
+invoices tax >=50;_;;
+
+""" invoices created before 2022-01-01 """
+invoices created <2022-01-01;_;;
+
+""" invoice items by invoice id 7002 """
+invoice_items invoice_id 7002;_;;
+
+""" invoice items tied to product 2105 """
+invoice_items product_id 2105;_;;
+
+""" line items where quantity is 5 or more """
+invoice_items quantity >=5;_;;
+
+""" line items with unit price below 20 """
+invoice_items unit_price <20;_;;
+
+""" line totals of at least 100 """
+invoice_items line_total >=100;_;;
+
+""" descriptions containing USB-C """
+invoice_items description ~"USB-C";_;;
+
+""" invoice item id equals 90550 """
+invoice_items id 90550;_;;
+
+""" items with unit price equal to 0 """
+invoice_items unit_price 0;_;;
+
+""" items where quantity equals 1 """
+invoice_items quantity 1;_;;
+
+""" descriptions that include HDMI """
+invoice_items description ~"HDMI";_;;
+
+""" invoice id equals 6001 for items """
+invoice_items invoice_id 6001;_;;
+
+""" items tied to product 9999 """
+invoice_items product_id 9999;_;;
+
+""" line items with quantity under 3 """
+invoice_items quantity <3;_;;
+
+""" unit price exactly 19.99 on items """
+invoice_items unit_price 19.99;_;;
+
+""" line total equals 0 on items """
+invoice_items line_total 0;_;;
+
+""" item id equals 77777 """
+invoice_items id 77777;_;;
+
+""" item descriptions including Adapter """
+invoice_items description ~"Adapter";_;;
+
+""" unit price at least 250 on items """
+invoice_items unit_price >=250;_;;
+
+""" quantity at most 10 on items """
+invoice_items quantity <=10;_;;
+
+""" line total below 25 on items """
+invoice_items line_total <25;_;;
+
+""" customers named Martinez added after 2024-05-01 """
+customers name ~"Martinez";created >2024-05-01;_;;
+
+""" customer email ends with @northco.com and phone has 555 """
+customers email ~"@northco.com";phone ~"555";_;;
+
+""" customers created on 2023-12-31 with name containing Lee """
+customers created 2023-12-31;name ~"Lee";_;;
+
+""" customer id 118 and email equals brenda@northco.com """
+customers id 118;email "brenda@northco.com";_;;
+

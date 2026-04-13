@@ -1,0 +1,309 @@
+""" Documentaries mentioning climate change after 2000 """
+movies genre documentary;description ~"climate change";year >2000;_;;
+
+""" Actors with Alex in name aged under 30 but not 19 """
+actors name ~"Alex";age <30;!=19;_;;
+
+""" actors aged over 20, under or equal to 50, not 27 or 31 """
+actors age >20;<=50;!=27,31;_;;
+
+""" movies released in or after 2001, before 2020, not in 2016 """
+movies year >=2001;<=2020;!=2016;_;;
+
+""" Roles rated under 2.2 that are not equal to 1 """
+roles rating <2.2;!=1;_;;
+
+""" Roles rated over 2, under 4.5, not 3.1 or 2.2 or 4.1 """
+roles rating >2;<4.5;!=3.1,2.2,4.1;_;;
+
+""" Movies with The in title before 1950 and not scifi """
+movies title ~"The";year <1950;genre !=scifi;_;;
+
+""" Actors named exactly Keanu Reeves aged at least 30 """
+actors name "Keanu Reeves";age >=30;_;;
+
+""" Sci-fi films before 1990 that mention robot or android """
+movies genre scifi;year <1990;description ~"robot","android";_;;
+
+""" Sci-fi films before 1991 that don't mention robot or android """
+movies genre scifi;year <1991;description !~"robot","android";_;;
+
+""" Roles for Harrison Ford with ratings 3, 4, or 5 """
+roles actor "Harrison Ford";rating 3,4,5;_;;
+
+""" Movies in 2001, 2002, or 2003 with Moon in title """
+movies year 2001,2002,2003;title ~"Moon";_;;
+
+""" Actors aged 0 to 2 whose name contains baby """
+actors age >=0;<=2;name ~"baby";_;;
+
+""" Drama films mentioning coming of age after 2000 """
+movies genre drama;description ~"coming of age";year >2000;_;;
+
+""" Movies ordered by title ascending """
+movies title :asc;_;;
+
+""" actors a-z """
+actors name :asc;_;;
+
+""" Actors Z-A """
+actors name :des;_;;
+
+""" sort actor names asc """
+actors name :asc;_;;
+
+""" order actors by name reverse """
+actors name :des;_;;
+
+""" movie titles A to Z """
+movies title :asc;_;;
+
+""" movies title z to a """
+movies title :des;_;;
+
+""" films by title asc """
+movies title :asc;_;;
+
+""" film titles reverse alpha """
+movies title :des;_;;
+
+""" roles by rating high to low """
+roles rating :des;_;;
+
+""" roles rating low to high """
+roles rating :asc;_;;
+
+""" sort roles by actor """
+roles actor :asc;_;;
+
+""" roles actor z-a """
+roles actor :des;_;;
+
+""" order roles by movie name ascending """
+roles movie :asc;_;;
+
+""" roles movie title desc """
+roles movie :des;_;;
+
+""" arrange actors alphabetically """
+actors name :asc;_;;
+
+""" reverse alphabet actors """
+actors name :des;_;;
+
+""" alphabetize films """
+movies title :asc;_;;
+
+""" reverse-alphabetize films """
+movies title :des;_;;
+
+""" rank roles by rating desc """
+roles rating :des;_;;
+
+""" Rank roles by rating ascending """
+roles rating :asc;_;;
+
+""" actors sorted name up """
+actors name :asc;_;;
+
+""" actors sorted name down """
+actors name :des;_;;
+
+""" Films sort title up """
+movies title :asc;_;;
+
+""" movies sort title down """
+movies title :des;_;;
+
+""" role ratings top first """
+roles rating :des;_;;
+
+""" role ratings bottom first """
+roles rating :asc;_;;
+
+""" roles order by actor name A->Z """
+roles actor :asc;_;;
+
+""" roles order by actor name Z->A """
+roles actor :des;_;;
+
+""" Sort roles by movie Z to A """
+roles movie :des;_;;
+
+""" sort roles by movie A to Z """
+roles movie :asc;_;;
+
+""" movies by year asc """
+movies year :asc;_;;
+
+""" Films year newest first """
+movies year :des;_;;
+
+""" order movies by release year up """
+movies year :asc;_;;
+
+""" sort films by year down """
+movies year :des;_;;
+
+""" movie list oldest to newest """
+movies year :asc;_;;
+
+""" movie list newest to oldest """
+movies year :des;_;;
+
+""" films ordered by year A->Z (year) """
+movies year :asc;_;;
+
+""" films ordered by year Z->A """
+movies year :des;_;;
+
+""" Rank movies by year ascending """
+movies year :asc;_;;
+
+""" rank movies by year descending """
+movies year :des;_;;
+
+""" films sorted by year descending then title ascending """
+movies year :des;title :asc;_;;
+
+""" sort by title asc, rating desc """
+roles movie :asc;rating :des;;
+
+""" roles: title up, rating down """
+roles movie :asc;rating :des;;
+
+""" roles title asc then rating desc """
+roles movie :asc;rating :des;;
+
+""" order roles by movie A-Z then rating high->low """
+roles movie :asc;rating :des;;
+
+""" roles sorted movie asc, rating des """
+roles movie :asc;rating :des;;
+
+""" movie Z-A then rating low-high (roles) """
+roles movie :des;rating :asc;;
+
+""" roles by movie desc then rating asc """
+roles movie :des;rating :asc;;
+
+""" roles movie down, rating up """
+roles movie :des;rating :asc;;
+
+""" rating des after movie asc """
+roles movie :asc;rating :des;;
+
+""" rating asc after movie desc """
+roles movie :des;rating :asc;;
+
+""" actor asc, rating des (roles) """
+roles actor :asc;rating :des;;
+
+""" roles: actor A-Z then rating high first """
+roles actor :asc;rating :des;;
+
+""" roles actor up rating down """
+roles actor :asc;rating :des;;
+
+""" roles actor Z-A then rating low first """
+roles actor :des;rating :asc;;
+
+""" actor desc, rating asc """
+roles actor :des;rating :asc;;
+
+""" rating des after actor asc """
+roles actor :asc;rating :des;;
+
+""" rating asc after actor desc """
+roles actor :des;rating :asc;;
+
+""" roles: actor up, rating up """
+roles actor :asc;rating :asc;;
+
+""" roles: actor down, rating down """
+roles actor :des;rating :des;;
+
+""" actor asc then movie desc """
+roles actor :asc;movie :des;;
+
+""" actor Z-A then movie A-Z """
+roles actor :des;movie :asc;;
+
+""" movie asc then actor desc """
+roles movie :asc;actor :des;;
+
+""" movie desc then actor asc """
+roles movie :des;actor :asc;;
+
+""" roles by movie A-Z actor A-Z """
+roles movie :asc;actor :asc;;
+
+""" roles by movie Z-A actor Z-A """
+roles movie :des;actor :des;;
+
+""" films: title asc, year desc """
+movies title :asc;year :des;;
+
+""" movies title up then year down """
+movies title :asc;year :des;;
+
+""" movie titles A-Z then newest first """
+movies title :asc;year :des;;
+
+""" titles Z-A then year ascending """
+movies title :des;year :asc;;
+
+""" movies by year asc, title desc """
+movies year :asc;title :des;;
+
+""" movies by year desc, title asc """
+movies year :des;title :asc;;
+
+""" order films: year up then title up """
+movies year :asc;title :asc;;
+
+""" order films: year down then title down """
+movies year :des;title :des;;
+
+""" roles: rating desc then movie asc """
+roles rating :des;movie :asc;;
+
+""" roles: rating asc then movie desc """
+roles rating :asc;movie :des;;
+
+""" roles by rating down then actor up """
+roles rating :des;actor :asc;;
+
+""" roles by rating up then actor down """
+roles rating :asc;actor :des;;
+
+""" roles sort rating des, movie des """
+roles rating :des;movie :des;;
+
+""" roles sort rating asc, actor asc """
+roles rating :asc;actor :asc;;
+
+""" movies: year des then title des """
+movies year :des;title :des;;
+
+""" movies: title asc then year asc """
+movies title :asc;year :asc;;
+
+""" All movies before 1970 ordered by year asc """
+movies year :asc<1970;_;;
+
+""" movies released after 2005 sorted by year desc """
+movies year :des>2005;_;;
+
+""" films released after 2007 sorted desc """
+movies year :des>2007;_;;
+
+""" movies released after 2009 descending """
+movies year :des>2009;_;;
+
+""" movies before 1970 sorted by year asc """
+movies year :asc<1970;_;;
+
+""" films before 1971 year ascending """
+movies year :asc<1971;_;;
+

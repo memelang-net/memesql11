@@ -1,0 +1,237 @@
+""" Heist movies by relevance, page 2 (25 per page) """
+movies description <=>"heist":des;_;% lim 25;% beg 25;;
+
+""" Top 12 actors in robot-themed films by average role rating """
+movies description <=>"robot"<=$sim;title _;roles movie @;rating :avg:des;actor :grp;% lim 12;;
+
+""" 8 heist movies by total role count """
+movies description <=>"heist"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 8;;
+
+""" Top 10 actors from space exploration films by max rating """
+movies description <=>"space exploration"<=$sim;title _;roles movie @;rating :max:des;actor :grp;% lim 10;;
+
+""" Comedy wedding films ranked by highest average role rating (top 7) """
+movies genre comedy;description <=>"wedding"<=$sim;title :grp;roles movie @;rating :avg:des;% lim 7;;
+
+""" Dystopia sci-fi: actors A-Z by total ratings, show 15 """
+movies genre scifi;description <=>"dystopia"<=$sim;title _;roles movie @;rating :sum;actor :grp:asc:des;% lim 15;;
+
+""" Revenge-themed films ranked by minimum role rating, top 5 """
+movies description <=>"revenge"<=$sim;title :grp;roles movie @;rating :min:des;% lim 5;;
+
+""" War-related movies with highest average role rating, top 12 """
+movies description <=>"war"<=$sim;title :grp;roles movie @;rating :avg:des;% lim 12;;
+
+""" Post apocalypse films with the largest casts, top 9 """
+movies description <=>"post apocalypse"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 9;;
+
+""" Music documentaries: actors Z-A grouped by name, first 10 by max rating """
+movies genre documentary;description <=>"music"<=$sim;title _;roles movie @;rating :max;actor :grp:des:des;% lim 10;;
+
+""" Political intrigue dramas after 1970: top 20 actors by average rating """
+movies year >1970;genre drama;description <=>"political intrigue"<=$sim;title _;roles movie @;rating :avg:des;actor :grp;% lim 20;;
+
+""" Top 12 actors in AI-themed movies by average role rating """
+movies description <=>"artificial intelligence"<=$sim;title _;roles movie @;rating :avg:des;actor :grp;% lim 12;;
+
+""" Space opera films ranked by cast size, top 15 """
+movies description <=>"space opera"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 15;;
+
+""" Dystopian sci-fi since 1990: best 10 actors by max rating """
+movies genre scifi;year >=1990;description <=>"dystopian"<=$sim;title _;roles movie @;rating :max:des;actor :grp;% lim 10;;
+
+""" Heist comedies with the largest casts, top 8 """
+movies genre comedy;description <=>"heist"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 8;;
+
+""" War stories before 1980: top 12 movies by minimum role rating """
+movies year <1980;description <=>"war"<=$sim;title :grp;roles movie @;rating :min:des;% lim 12;;
+
+""" Music documentaries ranked by average role rating, top 10 """
+movies genre documentary;description <=>"music"<=$sim;title :grp;roles movie @;rating :avg:des;% lim 10;;
+
+""" Post apocalypse dramas after 2000 with biggest casts, top 9 """
+movies genre drama;year >2000;description <=>"post apocalypse"<=$sim;title :grp;roles movie @;id :cnt:des;% lim 9;;
+
+""" best 7 actors by total ratings in Family road trip films """
+movies description <=>"family road trip"<=$sim;title _;roles movie @;rating :sum:des;actor :grp;% lim 7;;
+
+""" top 20 actors in Dream-themed movies by average rating """
+movies description <=>"dreams"<=$sim;title _;roles movie @;rating :avg:des;actor :grp;% lim 20;;
+
+""" Sports underdog films (sim > 0.5) by max role rating top 6 """
+movies description <=>"sports underdog"<0.5;title :grp;roles movie @;rating :max:des;% lim 6;;
+
+""" highest rated movie in 1999 """
+movies year 1999;title :grp;roles movie @;rating :max:des;% lim 1;;
+
+""" lowest rated actor in 2020 """
+movies year 2020;title _;roles movie @;rating :min:asc;actor :grp;% lim 1;;
+
+""" Films from 1995 to 2005 by highest average role rating (top 8) """
+movies year >=1995;<=2005;title :grp;roles movie @;rating :avg:des;% lim 8;;
+
+""" Actors aged 40-55 with max rating at least 4, sort by name Z-A """
+actors age >=40;<=55;name :grp;roles actor @;rating :max>=4;name :des;;
+
+""" Movies with role counts between 3 and 6 inclusive, A-Z """
+roles id :cnt>=3;:cnt<=6;movie :grp:asc;;
+
+""" Documentaries released before 1990 about nature, ranked by relevance, top 12 """
+movies genre documentary;year <1990;description <=>"nature":des;_;% lim 12;;
+
+""" Actors with 'Sam' in the name and average rating above 4.2, name Z-A """
+roles rating :avg>4.2;actor :grp:des~"Sam";;
+
+""" Movies after 2018 ranked by maximum role rating, top 5 """
+movies year >2018;title :grp;roles movie @;rating :max:des;% lim 5;;
+
+""" Titles containing Star with average role rating >= 4.0, alphabetical """
+movies title :grp:asc~"Star";roles movie @;rating :avg>=4.0;;
+
+""" Actors with exactly one credited role, A-Z """
+roles id :cnt=1;actor :grp:asc;;
+
+""" Sci-fi films from 1995 to 2005 mentioning alien, newest first, top 10 """
+movies genre scifi;year :des>=1995;<=2005;description ~"alien";_;% lim 10;;
+
+""" Actors with average rating above 4.0, name A-Z, first 12 """
+roles rating :avg>4.0;actor :grp:asc;% lim 12;;
+
+""" Movies where role count is between 4 and 8, titles Z-A """
+roles id :cnt>=4;:cnt<=8;movie :grp:des;;
+
+""" Co-stars who worked with Tom Hanks """
+roles actor :$x~"Tom Hanks";movie _;@ @ @;actor !=$x;;
+
+""" Films from 2010 ranked by cast size, largest first """
+movies year 2010;title :grp;roles movie @;id :cnt:des;;
+
+""" Actors aged 30 to 45 whose name contains an, youngest first, limit 8 """
+actors age :asc>=30;<=45;name ~"an";_;% lim 8;;
+
+""" Role ratings 3.2 through 4.8, sort by movie A-Z then rating high """
+roles movie :asc;rating :des>=3.2;<=4.8;_;;
+
+""" Top 5 descriptions closest to "time travel" """
+movies description <=>"time travel":des;_;% lim 5;;
+
+""" Actors with total ratings at least 25, sort by total then name """
+roles rating :sum:des;actor :grp:asc;;
+
+""" Sci-fi films with planet in the description, titles A-Z """
+movies description ~"planet";genre scifi;title :asc;_;;
+
+""" Roles where actor equals the movie title and rating <= 1.5 """
+roles actor _;movie @;rating <=1.5;_;;
+
+""" Average role rating per film from 1990 to 1999, highest first """
+movies year >=1990;<=1999;title :grp;roles movie @;rating :avg:des;;
+
+""" Counts of roles for actors like Alex, descending """
+roles actor :grp~"Alex";id :cnt:des;;
+
+""" First 10 oldest movies with the word city in the title """
+movies title ~"city";year :asc;_;% lim 10;;
+
+""" Actors whose maximum rating is not 1.0, order by max ascending """
+roles rating :max:asc;actor :grp!=1.0;;
+
+""" Movies where total role ratings exceed 60, titles A-Z """
+roles rating :sum>60;movie :grp:asc;;
+
+""" Adults 18+ with Jo in the name, oldest first, show 7 """
+actors age :des>=18;name ~"Jo";_;% lim 7;;
+
+""" Comedy or drama films from 1984 to 1986, titles Z-A """
+movies year >=1984;<=1986;genre comedy,drama;title :des;_;;
+
+""" Movies with average rating exactly 3.7 and at least two roles """
+roles rating :avg=3.7;id :cnt>=2;movie :grp;;
+
+""" Three highest-rated roles in robot-themed films """
+movies description <=>"robot"<=$sim;title _;roles movie @;rating :des;% lim 3;;
+
+""" Actors with Sam in the name, Z-A with role counts """
+roles id :cnt;actor :grp:des~"Sam";;
+
+""" Films before 1950 about war, order by year then title """
+movies year :asc<1950;description ~"war";title :asc;_;;
+
+""" Roles with rating not equal to 2.5, order actor then movie """
+roles rating !=2.5;actor :asc;movie :asc;_;;
+
+""" Titles with exactly 10 roles, A-Z """
+roles id :cnt=10;movie :grp:asc;;
+
+""" Top 9 actors by minimum rating, break ties by name A-Z """
+roles rating :min:des;actor :grp:asc;% lim 9;;
+
+""" Titles containing sun from 2000 to 2009, sort A-Z """
+movies title :asc~"sun";year >=2000;<=2009;_;;
+
+""" Actors with 3 to 5 roles inclusive, sorted by count high to low """
+roles id :cnt:des>=3;:cnt<=5;actor :grp;;
+
+""" Roles for movies Hero or House of Flying Daggers where actor name includes Li, actor A-Z """
+movies title "Hero","House of Flying Daggers";roles movie @;actor :asc~"Li";;
+
+""" Average rating per actor for films released after 2015, high to low """
+movies year >2015;title _;roles movie @;rating :avg:des;actor :grp;;
+
+""" Actors A-Z whose minimum rating is at most 2.0 and name contains Mi """
+roles rating :min<=2.0;actor :grp:asc~"Mi";;
+
+""" Scifi or documentary films with average rating at least 3.0, titles A-Z """
+movies genre scifi,documentary;title :grp:asc;roles movie @;rating :avg>=3.0;;
+
+""" Drama films from 2008 with roles sorted by rating descending """
+movies genre drama;year 2008;title _;roles movie @;rating :des;;
+
+""" Actors with role counts not equal to 1, names Z-A """
+roles id :cnt;actor :grp:des!=1;;
+
+""" Movies between 1965 and 1975 mentioning train, list 5 A-Z """
+movies year >=1965;<=1975;description ~"train";title :asc;_;% lim 5;;
+
+""" Roles rated at least 4.0, movie Z-A then actor A-Z """
+roles rating >=4.0;movie :des;actor :asc;_;;
+
+""" Actors ranked by total ratings under 5, smallest first """
+roles rating :sum:asc<5;actor :grp;;
+
+""" Movies whose maximum role rating is at least 4.5, titles Z-A """
+roles rating :max>=4.5;movie :grp:des;;
+
+""" Actors aged 50 to 70 with the most roles, top 10 """
+actors age >=50;<=70;name :grp;roles actor @;id :cnt:des;% lim 10;;
+
+""" Road-themed movies by similarity, show 7 """
+movies description <=>"road":des;_;% lim 7;;
+
+""" Co-actors of Daniel Craig, A-Z """
+roles actor :$x~"Daniel Craig";movie _;@ @ @;actor :asc!=$x;;
+
+""" Movies with role count excluding 1 and 2, sort by count descending """
+roles id :cnt:des>=3;movie :grp;;
+
+""" Roles for Natalie Portman in films after 2005, rating high to low """
+movies year >2005;title _;roles movie @;actor "Natalie Portman";rating :des;;
+
+""" Documentaries about climate from 2000 to 2020, year down then title """
+movies genre documentary;description ~"climate";year :des>=2000;<=2020;title :asc;_;;
+
+""" Actors at least 25 years old whose maximum rating is below 3.0 """
+actors age >=25;name :grp;roles actor @;rating :max<3.0;;
+
+""" Top 4 movies by average rating among titles containing king """
+roles rating :avg:des;movie :grp~"king";% lim 4;;
+
+""" Actors with average rating >= 4.2, sort by average then name """
+roles rating :avg:des>=4.2;actor :grp:asc;;
+
+""" Movies after 2012 with smallest total ratings first, limit 15 """
+roles rating :sum:asc;movie :grp;movies title @;year >2012;% lim 15;;
+
+""" Three earliest movies mentioning journey """
+movies description ~"journey";year :asc;_;% lim 3;;
+

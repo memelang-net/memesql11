@@ -1,0 +1,300 @@
+""" employees on leave page 5 (10 per page) """
+employees status on_leave;_;% lim 10;% beg 50;;
+
+""" employees active, salary >= 120000, order by salary desc limit 10 """
+employees status active;salary :des>=120000;_;% lim 10;;
+
+""" departments created after 2023-01-01, name A-Z top 8 """
+departments created >2023-01-01;name :asc;_;% lim 8;;
+
+""" jobs grade P4 with min_salary >= 90000, sort title asc limit 12 """
+jobs grade "P4";min_salary >=90000;title :asc;_;% lim 12;;
+
+""" performance reviews rating >= 4.5, newest first, cap 15 """
+performance_reviews rating >=4.5;review_date :des;_;% lim 15;;
+
+""" employees on_leave hired in 2024, sort hire_date asc page 2 of 20 """
+employees status on_leave;hire_date :asc>=2024-01-01;<=2024-12-31;_;% lim 20;% beg 20;;
+
+""" time off approved in 2025-09, start_date asc first 25 after 25 """
+time_off_requests status approved;start_date :asc>=2025-09-01;<=2025-09-30;_;% lim 25;% beg 25;;
+
+""" payroll entries USD with gross_pay >= 2000, sort net_pay desc page 3 of 10 """
+payroll_entries currency "USD";gross_pay >=2000;net_pay :des;_;% lim 10;% beg 20;;
+
+""" skills category Data, name A-Z limit 30 offset 60 """
+skills category "Data";name :asc;_;% lim 30;% beg 60;;
+
+""" distinct employee statuses ascending """
+employees status :grp:asc;;
+
+""" unique locations by country ascending """
+locations country :grp:asc;;
+
+""" distinct benefit plan types """
+benefit_plans type :grp;;
+
+""" distinct time-off types Z-A """
+time_off_requests type :grp:des;;
+
+""" distinct timesheet approver_id """
+timesheets approver_id :grp;;
+
+""" unique skill categories A-Z """
+skills category :grp:asc;;
+
+""" distinct payroll run statuses """
+payroll_runs status :grp;;
+
+""" distinct payroll currencies """
+payroll_entries currency :grp;;
+
+""" total gross pay per employee """
+payroll_entries gross_pay :sum;employee_id :grp;;
+
+""" sum of net pay per payroll_run """
+payroll_entries net_pay :sum;payroll_run_id :grp;;
+
+""" total tax withheld per employee """
+payroll_entries tax_withheld :sum;employee_id :grp;;
+
+""" sum of hours_worked per week_start """
+timesheets hours_worked :sum;week_start :grp;;
+
+""" total overtime_hours per approver_id """
+timesheets overtime_hours :sum;approver_id :grp;;
+
+""" sum of requested hours per employee """
+time_off_requests hours :sum;employee_id :grp;;
+
+""" sum of salaries per department """
+employees salary :sum;department_id :grp;;
+
+""" sum of bonus_target per department """
+employees bonus_target :sum;department_id :grp;;
+
+""" sum of min_salary by grade """
+jobs min_salary :sum;grade :grp;;
+
+""" sum of max_salary by grade """
+jobs max_salary :sum;grade :grp;;
+
+""" minimum salary per department """
+employees salary :min;department_id :grp;;
+
+""" min bonus_target per department """
+employees bonus_target :min;department_id :grp;;
+
+""" min rating per employee """
+performance_reviews rating :min;employee_id :grp;;
+
+""" min hours_worked per week_start """
+timesheets hours_worked :min;week_start :grp;;
+
+""" min overtime_hours per approver """
+timesheets overtime_hours :min;approver_id :grp;;
+
+""" minimum unit of requested hours per employee """
+time_off_requests hours :min;employee_id :grp;;
+
+""" min min_salary per grade """
+jobs min_salary :min;grade :grp;;
+
+""" min max_salary per grade """
+jobs max_salary :min;grade :grp;;
+
+""" min gross_pay per payroll_run """
+payroll_entries gross_pay :min;payroll_run_id :grp;;
+
+""" min net_pay per payroll_run """
+payroll_entries net_pay :min;payroll_run_id :grp;;
+
+""" maximum salary per department """
+employees salary :max;department_id :grp;;
+
+""" max bonus_target per department """
+employees bonus_target :max;department_id :grp;;
+
+""" max rating per employee """
+performance_reviews rating :max;employee_id :grp;;
+
+""" max hours_worked per week_start """
+timesheets hours_worked :max;week_start :grp;;
+
+""" max overtime_hours per approver """
+timesheets overtime_hours :max;approver_id :grp;;
+
+""" maximum requested hours per employee """
+time_off_requests hours :max;employee_id :grp;;
+
+""" max min_salary per grade """
+jobs min_salary :max;grade :grp;;
+
+""" max max_salary per grade """
+jobs max_salary :max;grade :grp;;
+
+""" max gross_pay per payroll_run """
+payroll_entries gross_pay :max;payroll_run_id :grp;;
+
+""" max net_pay per payroll_run """
+payroll_entries net_pay :max;payroll_run_id :grp;;
+
+""" average salary per department """
+employees salary :avg;department_id :grp;;
+
+""" avg bonus_target per department """
+employees bonus_target :avg;department_id :grp;;
+
+""" avg rating per employee """
+performance_reviews rating :avg;employee_id :grp;;
+
+""" average hours_worked per week_start """
+timesheets hours_worked :avg;week_start :grp;;
+
+""" avg overtime_hours per approver """
+timesheets overtime_hours :avg;approver_id :grp;;
+
+""" average requested hours per employee """
+time_off_requests hours :avg;employee_id :grp;;
+
+""" avg min_salary per grade """
+jobs min_salary :avg;grade :grp;;
+
+""" avg max_salary per grade """
+jobs max_salary :avg;grade :grp;;
+
+""" avg gross_pay per payroll_run """
+payroll_entries gross_pay :avg;payroll_run_id :grp;;
+
+""" avg net_pay per payroll_run """
+payroll_entries net_pay :avg;payroll_run_id :grp;;
+
+""" employee counts per department """
+employees id :cnt;department_id :grp;departments id @;name _;;
+
+""" employee counts per job """
+employees id :cnt;job_id :grp;jobs id @;title _;;
+
+""" reviews per employee """
+performance_reviews id :cnt;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" time-off requests per employee """
+time_off_requests id :cnt;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" timesheets per employee """
+timesheets id :cnt;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" skills per employee """
+employee_skills id :cnt;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" employees per manager_id """
+employees id :cnt;manager_id :grp;employees id @;first_name _;last_name _;;
+
+""" payroll entries per run """
+payroll_entries id :cnt;payroll_run_id :grp;;
+
+""" payroll entries per employee """
+payroll_entries id :cnt;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" departments per location_id """
+departments id :cnt;location_id :grp;locations id @;country _;;
+
+""" departments where average salary >= 100000 """
+employees salary :avg>=100000;department_id :grp;;
+
+""" departments where salary sum > 1000000 """
+employees salary :sum>1000000;department_id :grp;;
+
+""" grades with max max_salary >= 200000 """
+jobs max_salary :max>=200000;grade :grp;;
+
+""" grades with min min_salary >= 50000 """
+jobs min_salary :min>=50000;grade :grp;;
+
+""" employees with review count >= 3 """
+performance_reviews id :cnt>=3;employee_id :grp;;
+
+""" employees with total requested hours >= 40 """
+time_off_requests hours :sum>=40;employee_id :grp;;
+
+""" employees with avg rating >= 4.0 """
+performance_reviews rating :avg>=4.0;employee_id :grp;;
+
+""" payroll runs where sum gross_pay >= 100000 """
+payroll_entries gross_pay :sum>=100000;payroll_run_id :grp;;
+
+""" employees with timesheet count >= 4 """
+timesheets id :cnt>=4;employee_id :grp;;
+
+""" managers with employee count >= 5 """
+employees id :cnt>=5;manager_id :grp;;
+
+""" departments id groups >= 10 with employee count """
+employees id :cnt>=10;department_id :grp;;
+
+""" job id 100 or 200 with employee count """
+employees id :cnt;job_id :grp=100,200;;
+
+""" active employees """
+employees status :grp=active;id :cnt;;
+
+""" count per time-off reuqests types like vac """
+time_off_requests type :grp~"vac";id :cnt;;
+
+""" skill categories including Cloud by count """
+skills category :grp~"Cloud";id :cnt;;
+
+""" grades including P with job counts """
+jobs grade :grp~"P";id :cnt;;
+
+""" coverage_level groups equal family """
+employee_benefits coverage_level :grp=family;id :cnt;;
+
+""" benefit type groups like dental """
+benefit_plans type :grp~"dental";id :cnt;;
+
+""" departments grouped, avg salary desc where avg >= 90000 """
+employees salary :avg:des>=90000;department_id :grp;;
+
+""" employees grouped by reviewer, review count desc where count >= 5 """
+performance_reviews id :cnt:des>=5;reviewer_id :grp;;
+
+""" payroll_run grouped, sum net_pay desc where sum >= 50000 """
+payroll_entries net_pay :sum:des>=50000;payroll_run_id :grp;;
+
+""" employees grouped by approver, timesheet count asc where count >= 2 """
+timesheets id :cnt:asc>=2;approver_id :grp;;
+
+""" employees grouped by job_id, avg salary asc where avg >= 70000 """
+employees salary :avg:asc>=70000;job_id :grp;;
+
+""" employees grouped by manager_id, count desc where count >= 3 """
+employees id :cnt:des>=3;manager_id :grp;;
+
+""" grades grouped, max max_salary desc where max >= 180000 """
+jobs max_salary :max:des>=180000;grade :grp;;
+
+""" time-off grouped by type, hours sum desc where sum >= 24 """
+time_off_requests hours :sum:des>=24;type :grp;;
+
+""" skills grouped by category, count desc where count >= 5 """
+skills id :cnt:des>=5;category :grp;;
+
+""" departments grouped, salary sum asc where sum >= 200000 """
+employees salary :sum:asc>=200000;department_id :grp;;
+
+""" department name and country for employees hired on 2024-07-15 """
+employees hire_date 2024-07-15;department_id _;departments id @;name _;location_id _;locations id @;country _;;
+
+""" job title and grade for employees in department 10 """
+employees department_id 10;job_id _;jobs id @;title _;grade _;;
+
+""" department name and location region for employees in payroll run 2002 """
+payroll_runs id 2002;payroll_entries payroll_run_id @;employee_id _;employees id @;department_id _;departments id @;name _;location_id _;locations id @;region _;;
+
+""" reviewer first and last names for reviews on 2025-06-01 """
+performance_reviews review_date 2025-06-01;reviewer_id _;employees id @;first_name _;last_name _;;
+
+""" benefit plan name and type for employee 42 starting 2025-01-01 """
+employee_benefits employee_id 42;start_date 2025-01-01;benefit_plan_id _;benefit_plans id @;name _;type _;;
+

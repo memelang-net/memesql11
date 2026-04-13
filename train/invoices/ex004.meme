@@ -1,0 +1,300 @@
+""" highest invoice total per issue date """
+invoices total :max;invoice_date :grp;;
+
+""" invoices per due date (count) """
+invoices id :cnt;due_date :grp;;
+
+""" lowest invoice total per due date """
+invoices total :min;due_date :grp;;
+
+""" line items per invoice (count) """
+invoice_items id :cnt;invoice_id :grp;;
+
+""" average line total per invoice """
+invoice_items line_total :avg;invoice_id :grp;;
+
+""" maximum line total per invoice """
+invoice_items line_total :max;invoice_id :grp;;
+
+""" minimum line total per invoice """
+invoice_items line_total :min;invoice_id :grp;;
+
+""" average item unit price per invoice """
+invoice_items unit_price :avg;invoice_id :grp;;
+
+""" items per product (count) """
+invoice_items id :cnt;product_id :grp;;
+
+""" average quantity sold per product """
+invoice_items quantity :avg;product_id :grp;;
+
+""" maximum quantity on a line per product """
+invoice_items quantity :max;product_id :grp;;
+
+""" average unit price per product (items) """
+invoice_items unit_price :avg;product_id :grp;;
+
+""" minimum line total per product """
+invoice_items line_total :min;product_id :grp;;
+
+""" Total unit price per active status """
+products unit_price :sum;active :grp;;
+
+""" Sum of unit prices by product creation date """
+products unit_price :sum;created :grp;;
+
+""" Total invoice amounts per customer """
+invoices total :sum;customer_id :grp;customers id @;name _;;
+
+""" Sum of invoice tax by status """
+invoices tax :sum;status :grp;;
+
+""" Sum of line totals per invoice """
+invoice_items line_total :sum;invoice_id :grp;;
+
+""" Total quantity sold per product """
+invoice_items quantity :sum;product_id :grp;;
+
+""" daily customer signups, date ascending """
+customers id :cnt;created :grp:asc;;
+
+""" customer signups per day, newest dates first """
+customers id :cnt;created :grp:des;;
+
+""" latest customer id for each signup date, dates ascending """
+customers id :max;created :grp:asc;;
+
+""" Earliest customer id per signup date, newest dates first """
+customers id :min;created :grp:des;;
+
+""" average customer id by signup date, sort dates descending """
+customers id :avg;created :grp:des;;
+
+""" products by active flag (count), flag ascending """
+products id :cnt;active :grp:asc;;
+
+""" products by active flag (count), flag descending """
+products id :cnt;active :grp:des;;
+
+""" average price by active vs inactive, flag ascending """
+products unit_price :avg;active :grp:asc;;
+
+""" max price by active flag, flag descending """
+products unit_price :max;active :grp:des;;
+
+""" min price by active flag, flag ascending """
+products unit_price :min;active :grp:asc;;
+
+""" products added per day (count), dates ascending """
+products id :cnt;created :grp:asc;;
+
+""" products added per day (count), newest first """
+products id :cnt;created :grp:des;;
+
+""" average unit price per product creation date, dates ascending """
+products unit_price :avg;created :grp:asc;;
+
+""" max unit price per creation date, newest dates first """
+products unit_price :max;created :grp:des;;
+
+""" min unit price per creation date, dates ascending """
+products unit_price :min;created :grp:asc;;
+
+""" invoice volume per customer (count), customer id ascending """
+invoices id :cnt;customer_id :grp:asc;;
+
+""" invoice volume per customer (count), customer id descending """
+invoices id :cnt;customer_id :grp:des;;
+
+""" average invoice total per customer, customer id ascending """
+invoices total :avg;customer_id :grp:asc;;
+
+""" maximum invoice total per customer, customer id descending """
+invoices total :max;customer_id :grp:des;;
+
+""" minimum invoice total per customer, customer id ascending """
+invoices total :min;customer_id :grp:asc;;
+
+""" invoice count by status, status ascending """
+invoices id :cnt;status :grp:asc;;
+
+""" Get invoice count by status, status descending """
+invoices id :cnt;status :grp:des;;
+
+""" average invoice total by status, status ascending """
+invoices total :avg;status :grp:asc;;
+
+""" invoices per issue date (count), newest dates first """
+invoices id :cnt;invoice_date :grp:des;;
+
+""" invoices per issue date (count), dates ascending """
+invoices id :cnt;invoice_date :grp:asc;;
+
+""" lowest invoice total per due date, dates ascending """
+invoices total :min;due_date :grp:asc;;
+
+""" The highest invoice total per due date, newest due dates first """
+invoices total :max;due_date :grp:des;;
+
+""" Line items per invoice (count), invoice id ascending """
+invoice_items id :cnt;invoice_id :grp:asc;;
+
+""" average line total per invoice, invoice id descending """
+invoice_items line_total :avg;invoice_id :grp:des;;
+
+""" items per product, product id ascending """
+invoice_items id :cnt;product_id :grp:asc;;
+
+""" Total invoice amount by issue date earliest first """
+invoices total :sum;invoice_date :grp:asc;;
+
+""" Sum of invoice tax per status open or paid, status desc """
+invoices tax :sum;status :grp:des=open,paid;;
+
+""" Total line amount per product (product id ascending) """
+invoice_items line_total :sum;product_id :grp:asc;;
+
+""" Sum of quantities per invoice (invoice id descending) """
+invoice_items quantity :sum;invoice_id :grp:des;;
+
+""" daily customer signups, highest volume first """
+customers id :cnt:des;created :grp;;
+
+""" daily customer signups, lowest volume first """
+customers id :cnt:asc;created :grp;;
+
+""" latest customer id per signup date, sorted high to low """
+customers id :max:des;created :grp;;
+
+""" earliest customer id per signup date, sorted low to high """
+customers id :min:asc;created :grp;;
+
+""" average customer id per signup date, sorted high to low """
+customers id :avg:des;created :grp;;
+
+""" products by active flag, most items first """
+products id :cnt:des;active :grp;;
+
+""" products by active flag, fewest items first """
+products id :cnt:asc;active :grp;;
+
+""" average price by active status, sort highest averages first """
+products unit_price :avg:des;active :grp;;
+
+""" maximum price by active status, sort low to high """
+products unit_price :max:asc;active :grp;;
+
+""" minimum price by active status, sort high to low """
+products unit_price :min:des;active :grp;;
+
+""" products added per day, busiest days first """
+products id :cnt:des;created :grp;;
+
+""" products added per day, slowest days first """
+products id :cnt:asc;created :grp;;
+
+""" average unit price per product creation date, highest avg first """
+products unit_price :avg:des;created :grp;;
+
+""" max unit price per product creation date, lowest first """
+products unit_price :max:asc;created :grp;;
+
+""" min unit price per product creation date, highest first """
+products unit_price :min:des;created :grp;;
+
+""" invoice volume per customer, largest accounts first """
+invoices id :cnt:des;customer_id :grp;;
+
+""" invoice volume per customer, smallest accounts first """
+invoices id :cnt:asc;customer_id :grp;;
+
+""" average invoice total per customer, highest avg first """
+invoices total :avg:des;customer_id :grp;;
+
+""" maximum invoice total per customer, lowest first """
+invoices total :max:asc;customer_id :grp;;
+
+""" minimum invoice total per customer, highest first """
+invoices total :min:des;customer_id :grp;;
+
+""" invoice count by status, most common first """
+invoices id :cnt:des;status :grp;;
+
+""" invoice count by status, low count first """
+invoices id :cnt:asc;status :grp;;
+
+""" average invoice total by status, highest avg first """
+invoices total :avg:des;status :grp;;
+
+""" invoices per issue date, busiest days first """
+invoices id :cnt:des;invoice_date :grp;;
+
+""" invoices per issue date, slowest days first """
+invoices id :cnt:asc;invoice_date :grp;;
+
+""" lowest invoice total per due date, smallest first """
+invoices total :min:asc;due_date :grp;;
+
+""" highest invoice total per due date, largest first """
+invoices total :max:des;due_date :grp;;
+
+""" line items per invoice, most lines first """
+invoice_items id :cnt:des;invoice_id :grp;;
+
+""" average line total per invoice, highest avg first """
+invoice_items line_total :avg:des;invoice_id :grp;;
+
+""" items per product, fewest lines first """
+invoice_items id :cnt:asc;product_id :grp;;
+
+""" daily customer signups, ascending """
+customers id :cnt:asc;created :grp;;
+
+""" average product price by active flag, descending """
+products unit_price :avg:des;active :grp;;
+
+""" invoices per issue date descending """
+invoices id :cnt:des;invoice_date :grp;;
+
+""" average invoice total per customer ascending """
+invoices total :avg:asc;customer_id :grp;;
+
+""" average quantity per product, asc """
+invoice_items quantity :avg:asc;product_id :grp;;
+
+""" Sum of invoice totals per customer low to high """
+invoices total :sum:asc;customer_id :grp;;
+
+""" Total tax per status (highest first) """
+invoices tax :sum:des;status :grp;;
+
+""" Sum of quantities per product (ascending) """
+invoice_items quantity :sum:asc;product_id :grp;;
+
+""" Total line amount per invoice descending """
+invoice_items line_total :sum:des;invoice_id :grp;;
+
+""" Dates with at least 5 customer signups """
+customers id :cnt>=5;created :grp;;
+
+""" Signup days with 2 or fewer customers """
+customers id :cnt<=2;created :grp;;
+
+""" Dates where customer signups reached 10+ """
+customers id :cnt>=10;created :grp;;
+
+""" Active-status groups with total unit price at least 500 """
+products unit_price :sum>=500;active :grp;;
+
+""" Creation dates where product count is at least 20 """
+products id :cnt>=20;created :grp;;
+
+""" Product creation days with summed unit price no more than 100 """
+products unit_price :sum<=100;created :grp;;
+
+""" Customers whose invoices sum to at least 1000 """
+invoices total :sum>=1000;customer_id :grp;;
+
+""" Statuses with fewer than 3 invoices """
+invoices id :cnt<=2;status :grp;;
+

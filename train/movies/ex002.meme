@@ -1,0 +1,300 @@
+""" Roles rated exactly 2 """
+roles rating 2;_;;
+
+""" role ratings not equal to 5 """
+roles rating !=5;_;;
+
+""" roles with rating not 1 """
+roles rating !=1;_;;
+
+""" acting roles where rating != 2 """
+roles rating !=2;_;;
+
+""" roles excluding rating 3 """
+roles rating !=3;_;;
+
+""" roles rated greater than 4.5 """
+roles rating >4.5;_;;
+
+""" Roles with rating less than or equal to 1 """
+roles rating <=1;_;;
+
+""" actor rating equal to 3 """
+roles rating 3;_;;
+
+""" actor rating exactly 4 """
+roles rating 4;_;;
+
+""" roles rated 4 and above """
+roles rating >=4;_;;
+
+""" acting roles rated 2.5 and above """
+roles rating >=2.5;_;;
+
+""" roles rated at least 4.6 """
+roles rating >=4.6;_;;
+
+""" roles with ratings less than 2 """
+roles rating <2;_;;
+
+""" acting roles with ratings less than 3 """
+roles rating <3;_;;
+
+""" roles with ratings less than 4 """
+roles rating <4;_;;
+
+""" acting roles rated 3 or greater """
+roles rating >=3;_;;
+
+""" roles rated either 1,5 """
+roles rating 1,5;_;;
+
+""" acting roles rated either 2.2 or 4.1 """
+roles rating 2.2,4.1;_;;
+
+""" roles rated 2 or 4 only """
+roles rating 2,4;_;;
+
+""" roles rated 2, 3, or 5 """
+roles rating 2,3,5;_;;
+
+""" acting roles rated 2, 3, or 5 """
+roles rating 2,3,5;_;;
+
+""" roles with ratings 1, 3.1, or 5 """
+roles rating 1,3.1,5;_;;
+
+""" roles rated exactly 2 """
+roles rating 2;_;;
+
+""" acting roles rated exactly 3 """
+roles rating 3;_;;
+
+""" roles with rating not equal to 3 """
+roles rating !=3;_;;
+
+""" acting roles with rating not equal to 4 """
+roles rating !=4;_;;
+
+""" roles where rating is not 5 """
+roles rating !=5;_;;
+
+""" roles with rating greater than 2.5 """
+roles rating >2.5;_;;
+
+""" acting roles with rating above 3.5 """
+roles rating >3.5;_;;
+
+""" roles with rating over 4.5 """
+roles rating >4.5;_;;
+
+""" roles with rating less than or equal to 1 """
+roles rating <=1;_;;
+
+""" acting roles with rating ≤2 """
+roles rating <=2;_;;
+
+""" roles with rating at most 3.9 """
+roles rating <=3.9;_;;
+
+""" What movies has Mark Hamill starred in? """
+roles actor "Mark Hamill";movie _;;
+
+""" Which movies star Keanu Reeves """
+roles actor "Keanu Reeves";movie _;;
+
+""" films with Charlize Theron """
+roles actor "Charlize Theron";movie _;;
+
+""" List all movies featuring Morgan Freeman """
+roles actor "Morgan Freeman";movie _;;
+
+""" what films did Jennifer Lawrence act in? """
+roles actor "Jennifer Lawrence";movie _;;
+
+""" Movies Angelina Jolie appeared in """
+roles actor "Angelina Jolie";movie _;;
+
+""" Roles for movie 'The Empire Strikes Back' """
+roles movie "The Empire Strikes Back";_;;
+
+""" Tom Hanks or Meg Ryan roles """
+roles actor "Tom Hanks","Meg Ryan";_;;
+
+""" acting roles for Robert De Niro or Al Pacino """
+roles actor "Robert De Niro","Al Pacino";_;;
+
+""" film roles for Scarlett Johansson or Chris Evans """
+roles actor "Scarlett Johansson","Chris Evans";_;;
+
+""" roles for Natalie Portman or Keira Knightley """
+roles actor "Natalie Portman","Keira Knightley";_;;
+
+""" ratings for Denzel Washington / Viola Davis """
+roles actor "Denzel Washington","Viola Davis";_;;
+
+""" film roles for Harrison Ford or Sean Connery """
+roles actor "Harrison Ford","Sean Connery";_;;
+
+""" roles for Leonardo DiCaprio Kate Winslet """
+roles actor "Leonardo DiCaprio","Kate Winslet";_;;
+
+""" acting roles for Emma Stone Ryan Gosling and Amy Adams """
+roles actor "Emma Stone","Ryan Gosling","Amy Adams";_;;
+
+""" film roles for Meryl Streep, Anne Hathaway, Emily Blunt, or Stanley Tucci """
+roles actor "Meryl Streep","Anne Hathaway","Emily Blunt","Stanley Tucci";_;;
+
+""" roles for Samuel L. Jackson, Bruce Willis, Uma Thurman, John Travolta, Ving Rhames """
+roles actor "Samuel L. Jackson","Bruce Willis","Uma Thurman","John Travolta","Ving Rhames";_;;
+
+""" Movies from 1990 to 2000 inclusive """
+movies year >=1990;<=2000;_;;
+
+""" Movies released between 2001 to 2011 exclusive """
+movies year >2001;<2011;_;;
+
+""" documentaries released in 2020 """
+movies genre documentary;year 2020;_;;
+
+""" Sci-fi or drama movies from 1990-2005 inclusive """
+movies genre scifi,drama;year >=1990;<=2005;_;;
+
+""" stars between 45 and 59 inclusive """
+actors age >=45;<=59;_;;
+
+""" Actors aged from 18 and 30 """
+actors age >=18;<=30;_;;
+
+""" Actors named John between 50 and 60 years old inclusive """
+actors name ~"John";age >=50;<=60;_;;
+
+""" Roles with rating between 3 and 4.9 """
+roles rating >=3;<=4.9;_;;
+
+""" Roles with rating between 1 and 3 in Titanic """
+roles rating >=1;<=3;movie "Titanic";_;;
+
+""" roles for Mark Hamill or Carrie Fisher rated>2 """
+roles actor "Mark Hamill","Carrie Fisher";rating >2;_;;
+
+""" Show drama films from 1980 to 1990 that mention war """
+movies genre drama;year >=1980;<=1990;description ~"war";_;;
+
+""" Actors named like Chris aged between 25 and 40 """
+actors name ~"Chris";age >=25;<=40;_;;
+
+""" Roles for Tom Hanks in Forrest Gump rated 4 or higher """
+roles actor "Tom Hanks";movie "Forrest Gump";rating >=4;_;;
+
+""" Sci-fi titles with star in the name from 1970 onward """
+movies genre scifi;title ~"star";year >=1970;_;;
+
+""" Roles where actor name includes Lee and rating at least 2.5 but not 5 """
+roles actor ~"Lee";rating >=2.5;!=5;_;;
+
+""" Exclude actor ids 17 and 213;ages 30 to 60 """
+actors id !=17,213;age >=30;<=60;_;;
+
+""" Sci-fi robot movies since 1990 """
+movies genre scifi;description ~"robot";year >=1990;_;;
+
+""" Drama or comedy films in 1999 or 2000 with Love in title """
+movies genre drama,comedy;year 1999,2000;title ~"Love";_;;
+
+""" Roles in Alien with rating between 3 and 5 inclusive """
+roles movie "Alien";rating >=3;<=5;_;;
+
+""" Actors with Ann in name, age at least 21 and under 50 """
+actors name ~"Ann";age >=21;<50;_;;
+
+""" Movies before 1965 that are not documentaries or Sci-Fi and mention ocean """
+movies year <1965;genre !=documentary,scifi;description ~"ocean";_;;
+
+""" Keanu Reeves roles rated above 4 in 1999 releases """
+movies year 1999;title _;roles movie @;actor "Keanu Reeves";rating >4;_;;
+
+""" Actors aged 18, 21, or 25 whose name has Jo """
+actors age 18,21,25;name ~"Jo";_;;
+
+""" Comedies after 2010 with wedding in description """
+movies genre comedy;year >2010;description ~"wedding";_;;
+
+""" Find roles where rating equals 4 or 4.5 for Mark Hamill """
+roles actor "Mark Hamill";rating 4,4.5;_;;
+
+""" Movies in 2005 with King in title and drama genre """
+movies year 2005;title ~"King";genre drama;_;;
+
+""" Actors 65+ whose names contain Lee or Li """
+actors age >=65;name ~"Lee","Li";_;;
+
+""" Roles rated below 1.5 for movies before 1980 """
+movies year <1980;title _;roles movie @;rating <1.5;_;;
+
+""" Documentaries between 1975 and 1990 that mention music """
+movies genre documentary;year >=1975;<=1990;description ~"music";_;;
+
+""" Sci-fi films from 1990-2005 with galaxy in description """
+movies genre scifi;year >=1990;<=2005;description ~"galaxy";_;;
+
+""" Actors named exactly Emily Blunt aged under 50 """
+actors name "Emily Blunt";age <50;_;;
+
+""" Roles where rating not 1 and at least 3 for Carrie Fisher """
+roles actor "Carrie Fisher";rating !=1;>=3;_;;
+
+""" Movies titled Dune or Dune: Part Two released after 2018 """
+movies title "Dune","Dune: Part Two";year >2018;_;;
+
+""" Actors under 18 whose name includes A """
+actors age <18;name ~"A";_;;
+
+""" Drama films after 1999 with man in the title """
+movies genre drama;year >1999;title ~"man";_;;
+
+""" Roles for Alien or Aliens with rating at least 4 """
+roles movie "Alien","Aliens";rating >=4;_;;
+
+""" Movies between 2000 and 2010 whose description mentions robot """
+movies year >=2000;<=2010;description ~"robot";_;;
+
+""" Actors aged 40-60 whose name contains son """
+actors age >=40;<=60;name ~"son";_;;
+
+""" Films not sci-fi or documentary before 1985 """
+movies genre !=scifi,documentary;year <1985;_;;
+
+""" Roles with rating 2.0 to 4.0 inclusive in Jurassic Park """
+roles movie "Jurassic Park";rating >=2.0;<=4.0;_;;
+
+""" Actors exactly 33 named like Max """
+actors age 33;name ~"Max";_;;
+
+""" Movies after 2010 with dream in description and Love in title """
+movies year >2010;description ~"dream";title ~"Love";_;;
+
+""" Roles where actor equals movie title and rating >= 4 """
+roles actor _;movie @;rating >=4;_;;
+
+""" Actors named Tom Cruise aged 30 or more """
+actors name "Tom Cruise";age >=30;_;;
+
+""" Movies with Vietnam in description from 1970 to 1979 inclusive """
+movies description ~"Vietnam";year >=1970;<=1979;_;;
+
+""" Roles rated 5 or 4.5 for Robert De Niro """
+roles actor "Robert De Niro";rating 5,4.5;_;;
+
+""" Comedy or drama films with heist in description """
+movies genre comedy,drama;description ~"heist";_;;
+
+""" Actors named like Ana aged 20 to 35 inclusive """
+actors name ~"Ana";age >=20;<=35;_;;
+
+""" Movies titled with Star released in 1977 or 1980 """
+movies title ~"Star";year 1977,1980;_;;
+
+""" Roles for Natalie Portman in movies from 2016 """
+movies year 2016;title _;roles movie @;actor "Natalie Portman";_;;
+

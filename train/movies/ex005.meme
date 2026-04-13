@@ -1,0 +1,300 @@
+""" Actor names Z-A, show 8 with offset 16 """
+actors name :des;% lim 8;% beg 16;;
+
+""" Movies by year ascending, first 10 after 30 """
+movies year :asc;% lim 10;% beg 30;;
+
+""" Roles ordered by movie then actor, 30 after 90 """
+roles movie :asc;actor :asc;% lim 30;% beg 90;;
+
+""" Year descending then title ascending, list 12 from 24 """
+movies year :des;title :asc;% lim 12;% beg 24;;
+
+""" Titles reverse alphabetical, take 4 starting at 8 """
+movies title :des;% lim 4;% beg 8;;
+
+""" Actors by name descending, first 11 after 33 """
+actors name :des;% lim 11;% beg 33;;
+
+""" Roles by actor Z-A then movie A-Z, 25 after 50 """
+roles actor :des;movie :asc;% lim 25;% beg 50;;
+
+""" Start at 200 and list 40 titles A-Z """
+movies title :asc;% lim 40;% beg 200;;
+
+""" Begin at 60 and show 15 oldest films """
+movies year :asc;% lim 15;% beg 60;;
+
+""" Continue at 75, display 25 titles ascending """
+movies title :asc;% lim 25;% beg 75;;
+
+""" Offset 100: 20 roles sorted by rating descending """
+roles rating :des;% lim 20;% beg 100;;
+
+""" Film titles A-Z, page 2 (50 per page) """
+movies title :asc;% lim 50;% beg 50;;
+
+""" Actors Z-A, show 30 starting at 60 """
+actors name :des;% lim 30;% beg 60;;
+
+""" Youngest 12 actors (offset 24) """
+actors age :asc;% lim 12;% beg 24;;
+
+""" Oldest 8 performers beginning at 16 """
+actors age :des;% lim 8;% beg 16;;
+
+""" Roles by rating high to low, page 4 (20 per page) """
+roles rating :des;% lim 20;% beg 60;;
+
+""" Movies by title Z to A, take 9 at offset 27 """
+movies title :des;% lim 9;% beg 27;;
+
+""" IDs ascending, list 6 after 12 """
+movies id :asc;% lim 6;% beg 12;;
+
+""" Sort actors by name, page 3 (25 per page) """
+actors name :asc;% lim 25;% beg 50;;
+
+""" Titles reverse alphabetical, display 13 from 39 """
+movies title :des;% lim 13;% beg 39;;
+
+""" Start at 75: show 25 latest releases """
+movies year :des;_;% lim 25;% beg 75;;
+
+""" Begin at 90, list 30 titles A-Z """
+movies title :asc;% lim 30;% beg 90;;
+
+""" Actors by age descending, page 2 (50 per page) """
+actors age :des;% lim 50;% beg 50;;
+
+""" Role ratings ascending, page 5 of 10-per-page """
+roles rating :asc;% lim 10;% beg 40;;
+
+""" Newest 10 films released on or before 1998 """
+movies year :des<=1998;% lim 10;;
+
+""" First 7 films from 2005 or later, oldest to newest """
+movies year :asc>=2005;% lim 7;;
+
+""" Top twelve movies no later than 1985, newest first """
+movies year :des<=1985;% lim 12;;
+
+""" Earliest 6 releases from 2010 and onward """
+movies year :asc>=2010;% lim 6;;
+
+""" Top 15 titles up to and including 1979 by newest """
+movies year :des<=1979;% lim 15;;
+
+""" First 9 films from 1999 or later by oldest """
+movies year :asc>=1999;% lim 9;;
+
+""" Top 8 movies at or before 1965, newest first """
+movies year :des<=1965;% lim 8;;
+
+""" First 5 films from 2020 and later, oldest first """
+movies year :asc>=2020;% lim 5;;
+
+""" Top 20 releases not after 2001, newest first """
+movies year :des<=2001;% lim 20;;
+
+""" First 11 films from 1990 onward, oldest first """
+movies year :asc>=1990;% lim 11;;
+
+""" youngest 8 performers aged 21 or older """
+actors age :asc>=21;% lim 8;;
+
+""" Top 6 oldest actors aged at most 70 """
+actors age :des<=70;% lim 6;;
+
+""" First 10 performers from age 30 and up (youngest first) """
+actors age :asc>=30;% lim 10;;
+
+""" Top 5 oldest people aged no more than 60 """
+actors age :des<=60;% lim 5;;
+
+""" First 12 actors aged at least 18 by youngest """
+actors age :asc>=18;% lim 12;;
+
+""" Top 9 roles with ratings up to and including 3.5 (highest first) """
+roles rating :des<=3.5;% lim 9;;
+
+""" First 7 roles rated 4.0 or higher, lowest to highest """
+roles rating :asc>=4.0;% lim 7;;
+
+""" top 10 roles with rating not above 2.0 """
+roles rating :des<=2.0;% lim 10;;
+
+""" First 6 roles with rating at least 4.5, low to high """
+roles rating :asc>=4.5;% lim 6;;
+
+""" Top 13 roles rated no more than 1.8 (highest first) """
+roles rating :des<=1.8;% lim 13;;
+
+""" roles per actor """
+roles id :cnt;actor :grp;;
+
+""" count roles by actor """
+roles id :cnt;actor :grp;;
+
+""" number of roles per actor """
+roles id :cnt;actor :grp;;
+
+""" roles grouped by actor with counts """
+roles id :cnt;actor :grp;;
+
+""" actor-wise role totals """
+roles id :cnt;actor :grp;;
+
+""" role count for each actor """
+roles id :cnt;actor :grp;;
+
+""" aggregate roles by actor (count) """
+roles id :cnt;actor :grp;;
+
+""" actors with their role counts """
+roles id :cnt;actor :grp;;
+
+""" sum of roles per actor (as count) """
+roles id :cnt;actor :grp;;
+
+""" role frequency by actor """
+roles id :cnt;actor :grp;;
+
+""" list actors and how many roles they have """
+roles id :cnt;actor :grp;;
+
+""" roles per movie """
+roles id :cnt;movie :grp;;
+
+""" count roles by movie """
+roles id :cnt;movie :grp;;
+
+""" number of roles per movie """
+roles id :cnt;movie :grp;;
+
+""" roles grouped by movie with counts """
+roles id :cnt;movie :grp;;
+
+""" movie-wise role totals """
+roles id :cnt;movie :grp;;
+
+""" role count for each movie """
+roles id :cnt;movie :grp;;
+
+""" aggregate roles by movie (count) """
+roles id :cnt;movie :grp;;
+
+""" movies with their role counts """
+roles id :cnt;movie :grp;;
+
+""" role frequency by movie """
+roles id :cnt;movie :grp;;
+
+""" list movies and how many roles they have """
+roles id :cnt;movie :grp;;
+
+""" tally roles per movie title """
+roles id :cnt;movie :grp;;
+
+""" average rating per actor """
+roles rating :avg;actor :grp;;
+
+""" actor, average rating """
+roles rating :avg;actor :grp;;
+
+""" mean rating by actor """
+roles rating :avg;actor :grp;;
+
+""" actor-wise average ratings """
+roles rating :avg;actor :grp;;
+
+""" average role rating for each actor """
+roles rating :avg;actor :grp;;
+
+""" per-actor mean of ratings """
+roles rating :avg;actor :grp;;
+
+""" actors with their average ratings """
+roles rating :avg;actor :grp;;
+
+""" average rating per movie """
+roles rating :avg;movie :grp;;
+
+""" movie, average rating """
+roles rating :avg;movie :grp;;
+
+""" mean rating by movie """
+roles rating :avg;movie :grp;;
+
+""" movie-wise average role rating """
+roles rating :avg;movie :grp;;
+
+""" average rating for each movie """
+roles rating :avg;movie :grp;;
+
+""" per-film mean of ratings """
+roles rating :avg;movie :grp;;
+
+""" movies with their average ratings """
+roles rating :avg;movie :grp;;
+
+""" sum of ratings per actor """
+roles rating :sum;actor :grp;;
+
+""" actor, sum of ratings """
+roles rating :sum;actor :grp;;
+
+""" total rating by actor """
+roles rating :sum;actor :grp;;
+
+""" performer-wise sum of ratings """
+roles rating :sum;actor :grp;;
+
+""" sum ratings for each star """
+roles rating :sum;actor :grp;;
+
+""" aggregate rating totals per actor """
+roles rating :sum;actor :grp;;
+
+""" cumulative ratings by actor """
+roles rating :sum;actor :grp;;
+
+""" sum of ratings per movie """
+roles rating :sum;movie :grp;;
+
+""" film, sum of ratings """
+roles rating :sum;movie :grp;;
+
+""" total rating by movie """
+roles rating :sum;movie :grp;;
+
+""" movie-wise sum of ratings """
+roles rating :sum;movie :grp;;
+
+""" sum ratings for each movie """
+roles rating :sum;movie :grp;;
+
+""" aggregate rating totals per movie """
+roles rating :sum;movie :grp;;
+
+""" cumulative ratings by movie """
+roles rating :sum;movie :grp;;
+
+""" ratings summed by movie """
+roles rating :sum;movie :grp;;
+
+""" per-movie cumulative rating sum """
+roles rating :sum;movie :grp;;
+
+""" Sum of role ratings for each film """
+roles rating :sum;movie :grp;;
+
+""" movie totals of ratings """
+roles rating :sum;movie :grp;;
+
+""" Add ratings by movie """
+roles rating :sum;movie :grp;;
+
+""" Distinct movie years (ascending) """
+movies year :grp:asc;;
+

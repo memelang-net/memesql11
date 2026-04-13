@@ -1,0 +1,300 @@
+""" movies earlier than 1972 order by year asc """
+movies year :asc<1972;_;;
+
+""" Actors no older than 25 (A-Z) """
+actors age <=25;name :asc;_;;
+
+""" Under 18, sorted by age ascending """
+actors age :asc<18;_;;
+
+""" Between 60 and 75, name A-Z """
+actors age >=60;<=75;name :asc;_;;
+
+""" Actors age ≤ 10 (youngest first) """
+actors age :asc<=10;_;;
+
+""" performers age ≥ 90 (oldest first) """
+actors age :des>=90;_;;
+
+""" Show films released earlier than 1950, oldest first """
+movies year :asc<1950;_;;
+
+""" List movies from 2010 and later, newest to oldest """
+movies year :des>=2010;_;;
+
+""" Alphabetize titles that contain "Star" """
+movies title :asc~"Star";_;;
+
+""" Titles including "Love", reverse alphabetical """
+movies title :des~"Love";_;;
+
+""" Actors age 12 and under, youngest first """
+actors age :asc<=12;_;;
+
+""" Seniors 80+ sorted by highest age first """
+actors age :des>=80;_;;
+
+""" Roles scored below 1.5, sort low to high """
+roles rating :asc<1.5;_;;
+
+""" Roles rated 4.7 or higher, rank by rating desc """
+roles rating :des>=4.7;_;;
+
+""" People whose name contains "Ann", A–Z """
+actors name :asc~"Ann";_;;
+
+""" Roles for actors with "Lee" in the name, actor A–Z """
+roles actor :asc~"Lee";_;;
+
+""" Movie IDs greater than 5000, order by id ascending """
+movies id :asc>5000;_;;
+
+""" Actor IDs above 100, highest id first """
+actors id :des>100;_;;
+
+""" All films from the year 2001, year ascending """
+movies year :asc=2001;_;;
+
+""" Catalog up to and including 1965, year ascending """
+movies year :asc<=1965;_;;
+
+""" Roles with rating at most 2.0, sort ascending """
+roles rating :asc<=2.0;_;;
+
+""" Names containing "son", Z–A """
+actors name :des~"son";_;;
+
+""" All films from 1999, newest first """
+movies year :des=1999;_;;
+
+""" Time travel movies """
+movies description <=>"time travel"<=$sim;_;;
+
+""" Movies involving Vietnam """
+movies description <=>"Vietnam"<=$sim;_;;
+
+""" Heist-related movies """
+movies description <=>"heist"<=$sim;_;;
+
+""" Robot-themed films """
+movies description <=>"robot"<=$sim;_;;
+
+""" Space exploration titles """
+movies description <=>"space exploration"<=$sim;_;;
+
+""" Serial killer thrillers """
+movies description <=>"serial killer"<=$sim;_;;
+
+""" Coming-of-age stories """
+movies description <=>"coming of age"<=$sim;_;;
+
+""" Post-apocalyptic films """
+movies description <=>"post apocalyptic"<=$sim;_;;
+
+""" World War II movies """
+movies description <=>"world war ii"<=$sim;_;;
+
+""" Artificial intelligence themes """
+movies description <=>"artificial intelligence"<=$sim;_;;
+
+""" Romantic comedy picks with sim>=.75 """
+movies description <=>"romantic comedy"<=0.75;_;;
+
+""" Superhero adventure movies sim=0.67 """
+movies description <=>"superhero"<=0.67;_;;
+
+""" Classic westerns """
+movies description <=>"western"<=$sim;_;;
+
+""" Films with dystopian society narratives sim>.33 """
+movies description <=>"dystopian"<0.33;_;;
+
+""" Show 15 newest movies """
+movies year :des;_;% lim 15;;
+
+""" top 8 oldest films """
+movies year :asc;_;% lim 8;;
+
+""" First 12 titles A-Z """
+movies title :asc;_;% lim 12;;
+
+""" Ten titles Z-A """
+movies title :des;_;% lim 10;;
+
+""" Five highest-rated roles """
+roles rating :des;_;% lim 5;;
+
+""" Lowest 7 role ratings """
+roles rating :asc;_;% lim 7;;
+
+""" Youngest 20 actors """
+actors age :asc;_;% lim 20;;
+
+""" Six oldest performers """
+actors age :des;_;% lim 6;;
+
+""" Nine actor names alphabetically """
+actors name :asc;_;% lim 9;;
+
+""" first 4 movies by id """
+movies id :asc;_;% lim 4;;
+
+""" oldest 5 actors """
+actors age :des;_;% lim 5;;
+
+""" 25 newest releases """
+movies year :des;_;% lim 25;;
+
+""" 18 film titles A-Z """
+movies title :asc;_;% lim 18;;
+
+""" 6 titles reverse alphabetical """
+movies title :des;_;% lim 6;;
+
+""" 10 lowest role ratings """
+roles rating :asc;_;% lim 10;;
+
+""" 12 highest role ratings """
+roles rating :des;_;% lim 12;;
+
+""" 14 youngest performers """
+actors age :asc;_;% lim 14;;
+
+""" Nine oldest actors """
+actors age :des;_;% lim 9;;
+
+""" 5 actor names A-Z """
+actors name :asc;_;% lim 5;;
+
+""" 7 actor names Z-A """
+actors name :des;_;% lim 7;;
+
+""" lowest three movie ids """
+movies id :asc;_;% lim 3;;
+
+""" Show sci-fi titles containing "Star", A–Z, limit 12 """
+movies title :asc~"Star";_;% lim 12;;
+
+""" List films from 2001 and later, newest first, top 10 """
+movies year :des>=2001;_;% lim 10;;
+
+""" Movies released before 1980, oldest first, first 7 """
+movies year :asc<1980;_;% lim 7;;
+
+""" Actors age 13 and under, youngest first, only 5 """
+actors age :asc<=13;_;% lim 5;;
+
+""" Seniors 75+ ordered by highest age, cap at 8 """
+actors age :des>=75;_;% lim 8;;
+
+""" Roles with rating 4.5 or higher, sort high to low, show 6 """
+roles rating :des>=4.5;_;% lim 6;;
+
+""" Roles rated below 2.0, low to high, return 9 """
+roles rating :asc<2.0;_;% lim 9;;
+
+""" Names including "Lee", Z–A, take 10 """
+actors name :des~"Lee";_;% lim 10;;
+
+""" Movie ids above 3000, id ascending, first 4 """
+movies id :asc>3000;_;% lim 4;;
+
+""" Youngest actor named 'Chris' """
+actors name ~"Chris";age :asc;% lim 1;;
+
+""" Top 10 highest-rated roles """
+roles rating :des;_;% lim 10;;
+
+""" find 10 youngest actors name matches "Adam" """
+actors name ~"Adam";age :asc;% lim 10;;
+
+""" actors name like "Ben" sorted by age asc limit 9 """
+actors name ~"Ben";age :asc;% lim 9;;
+
+""" show 8 youngest actors name includes "Alex" """
+actors name ~"Alex";age :asc;% lim 8;;
+
+""" top 7 actors with "Joe" in name age asc """
+actors name ~"Joe";age :asc;% lim 7;;
+
+""" six actors with "Jane" in name ordered youngest first """
+actors name ~"Jane";age :asc;% lim 6;;
+
+""" surname Smith actors age asc top 5 """
+actors name ~"Smith";age :asc;% lim 5;;
+
+""" name contains "Zoe" actors sort by age asc first 4 """
+actors name ~"Zoe";age :asc;% lim 4;;
+
+""" 3 youngest actors whose name matches 'Max' """
+actors name ~"Max";age :asc;% lim 3;;
+
+""" Latest 12 movies (by year) """
+movies year :des;_;% lim 12;;
+
+""" Oldest 12 movies by year """
+movies year :asc;_;% lim 12;;
+
+""" Top 10 movies about space """
+movies description <=>"space":des;_;% lim 10;;
+
+""" 20 films about money """
+movies description <=>"money":des;_;% lim 20;;
+
+""" Top 15 documentaries about nature """
+movies description <=>"nature":des;_;% lim 15;;
+
+""" Best 12 films about friendship """
+movies description <=>"friendship":des;_;% lim 12;;
+
+""" top eight movies about bank robbery """
+movies description <=>"bank robbery":des;_;% lim 8;;
+
+""" Top 20 movies about time travel """
+movies description <=>"time travel":des;_;% lim 20;;
+
+""" Top 5 films about artificial intelligence """
+movies description <=>"artificial intelligence":des;_;% lim 5;;
+
+""" movies about vampires, top 10 """
+movies description <=>"vampires":des;_;% lim 10;;
+
+""" Top 6 apocalypse films """
+movies description <=>"apocalypse":des;_;% lim 6;;
+
+""" Top 9 movies about road trips """
+movies description <=>"road trip":des;_;% lim 9;;
+
+""" Seven films about family """
+movies description <=>"family":des;_;% lim 7;;
+
+""" Top 11 movies about revenge """
+movies description <=>"revenge":des;_;% lim 11;;
+
+""" Newest movies by year descending, page 3 (20 per page) """
+movies year :des;_;% lim 20;% beg 40;;
+
+""" Actor names A-Z, page 4 with 50 per page """
+actors name :asc;% lim 50;% beg 150;;
+
+""" Roles sorted by rating high to low, page 2 (30 each) """
+roles rating :des;% lim 30;% beg 30;;
+
+""" Film titles Z-A, page 5 of 25-per-page """
+movies title :des;% lim 25;% beg 100;;
+
+""" Movie IDs ascending, page 3 (10 per page) """
+movies id :asc;% lim 10;% beg 20;;
+
+""" Alphabetize film titles, show 18 after skipping 36 """
+movies title :asc;% lim 18;% beg 36;;
+
+""" Youngest actors first, 20 starting at 40 """
+actors age :asc;% lim 20;% beg 40;;
+
+""" Oldest performers first, 6 beginning at 12 """
+actors age :des;% lim 6;% beg 12;;
+
+""" Role ratings low to high, list 9 from offset 27 """
+roles rating :asc;% lim 9;% beg 27;;
+

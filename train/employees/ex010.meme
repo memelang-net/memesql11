@@ -1,0 +1,156 @@
+""" People in the same department as employee 4321, order last name A-Z """
+employees id 4321;department_id _;@ @ @;employees id !=4321;first_name _;last_name :asc;;
+
+""" Job titles sharing the grade of Senior Engineer, show min salaries high to low """
+jobs title "Senior Engineer";id :$x;grade _;@ @ @;jobs id !=$x;min_salary :des;title _;;
+
+""" Departments at the same location as department 10 with location name """
+departments id 10;location_id _;@ @ @;departments id !=10;name _;location_id _;locations id @;name _;;
+
+""" Benefit plans of the same type as Premium Health that are active, names A-Z """
+benefit_plans name "Premium Health";id :$x;type _;@ @ @;benefit_plans id !=$x;active 1;name :asc;;
+
+""" Skills in the same category as Kubernetes with at least 5 employees per skill """
+skills name "Kubernetes";id :$x;category _;@ @ @;skills name _;id :grp!=$x;employee_skills skill_id @;id :cnt:des>=5;;
+
+""" Locations in the same country as Toronto, names A-Z """
+locations name "Toronto";id :$x;country _;@ @ @;locations id !=$x;name :asc;country _;;
+
+""" Timesheets with the same approver as timesheet 700 during 2025-03, include employee names """
+timesheets id 700;approver_id _;@ @ @;timesheets id !=700;week_start >=2025-03-01;<=2025-03-31;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Payroll runs with the same status as the run on 2025-05-31, count such runs in 2025-05 """
+payroll_runs pay_date 2025-05-31;status _;@ @ @;payroll_runs pay_date >=2025-05-01;<=2025-05-31;id :cnt;status :grp;;
+
+""" Reviews on the same date as review 900, list employee names with rating descending """
+performance_reviews id 900;review_date _;@ @ @;performance_reviews id !=900;rating :des;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Benefit enrollments sharing the coverage level of employee 55 on 2025-02-01, active that day, include plan and employee names """
+employee_benefits employee_id 55;start_date <=2025-02-01;end_date >=2025-02-01;coverage_level _;@ @ @;employee_benefits start_date <=2025-02-01;end_date >=2025-02-01;benefit_plan_id _;benefit_plans id @;name _;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Departments sharing the location with Marketing, list names A-Z """
+departments name "Marketing";id :$x;location_id _;@ @ @;departments id !=$x;name :asc;;
+
+""" Roles with the same grade as Senior Engineer, titles A-Z """
+jobs title "Senior Engineer";id :$x;grade _;@ @ @;jobs id !=$x;title :asc;;
+
+""" Skills in the same category as Kubernetes, names A-Z """
+skills name "Kubernetes";id :$x;category _;@ @ @;skills id !=$x;name :asc;;
+
+""" Active plans of the same type as Premier Health, names A-Z """
+benefit_plans name "Premier Health";id :$x;type _;@ @ @;benefit_plans active 1;id !=$x;name :asc;;
+
+""" Colleagues in the same department as employee 777 with salaries above 90000, names by salary high to low """
+employees id 777;id :$x;department_id _;@ @ @;employees id !=$x;salary :des>90000;first_name _;last_name _;;
+
+""" Locations in the same country as London, show name and region sorted by region """
+locations name "London";id :$x;country _;@ @ @;locations id !=$x;name _;region :asc;;
+
+""" Payroll runs with the same status as run 1000, pay_date ascending """
+payroll_runs id 1000;status _;@ @ @;payroll_runs id !=1000;pay_date :asc;_;;
+
+""" Employees reviewed by the same reviewer as review 5555 during 2025, newest reviews first, show names """
+performance_reviews id 5555;reviewer_id _;@ @ @;performance_reviews review_date :des>=2025-01-01;<=2025-12-31;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Timesheets approved by the same approver as employee 123 on week 2025-07-07, show employee names A-Z, first 20 """
+timesheets employee_id 123;week_start 2025-07-07;approver_id _;@ @ @;timesheets approved 1;employee_id _;employees id @;last_name :asc;first_name _;% lim 20;;
+
+""" Co-workers in the same department as employee 4321 with department name, last names A-Z """
+employees id 4321;department_id _;@ @ @;employees id !=4321;department_id _;departments id @;name _;last_name :asc;first_name _;;
+
+""" Jobs in the same grade as title Senior Engineer created in 2023, list title, min and max salary A-Z """
+jobs title "Senior Engineer";id :$x;grade _;@ @ @;jobs id !=$x;created >=2023-01-01;<=2023-12-31;title :asc;min_salary _;max_salary _;;
+
+""" Skills in the same category as Kubernetes created in 2024, names A-Z """
+skills name "Kubernetes";id :$x;category _;@ @ @;skills id !=$x;created >=2024-01-01;<=2024-12-31;name :asc;;
+
+""" Benefit plans of the same type as Health Basic created in 2024, names A-Z """
+benefit_plans name "Health Basic";id :$x;type _;@ @ @;benefit_plans id !=$x;created >=2024-01-01;<=2024-12-31;name :asc;;
+
+""" Locations in the same country as Toronto with at least 2 departments, location names A-Z """
+locations name "Toronto";id :$x;country _;@ @ @;locations name :asc;id :grp!=$x;departments location_id @;id :cnt>=2;;
+
+""" Other jobs sharing the same max_salary as job 200, titles and grades by title A-Z """
+jobs id 200;max_salary _;@ @ @;jobs id !=200;title :asc;grade _;;
+
+""" Employees with the same manager as Ava Patel hired in 2020, include email sorted by hire_date asc """
+employees first_name "Ava";last_name "Patel";id :$x;manager_id _;@ @ @;employees id !=$x;hire_date >=2020-01-01;<=2020-12-31;hire_date :asc;email _;first_name _;last_name _;;
+
+""" Time-off totals by type in 2025-07 for employees in the same department as employee 77 """
+employees id 77;department_id _;@ @ @;employees id !=77;id _;time_off_requests employee_id @;request_date >=2025-07-01;<=2025-07-31;hours :sum:des;type :grp;;
+
+""" Reviews on 2024-10-15 for employees sharing the same job as employee 999, reviewer last names A-Z """
+employees id 999;job_id _;@ @ @;employees id !=999;id _;performance_reviews employee_id @;review_date 2024-10-15;reviewer_id _;employees id @;last_name :asc;first_name _;;
+
+""" Teammates of employee 789 in the same department, active only, names A-Z """
+employees id 789;department_id _;@ @ @;employees id !=789;status active;last_name :asc;first_name _;;
+
+""" Staff sharing the job title with Jane Doe hired in 2024, newest hires first """
+employees first_name "Jane";last_name "Doe";id :$x;job_id _;@ @ @;employees id !=$x;hire_date :des>=2024-01-01;<=2024-12-31;first_name _;last_name _;;
+
+""" Exempt job roles that share the same max salary, list title and grade A-Z """
+jobs exempt 1;id :$x;max_salary _;@ @ @;jobs exempt 1;id !=$x;title :asc;grade _;;
+
+""" Departments located at the same site as R&D, exclude R&D itself, names A-Z """
+departments name "R&D";id :$x;location_id _;@ @ @;departments id !=$x;name :asc;;
+
+""" Active benefit plans of the same type as Acme 401k, plan names A-Z """
+benefit_plans name "Acme 401k";id :$x;type _;@ @ @;benefit_plans active 1;id !=$x;name :asc;;
+
+""" US locations in the same region as Austin, excluding Austin, names A-Z """
+locations name "Austin";id :$x;region _;@ @ @;locations country "US";id !=$x;name :asc;;
+
+""" Skills in the same category as Kubernetes, list other skill names A-Z """
+skills name "Kubernetes";id :$x;category _;@ @ @;skills id !=$x;name :asc;;
+
+""" Reviews written by the same reviewer as employee 200's review on 2025-06-01, show other dates and ratings newest first """
+performance_reviews employee_id 200;review_date 2025-06-01;id :$x;reviewer_id _;@ @ @;performance_reviews id !=$x;review_date :des;rating _;;
+
+""" Timesheets that have the same approver as employee 77 on week 2025-08-04, list employee names """
+timesheets employee_id 77;week_start 2025-08-04;id :$x;approver_id _;@ @ @;timesheets id !=$x;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Payroll entries in December 2025 using the same currency as employee 42's entries in the 2025-12-31 run, others by net_pay desc """
+payroll_runs pay_date 2025-12-31;id _;payroll_entries payroll_run_id @;employee_id 42;currency _;@ @ @;payroll_entries employee_id !=42;created >=2025-12-01;<=2025-12-31;net_pay :des;currency _;;
+
+""" Co-workers of employee 7890 hired in 2023, newest hires first """
+employees id 7890;department_id _;@ @ @;employees id !=7890;hire_date :des>=2023-01-01;<=2023-12-31;first_name _;last_name _;;
+
+""" Other jobs with the same grade as Principal Engineer, titles A-Z """
+jobs title "Principal Engineer";id :$x;grade _;@ @ @;jobs id !=$x;title :asc;_;;
+
+""" Departments at the same location as department 12 with 20+ employees, list names by headcount desc """
+departments id 12;location_id _;@ @ @;departments id !=12;id _;employees department_id @;id :cnt:des>=20;department_id :grp;departments id @;name _;;
+
+""" People in the same job as employee 550 with 2025 reviews, show names and latest review date """
+employees id 550;job_id _;@ @ @;employees id !=550;id _;performance_reviews employee_id @;review_date :max>=2025-01-01;:max<=2025-12-31;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Locations in the same country as San Francisco with at least 3 departments, names A-Z """
+locations name "San Francisco";country _;@ @ @;locations id _;departments location_id @;id :cnt>=3;location_id :grp;locations id @;name :asc;;
+
+""" People reporting to the same manager as Ava Lee with reviews similar to leadership (>=0.90), names """
+employees first_name "Ava";last_name "Lee";id :$x;manager_id _;@ @ @;employees first_name _;last_name _;id :grp!=$x;performance_reviews employee_id @;comments <=>"leadership"<=0.90;;
+
+""" Entries in the same currency as payroll entry 9001 during 2025-11, top 10 by net_pay with names """
+payroll_entries id 9001;currency _;@ @ @;payroll_entries id !=9001;created >=2025-11-01;<=2025-11-30;net_pay :des;employee_id _;employees id @;first_name _;last_name _;% lim 10;;
+
+""" Departments in the same region as Austin with average salary >= 100000, list department names """
+locations name "Austin";region _;@ @ @;locations id _;departments location_id @;id _;employees department_id @;salary :avg>=100000;department_id :grp;departments id @;name _;;
+
+""" Jobs in the same grade as a title similar to Software Architect (>=0.77), titles A-Z, first 20 """
+jobs title <=>"Software Architect"<=0.77;id :$x;grade _;@ @ @;jobs id !=$x;title :asc;% lim 20;;
+
+""" Employees reviewed by the same reviewer as employee 77 during 2025 with rating 4+ sorted by rating desc """
+performance_reviews employee_id 77;review_date >=2025-01-01;<=2025-12-31;reviewer_id _;@ @ @;performance_reviews rating :des>=4;employee_id _;employees id @;first_name _;last_name _;;
+
+""" People whose timesheets for week 2025-08-11 share the same approver as employee 42, names A-Z """
+timesheets employee_id 42;week_start 2025-08-11;approver_id _;@ @ @;timesheets employee_id _;employees id @;id !=42;last_name :asc;first_name _;;
+
+""" Job titles sharing the grade of job id 12, exclude that job, titles A-Z """
+jobs id 12;grade _;@ @ @;jobs id !=12;title :asc;;
+
+""" Currencies matching those in payroll run 2500, show total gross and net per currency sorted by net desc """
+payroll_entries payroll_run_id 2500;currency _;@ @ @;payroll_entries gross_pay :sum;net_pay :sum:des;currency :grp;;
+
+""" For the same time-off type as employee 902's pending request on 2025-01-10, counts by status A-Z """
+time_off_requests employee_id 902;request_date 2025-01-10;status pending;type _;@ @ @;time_off_requests id :cnt;status :grp:asc;;
+

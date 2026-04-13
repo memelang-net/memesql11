@@ -1,0 +1,306 @@
+""" Profiles of people followed by username "mira" """
+users username "mira";id _;follows follower_id @;followee_id _;profiles user_id @;_;;
+
+""" Usernames who liked posts by "alex" on 2025-01-01 """
+users username "alex";id _;posts user_id @;id _;likes post_id @;created_at 2025-01-01;user_id _;users id @;username _;;
+
+""" Comment texts on posts by "sara" since 2025-07-01 """
+users username "sara";id _;posts user_id @;id _;comments post_id @;created_at >=2025-07-01;body _;;
+
+""" Message bodies sent by users followed by "ava" on 2025-06-01 """
+users username "ava";id _;follows follower_id @;followee_id _;messages sender_id @;created_at 2025-06-01;body _;;
+
+""" Avatars of authors of comments on post 101 """
+posts id 101;comments post_id @;user_id _;users id @;id _;profiles user_id @;avatar_url _;;
+
+""" Thread replies under comment 880100 with author usernames """
+comments id 880100;comments parent_comment_id @;user_id _;users id @;username _;;
+
+""" Images in posts liked by "liam" during 2024-12-01 """
+users username "liam";id _;likes user_id @;created_at 2024-12-01;post_id _;posts id @;image_url _;;
+
+""" Bios for followers of "sophia" """
+users username "sophia";id _;follows followee_id @;follower_id _;users id @;profiles user_id @;bio _;;
+
+""" Bodies of posts commented on by "james" in 2025 """
+users username "james";id _;comments user_id @;created_at >=2025-01-01;<=2025-12-31;post_id _;posts id @;body _;;
+
+""" Users who messaged "emily" on 2025-03-10 """
+users username "emily";id _;messages recipient_id @;created_at 2025-03-10;sender_id _;users id @;username _;;
+
+""" Websites of people who like "oliver" posts """
+users username "oliver";id _;posts user_id @;id _;likes post_id @;user_id _;users id @;id _;profiles user_id @;website _;;
+
+""" Usernames of repliers to comment 5001 """
+comments id 5001;comments parent_comment_id @;user_id _;users id @;username _;;
+
+""" Followers of users located in Berlin """
+profiles location "Berlin";user_id _;follows followee_id @;follower_id _;users id @;username _;;
+
+""" Images liked by commenters on post 77 """
+comments post_id 77;user_id _;likes user_id @;post_id _;posts id @;image_url _;;
+
+""" Senders who messaged "mia" after 2025-04-01 """
+users username "mia";id _;messages recipient_id @;created_at >2025-04-01;sender_id _;users id @;username _;;
+
+""" People followed by commenters on "noah" posts """
+users username "noah";id _;posts user_id @;id _;comments post_id @;user_id _;follows follower_id @;followee_id _;users id @;username _;;
+
+""" Recipients messaged by users followed by "ava" """
+users username "ava";id _;follows follower_id @;followee_id _;messages sender_id @;recipient_id _;users id @;username _;;
+
+""" Avatars of followers of user id 42 """
+users id 42;follows followee_id @;follower_id _;profiles user_id @;avatar_url _;;
+
+""" Bodies of replies to replies under comment 7300 """
+comments id 7300;comments parent_comment_id @;id _;comments parent_comment_id @;body _;;
+
+""" Authors of posts liked on 2025-02-14 """
+likes created_at 2025-02-14;post_id _;posts id @;user_id _;users id @;username _;;
+
+""" Like counts per post for "mira" since 2025-01-01, high to low """
+users username "mira";id _;posts user_id @;id :grp;likes post_id @;created_at >=2025-01-01;id :cnt:des;;
+
+""" Comment counts per post for "alex" in 2025, high to low """
+users username "alex";id _;posts user_id @;created_at >=2025-01-01;<=2025-12-31;id :grp;comments post_id @;id :cnt:des;;
+
+""" Latest comment time per post for "sara" after 2025-07-01, newest first """
+users username "sara";id _;posts user_id @;created_at >2025-07-01;id :grp;comments post_id @;created_at :max:des;;
+
+""" Message counts by recipient for "ava" after 2025-03-01, recipients A-Z """
+users username "ava";id _;messages sender_id @;created_at >2025-03-01;recipient_id :grp:asc;id :cnt;;
+
+""" Latest message per recipient for "mia" since 2025-04-01, newest first """
+users username "mia";id _;messages sender_id @;created_at :max:des>=2025-04-01;recipient_id :grp;;
+
+""" Follower counts for users in Berlin, usernames A-Z """
+follows id :cnt;followee_id _;profiles user_id :grp:asc=@;location "Berlin";;
+
+""" Followee counts for "noah", high to low """
+users username "noah";id _;follows follower_id @;id :cnt:des;followee_id :grp;;
+
+""" Commenter counts per post for "oliver" after 2025-02-01, high to low """
+users username "oliver";id _;posts user_id @;id _;comments post_id @;created_at >=2025-02-01;post_id :grp;user_id :cnt:des;;
+
+""" Comment counts per author on "oliver" posts after 2025-02-01, high to low """
+users username "oliver";id _;posts user_id @;id _;comments post_id @;created_at >=2025-02-01;user_id :grp;id :cnt:des;;
+
+""" Like counts per visibility on "alex" posts since 2025-05-01, visibility A-Z """
+users username "alex";id _;posts user_id @;created_at >=2025-05-01;visibility :grp:asc;id _;likes post_id @;id :cnt;;
+
+""" Recipient counts for followers of "mira" since 2025-01-10, Z-A """
+users username "mira";id _;follows follower_id @;followee_id _;messages sender_id @;created_at >=2025-01-10;recipient_id :grp:des;id :cnt;;
+
+""" Latest post time per followee of "ava" on or before 2025-06-01, newest first """
+users username "ava";id _;follows follower_id @;followee_id :grp;posts user_id @;created_at :max:des<=2025-06-01;;
+
+""" Message counts by sender to "emily" after 2025-03-10, high to low """
+users username "emily";id _;messages recipient_id @;created_at >2025-03-10;sender_id :grp;id :cnt:des;;
+
+""" Oldest comment time per post for "noah" since 2024-01-01, posts ascending """
+users username "noah";id _;posts user_id @;created_at >=2024-01-01;id :grp:asc;comments post_id @;created_at :min;;
+
+""" Like counts on posts by Berlin users since 2025-01-01, high to low """
+profiles location "Berlin";user_id _;posts user_id @;created_at >=2025-01-01;id :grp;likes post_id @;id :cnt:des;;
+
+""" Like counts per liker on "mia" posts in 2025, high to low """
+users username "mia";id _;posts user_id @;id _;likes post_id @;created_at >=2025-01-01;<=2025-12-31;user_id :grp;id :cnt:des;;
+
+""" Reply counts per parent on post 77 after 2025-02-01, high to low """
+posts id 77;comments post_id @;created_at >=2025-02-01;parent_comment_id :grp;id :cnt:des;;
+
+""" Latest message time per follower of "sophia" since 2025-08-01, newest first """
+users username "sophia";id _;follows followee_id @;follower_id :grp;messages sender_id @;created_at :max:des>=2025-08-01;;
+
+""" Post counts per followee for "liam" on or after 2024-12-01, followee ascending """
+users username "liam";id _;follows follower_id @;followee_id :grp:asc;posts user_id @;id :cnt>=1;;
+
+""" Recipient counts per sender among Paris users since 2025-05-01, high to low """
+profiles location "Paris";user_id :grp;messages sender_id @;created_at >=2025-05-01;id :cnt:des;;
+
+""" Follows profiles with the same location """
+profiles location :$x;user_id _;follows followee_id @;profiles user_id @;location $x;_;;
+
+""" Co-likers on the same post excluding the original liker """
+likes user_id :$x;post_id _;@ @ @;user_id !=$x;users id @;username _;;
+
+""" Usernames of users in same location as zach1234 """
+users username zach1234;id :$x;profiles user_id @;location _;@ @ @;user_id !=$x;user id @;username _;;
+
+""" Posts from user alice with 'launch' in body, public only, newest first, limit 10 """
+users username "alice";id _;posts user_id @;visibility =public;body ~"launch";created_at :des;_;% lim 10;;
+
+""" Profiles in Austin with bio similar to photography at 0.65 threshold, order by last update desc """
+profiles location "Austin";bio <=>"photography"<=0.65;updated_at :des;_;;
+
+""" Public posts with .png images created between 2024-01-15 and 2025-07-04, sort by id ascending """
+posts visibility =public;image_url ~".png";created_at >=2024-01-15;<=2025-07-04;id :asc;_;;
+
+""" Comments on post 300 containing 'thanks', newest first, show 5 """
+comments post_id 300;body ~"thanks";created_at :des;_;% lim 5;;
+
+""" Profiles of accounts that carol follows in Dallas, sorted by name asc """
+users username "carol";id _;follows follower_id @;followee_id _;profiles user_id @;location "Dallas";full_name :asc;_;;
+
+""" Posts liked by user 77 between 2024-01-01 and 2024-12-31, ordered by post date asc, limit 15 """
+likes user_id 77;created_at >=2024-01-01;<=2024-12-31;post_id _;posts id @;created_at :asc;_;% lim 15;;
+
+""" Alice's comments on friends-only posts, comment updated no later than 2025-10-01, most recent comments first """
+users username "alice";id _;comments user_id @;updated_at <=2025-10-01;created_at :des;post_id _;posts id @;visibility =friends;_;;
+
+""" Direct messages containing 'meeting' from sender 100, read state true, newest first, limit 5 offset 10 """
+messages sender_id 100;body ~"meeting";read_flag =true;created_at :des;_;% lim 5;% beg 10;;
+
+""" User list with gmail emails created after 2024-01-15, sort usernames ascending """
+users email ~"@gmail.com";created_at >2024-01-15;username :asc;_;;
+
+""" Profiles with birthdays from 1985-01-01 to 1995-12-31 and website containing .org, order by updated_at desc, top 20 """
+profiles birthday >=1985-01-01;<=1995-12-31;website ~".org";updated_at :des;_;% lim 20;;
+
+""" Public photo posts by dave on 2024-06-01 or 2024-06-30, with .jpg images, sort by id desc """
+users username "dave";id _;posts user_id @;visibility =public;image_url ~".jpg";created_at 2024-06-01,2024-06-30;id :des;_;;
+
+""" Follows where followee frank and follower not 3 or 4, sort by created_at asc """
+users username "frank";id _;follows followee_id @;follower_id !=3,4;created_at :asc;_;;
+
+""" Replies on posts by alice (comments with a parent), oldest first, limit 10 """
+users username "alice";id _;posts user_id @;id _;comments post_id @;parent_comment_id >=1;created_at :asc;_;% lim 10;;
+
+""" Posts mentioning 'release' updated on or before 2025-10-01, order by created_at asc, limit 10 offset 20 """
+posts body ~"release";updated_at <=2025-10-01;created_at :asc;_;% lim 10;% beg 20;;
+
+""" Likes for post 500 by users id at least 100, recent first, paginate with limit 25 offset 50 """
+likes post_id 500;user_id >=100;created_at :des;_;% lim 25;% beg 50;;
+
+""" Profiles in cities containing San with .png avatars created before 2025-01-01, names ascending """
+profiles location ~"San";avatar_url ~".png";created_at <2025-01-01;full_name :asc;_;;
+
+""" Users updated on 2025-02-20 or 2025-02-21 with username not admin, id ascending """
+users updated_at 2025-02-20,2025-02-21;username !="admin";id :asc;_;;
+
+""" Public posts semantically about 'summer trip' at 0.70+ and with .jpg image, sort by updated_at desc """
+posts body <=>"summer trip"<=0.70;visibility =public;image_url ~".jpg";updated_at :des;_;;
+
+""" Users with ids 7 or 9 whose email does not contain @spam.org, username ascending """
+users id 7,9;email !~"@spam.org";username :asc;_;;
+
+""" Profiles for gmail users in Portland, order full_name asc, limit 12 """
+users email ~"@gmail.com";id _;profiles user_id @;location "Portland";full_name :asc;_;% lim 12;;
+
+""" Likes on posts by bob created on 2024-06-01 or 2024-06-30, sort by liker id asc """
+users username "bob";id _;posts user_id @;id _;likes post_id @;created_at 2024-06-01,2024-06-30;user_id :asc;_;;
+
+""" User accounts with gmail emails and id between 100 and 500, order usernames ascending """
+users email ~"@gmail.com";id >=100;<=500;username :asc;_;;
+
+""" Profiles in Austin whose bio mentions engineer and website includes https, newest updated first, cap 15 """
+profiles location "Austin";bio ~"engineer";website ~"https://";updated_at :des;_;% lim 15;;
+
+""" Profiles with birthdays after 1985-01-01 and before 2000-12-31, names containing Smith, sort full_name ascending """
+profiles birthday >1985-01-01;<=2000-12-31;full_name :asc~"Smith";_;;
+
+""" Follow relationships by follower 42 created between 2024-01-01 and 2025-07-04, newest first, top 10 """
+follows follower_id 42;created_at :des>=2024-01-01;<=2025-07-04;_;% lim 10;;
+
+""" Follows where followee is not 13 and follower at least 100, created no later than 2025-10-01, order by id ascending """
+follows followee_id !=13;follower_id >=100;created_at <=2025-10-01;id :asc;_;;
+
+""" Public posts with a PNG image and updated not after 2025-10-01, ordered by id descending """
+posts visibility =public;image_url ~".png";updated_at <=2025-10-01;id :des;_;;
+
+""" Posts by users 100+ with id from 10 to 250, newest created first """
+posts user_id >=100;id >=10;<=250;created_at :des;_;;
+
+""" Comments on posts 42+ mentioning thanks, no later than 2025-10-01, newest first, limit 5 """
+comments post_id >=42;body ~"thanks";updated_at <=2025-10-01;created_at :des;_;% lim 5;;
+
+""" Comments from user ids between 5 and 1000 that mention fix, created on or after 2024-01-15, sort by id ascending """
+comments user_id >=5;<=1000;body ~"fix";created_at >=2024-01-15;id :asc;_;;
+
+""" Threaded comments from 1 to 5000, hide spam, authors 100+, sort by creation time ascending """
+comments parent_comment_id >=1;<=5000;body !~"spam";user_id >=100;created_at :asc;_;;
+
+""" Likes on posts 5 to 1000 and within 2024-01-15 to 2025-07-04, order by user_id ascending """
+likes post_id >=5;<=1000;created_at >=2024-01-15;<=2025-07-04;user_id :asc;_;;
+
+""" Likes by users 100+ with id 42 or higher, earliest first, top 5 """
+likes user_id >=100;id >=42;created_at :asc;_;% lim 5;;
+
+""" Messages mentioning project from sender 120 to recipient 300 during 2024-02-01 to 2024-12-31, sort by created_at ascending """
+messages body ~"project";sender_id 120;recipient_id 300;created_at :asc>=2024-02-01;<=2024-12-31;_;;
+
+""" Users created 2024-03-01 to 2024-12-31 with non-admin usernames and emails containing .org, sort username asc then created_at desc """
+users username :asc!="admin";created_at :des>=2024-03-01;<=2024-12-31;email ~".org";_;;
+
+""" Profiles about photography (semantic min 0.60) in York, newest updates first, show 5 """
+profiles bio <=>"photography"<=0.60;location ~"York";updated_at :des;_;% lim 5;;
+
+""" Public posts with promo semantics (min 0.55) created after 2024-01-15, newest first """
+posts visibility =public;body <=>"promo"<=0.55;created_at :des>=2024-01-15;_;;
+
+""" Likes from users 42 to 2500 on posts 10+, id at least 10, newest first """
+likes user_id >=42;<=2500;post_id >=10;id >=10;created_at :des;_;;
+
+""" Users not on spam.org updated on or after 2024-01-01, order by id ascending, fetch 25 """
+users email !~"@spam.org";updated_at >=2024-01-01;id :asc;_;% lim 25;;
+
+""" Profiles with websites ending .org and avatars with .png where name includes Alex, sort by created_at ascending """
+profiles website ~".org";avatar_url ~".png";full_name ~"Alex";created_at :asc;_;;
+
+""" Messages marked read containing invoice during 2024-03-01 to 2024-03-31, sort by id descending, take 50 """
+messages read_flag =true;body ~"invoice";created_at >=2024-03-01;<=2024-03-31;id :des;_;% lim 50;;
+
+""" Gmail users created in 2024, sorted by latest update, limit 20 """
+users email ~"@gmail.com";created_at >=2024-01-01;<=2024-12-31;updated_at :des;_;% lim 20;;
+
+""" Profiles with name matching Lee in Austin after 2024-02-01, order by id ascending """
+profiles full_name ~"Lee";location "Austin";created_at >2024-02-01;id :asc;_;;
+
+""" Likes by users 10 or 20 on posts up to id 1000 during 2024-06-01 to 2024-12-31, id ascending """
+likes user_id 10,20;post_id <=1000;created_at >=2024-06-01;<=2024-12-31;id :asc;_;;
+
+""" Unread messages mentioning invoice between 2024-03-01 and 2024-12-31, newest first, limit 5 """
+messages body ~"invoice";read_flag !=true;created_at :des>=2024-03-01;<=2024-12-31;_;% lim 5;;
+
+""" Non-admin users with .org emails updated in 2024, sort usernames ascending """
+users username :asc!="admin","root";email ~".org";updated_at >=2024-01-01;<=2024-12-31;_;;
+
+""" Profiles with photography-like bios and https sites updated on or after 2024-05-01, newest first, limit 25 """
+profiles bio <=>"photography"<=0.70;website ~"https://";updated_at :des>=2024-05-01;_;% lim 25;;
+
+""" Comments from user ids 5 to 1000 containing thanks, id ascending """
+comments user_id >=5;<=1000;body ~"thanks";id :asc;_;;
+
+""" Messages from senders 500+ to recipients 100 or 200 after 2024-01-01, id descending, limit 8 """
+messages sender_id >=500;recipient_id 100,200;created_at >=2024-01-01;id :des;_;% lim 8;;
+
+""" Follows with follower at least 100 and followee 200 or 300 during 2024, created_at ascending, limit 50 """
+follows follower_id >=100;followee_id 200,300;created_at :asc>=2024-01-01;<=2024-12-31;_;% lim 50;;
+
+""" Users with ids 1000 through 2000 not at spam.org created before 2025-01-01, updated newest first, take 100 """
+users id >=1000;<=2000;email !~"@spam.org";created_at <2025-01-01;updated_at :des;_;% lim 100;;
+
+""" Profiles in York or San locales with birthdays after 1980-01-01 and before 2005-12-31, names ascending """
+profiles location ~"York","San";birthday >1980-01-01;<=2005-12-31;full_name :asc;_;;
+
+""" Public posts excluding draft mentions with id at least 500, newest by creation, limit 5 """
+posts visibility =public;body !~"draft";id >=500;created_at :des;_;% lim 5;;
+
+""" Users whose password hash includes abc and emails not root@sys or admin@sys, joined after 2024-01-15, id ascending """
+users password_hash ~"abc";email !="root@sys","admin@sys";created_at >2024-01-15;id :asc;_;;
+
+""" Profiles with png or jpg avatars and sites not old URLs, created 2024-01-01 to 2025-01-01, updated descending """
+profiles avatar_url ~".png",".jpg";website !="http://old/a","http://old/b";created_at >=2024-01-01;<=2025-01-01;updated_at :des;_;;
+
+""" Read messages about meeting for recipients 1000 or higher, oldest first, limit 10 """
+messages body ~"meeting";recipient_id >=1000;read_flag =true;created_at :asc;_;% lim 10;;
+
+""" Follow links where followee at least 100 and follower not 42 on 2024-09-01, id ascending """
+follows followee_id >=100;follower_id !=42;created_at 2024-09-01;id :asc;_;;
+
+""" Likes with id at least 10 on posts 50 to 500, sort by user_id ascending, cap at 30 """
+likes id >=10;post_id >=50;<=500;user_id :asc;_;% lim 30;;
+
+""" Users named ana or bob with .net emails updated on 2025-01-01 or 2025-01-02, id descending, limit 2 """
+users username "ana","bob";email ~".net";updated_at 2025-01-01,2025-01-02;id :des;_;% lim 2;;
+

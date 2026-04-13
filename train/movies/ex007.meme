@@ -1,0 +1,300 @@
+""" Age exactly 33 grouped for actors, ages high to low """
+actors id :cnt;age :grp:des=33;;
+
+""" Actor names with "Alex" grouped A-Z and counted """
+actors id :cnt;name :grp:asc~"Alex";;
+
+""" distinct movie titles A-Z """
+movies title :grp:asc;;
+
+""" Film titles distinct desc """
+movies title :grp:des;;
+
+""" roles per actor, most to fewest """
+roles id :cnt:des;actor :grp;;
+
+""" average role rating by actor, high to low """
+roles rating :avg:des;actor :grp;;
+
+""" maximum role rating by actor, high to low """
+roles rating :max:des;actor :grp;;
+
+""" minimum role rating by actor, low to high """
+roles rating :min:asc;actor :grp;;
+
+""" roles per actor, fewest to most """
+roles id :cnt:asc;actor :grp;;
+
+""" film counts by year, high to low """
+movies id :cnt:des;year :grp;;
+
+""" movie counts by year, low to high """
+movies id :cnt:asc;year :grp;;
+
+""" actors by age, most common first """
+actors id :cnt:des;age :grp;;
+
+""" actors by age, least common first """
+actors id :cnt:asc;age :grp;;
+
+""" average role rating by actor, low to high """
+roles rating :avg:asc;actor :grp;;
+
+""" minimum role rating by actor, high to low """
+roles rating :min:des;actor :grp;;
+
+""" maximum role rating by actor, low to high """
+roles rating :max:asc;actor :grp;;
+
+""" roles per actor, descending by count """
+roles id :cnt:des;actor :grp;;
+
+""" roles per actor, ascending by count """
+roles id :cnt:asc;actor :grp;;
+
+""" yearly film totals, descending """
+movies id :cnt:des;year :grp;;
+
+""" yearly film totals, ascending """
+movies id :cnt:asc;year :grp;;
+
+""" actor workload by count, high to low """
+roles id :cnt:des;actor :grp;;
+
+""" actor workload by count, low to high """
+roles id :cnt:asc;actor :grp;;
+
+""" star averages by rating, descending """
+roles rating :avg:des;actor :grp;;
+
+""" performer averages by rating, ascending """
+roles rating :avg:asc;actor :grp;;
+
+""" Movies whose average rating equals 5 """
+roles rating :avg=5;movie :grp;;
+
+""" films with average rating is not equal to 3 """
+roles rating :avg!=3;movie :grp;;
+
+""" Actors with minimum rating equal to 3 """
+roles rating :min=3;actor :grp;;
+
+""" Actors with maximum rating not equal to 5 """
+roles rating :max!=5;actor :grp;;
+
+""" average performer rating at least 4.2 """
+roles rating :avg>=4.2;actor :grp;;
+
+""" Movies with average rating under 2.0 """
+roles rating :avg<2.0;movie :grp;;
+
+""" Actors with minimum role rating at least 3 """
+roles rating :min>=3;actor :grp;;
+
+""" stars with maximum role rating at most 2 """
+roles rating :max<=2;actor :grp;;
+
+""" Actors whose average role rating is at least 4.0 """
+roles rating :avg>=4.0;actor :grp;;
+
+""" Movies with average role rating strictly greater than 3.5 """
+roles rating :avg>3.5;movie :grp;;
+
+""" Actors where average rating equals 5.0 """
+roles rating :avg=5.0;actor :grp;;
+
+""" Films whose average rating is not equal to 2.0 """
+roles rating :avg!=2.0;movie :grp;;
+
+""" Actors with average rating no more than 1.5 """
+roles rating :avg<=1.5;actor :grp;;
+
+""" Movies with average rating under 4.8 """
+roles rating :avg<4.8;movie :grp;;
+
+""" Actors whose minimum rating is at least 2 """
+roles rating :min>=2;actor :grp;;
+
+""" Movies where minimum role rating is greater than 3 """
+roles rating :min>3;movie :grp;;
+
+""" Actors with minimum rating exactly 1 """
+roles rating :min=1;actor :grp;;
+
+""" Films whose minimum rating is not equal to 2 """
+roles rating :min!=2;movie :grp;;
+
+""" Actors with minimum rating at most 4 """
+roles rating :min<=4;actor :grp;;
+
+""" Movies having minimum rating below 1.0 """
+roles rating :min<1.0;movie :grp;;
+
+""" Actors whose maximum rating is at least 4.5 """
+roles rating :max>=4.5;actor :grp;;
+
+""" Movies maximum rating is greater than 4.0 """
+roles rating :max>4.0;movie :grp;;
+
+""" actors with maximum rating equal to 5 """
+roles rating :max=5;actor :grp;;
+
+""" Films whose maximum rating is not equal to 5 """
+roles rating :max!=5;movie :grp;;
+
+""" Actors whose maximum rating is at most 3 """
+roles rating :max<=3;actor :grp;;
+
+""" Movies with maximum rating below 2.5 """
+roles rating :max<2.5;movie :grp;;
+
+""" Actors with role count of at least 3 """
+roles id :cnt>=3;actor :grp;;
+
+""" Movies where role count exceeds 10 """
+roles id :cnt>10;movie :grp;;
+
+""" Actors whose role count is exactly 1 """
+roles id :cnt=1;actor :grp;;
+
+""" Films with role count not equal to 2 """
+roles id :cnt!=2;movie :grp;;
+
+""" Actors with role count no more than 5 """
+roles id :cnt<=5;actor :grp;;
+
+""" Movies with role count under 4 """
+roles id :cnt<4;movie :grp;;
+
+""" Actors whose total rating is at least 12.0 """
+roles rating :sum>=12.0;actor :grp;;
+
+""" Movies where total rating is greater than 30 """
+roles rating :sum>30;movie :grp;;
+
+""" actors total rating equal to 1.1 """
+roles rating :sum=1.1;actor :grp;;
+
+""" Films whose total rating is not equal to 25 """
+roles rating :sum!=25;movie :grp;;
+
+""" Actors with total rating at most 8.5 """
+roles rating :sum<=8.5;actor :grp;;
+
+""" Movies with total rating below 15.0 """
+roles rating :sum<15.0;movie :grp;;
+
+""" Actors whose average rating is more than 3.2 """
+roles rating :avg>3.2;actor :grp;;
+
+""" Movies with average rating of exactly 4.2 """
+roles rating :avg=4.2;movie :grp;;
+
+""" Actors whose minimum rating is not equal to 4 """
+roles rating :min!=4;actor :grp;;
+
+""" Films where maximum rating is at least 4.9 """
+roles rating :max>=4.9;movie :grp;;
+
+""" Actors with maximum rating less than 2.0 """
+roles rating :max<2.0;actor :grp;;
+
+""" Movies where role count is at least 2 """
+roles id :cnt>=2;movie :grp;;
+
+""" Actors with role count greater than 7 """
+roles id :cnt>7;actor :grp;;
+
+""" films having role count equal to 3 """
+roles id :cnt=3;movie :grp;;
+
+""" Actors whose role count is not equal to 9 """
+roles id :cnt!=9;actor :grp;;
+
+""" Movies with role count at most 1 """
+roles id :cnt<=1;movie :grp;;
+
+""" Actors with role count less than 6 """
+roles id :cnt<6;actor :grp;;
+
+""" Movies where sum of ratings is at least 40 """
+roles rating :sum>=40;movie :grp;;
+
+""" Actors whose sum of ratings exceeds 20 """
+roles rating :sum>20;actor :grp;;
+
+""" Films with sum of ratings equal to 10 """
+roles rating :sum=10;movie :grp;;
+
+""" Actors where sum of ratings is not equal to 15 """
+roles rating :sum!=15;actor :grp;;
+
+""" Movies with sum of ratings at most 5 """
+roles rating :sum<=5;movie :grp;;
+
+""" sum of ratings is below 9.5 for actor """
+roles rating :sum<9.5;actor :grp;;
+
+""" Movies with average rating at least 1.0 """
+roles rating :avg>=1.0;movie :grp;;
+
+""" Actors where average rating is not equal to 3.5 """
+roles rating :avg!=3.5;actor :grp;;
+
+""" Films whose minimum rating equals 2 """
+roles rating :min=2;movie :grp;;
+
+""" Actors with maximum rating greater than 4.7 """
+roles rating :max>4.7;actor :grp;;
+
+""" Actors alphabetically with average rating >= 4.3 """
+roles rating :avg>=4.3;actor :grp:asc;;
+
+""" Actors Z-A, average rating < 2.5 """
+roles rating :avg<2.5;actor :grp:des;;
+
+""" Actor names ascending, maximum rating  5 """
+roles rating :max=5;actor :grp:asc;;
+
+""" Actor names descending, maximum rating != 5 """
+roles rating :max;actor :grp:des!=5;;
+
+""" Actors A-Z having minimum rating >= 3 """
+roles rating :min>=3;actor :grp:asc;;
+
+""" Actors Z-A with minimum rating <= 2 """
+roles rating :min<=2;actor :grp:des;;
+
+""" Actors sorted A-Z, total rating > 12 """
+roles rating :sum>12;actor :grp:asc;;
+
+""" Actors sorted Z-A, total rating  3 """
+roles rating :sum=3;actor :grp:des;;
+
+""" Actors A-Z whose role count >= 2 """
+roles id :cnt>=2;actor :grp:asc;;
+
+""" Actors Z-A with role count < 5 """
+roles id :cnt<5;actor :grp:des;;
+
+""" Movies A-Z, average rating  4.2 """
+roles rating :avg=4.2;movie :grp:asc;;
+
+""" Movies Z-A, average rating != 3.0 """
+roles rating :avg;movie :grp:des!=3.0;;
+
+""" Movie titles ascending with max role rating >= 4.8 """
+roles rating :max>=4.8;movie :grp:asc;;
+
+""" Movie titles descending with max role rating < 2.0 """
+roles rating :max<2.0;movie :grp:des;;
+
+""" Movies alphabetically, minimum role rating > 1.0 """
+roles rating :min>1.0;movie :grp:asc;;
+
+""" Movies Z-A having minimum role rating  4 """
+roles rating :min=4;movie :grp:des;;
+
+""" Titles A-Z where total ratings <= 25 """
+roles rating :sum<=25;movie :grp:asc;;
+

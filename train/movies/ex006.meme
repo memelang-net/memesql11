@@ -1,0 +1,300 @@
+""" Movie counts per year from 2000 and later """
+movies id :cnt;year :grp>=2000;;
+
+""" Films per year, 1975 through 1985 inclusive """
+movies year :grp>=1975;<=1985;id :cnt;;
+
+""" Role totals by movie where title includes "Star" """
+roles movie :grp~"Star";id :cnt;;
+
+""" Actors grouped by exact age 60 and up """
+actors id :cnt;age :grp>=60;;
+
+""" Movies per year strictly before 1950 """
+movies id :cnt;year :grp<1950;;
+
+""" Actor counts for ages 0-2 inclusive """
+actors age :grp>=0;<=2;id :cnt;;
+
+""" Role counts for movie names matching "Alien" """
+roles movie :grp~"Alien";id :cnt;;
+
+""" Titles that contain "Love" grouped with counts """
+movies title :grp~"Love";id :cnt;;
+
+""" Films per year exactly 1999 """
+movies id :cnt;year :grp=1999;;
+
+""" Actors per name including "Lee" """
+actors name :grp~"Lee";id :cnt;;
+
+""" Actor ages at most 10 grouped """
+actors id :cnt;age :grp<=10;;
+
+""" Movies per year after 2015 """
+movies id :cnt;year :grp>2015;;
+
+""" Films per year at or before 1988 """
+movies id :cnt;year :grp<=1988;;
+
+""" Counts of roles for movies with "King" in the title """
+roles movie :grp~"King";id :cnt;;
+
+""" Actors per name containing "Alex" """
+actors name :grp~"Alex";id :cnt;;
+
+""" Movies per title with the word "Moon" """
+movies title :grp~"Moon";id :cnt;;
+
+""" Actor age groups 21 to 40 inclusive """
+actors age :grp>=21;<=40;id :cnt;;
+
+""" Year bucket equal to 2005 with film totals """
+movies id :cnt;year :grp=2005;;
+
+""" movie years distinct descending """
+movies year :grp:des;;
+
+""" roles per actor a-z """
+roles id :cnt;actor :grp:asc;;
+
+""" role total per actor Z-A """
+roles id :cnt;actor :grp:des;;
+
+""" roles per actor alphabetical """
+roles id :cnt;actor :grp:asc;;
+
+""" role count per actor descending """
+roles id :cnt;actor :grp:des;;
+
+""" actors with highest average rating """
+roles rating :avg:des;actor :grp;;
+
+""" Count roles per actor, highest to lowest """
+roles id :cnt:des;actor :grp;;
+
+""" Count roles per movie, alphabetical """
+roles id :cnt;movie :grp:asc;;
+
+""" Average rating per actor, highest to lowest """
+roles rating :avg:des;actor :grp;;
+
+""" actors by avg rating alphabetical """
+roles rating :avg;actor :grp:asc;;
+
+""" avg rating per movie, lowest to highest """
+roles rating :avg:asc;movie :grp;;
+
+""" Minimum rating per actor, lowest to highest """
+roles rating :min:asc;actor :grp;;
+
+""" Maximum rating per actor, order by name Z-A """
+roles rating :max;actor :grp:des;;
+
+""" Sum of ratings per actor, high to low """
+roles rating :sum:des;actor :grp;;
+
+""" role counts per actor A-Z """
+roles id :cnt;actor :grp:asc;;
+
+""" actor role totals Z-A """
+roles id :cnt;actor :grp:des;;
+
+""" actors ranked by role count high to low """
+roles id :cnt:des;actor :grp;;
+
+""" actors with fewest roles first """
+roles id :cnt:asc;actor :grp;;
+
+""" movie-wise role totals A-Z by title """
+roles id :cnt;movie :grp:asc;;
+
+""" movie role counts sorted Z-A """
+roles id :cnt;movie :grp:des;;
+
+""" movies ranked by role count descending """
+roles id :cnt:des;movie :grp;;
+
+""" movies with smallest role totals first """
+roles id :cnt:asc;movie :grp;;
+
+""" actors ordered A-Z with average rating """
+roles rating :avg;actor :grp:asc;;
+
+""" actors Z-A with average rating """
+roles rating :avg;actor :grp:des;;
+
+""" highest average rating by actor """
+roles rating :avg:des;actor :grp;;
+
+""" lowest average rating by actor """
+roles rating :avg:asc;actor :grp;;
+
+""" movies A-Z with average role rating """
+roles rating :avg;movie :grp:asc;;
+
+""" movies Z-A with average role rating """
+roles rating :avg;movie :grp:des;;
+
+""" movies ranked by average rating high to low """
+roles rating :avg:des;movie :grp;;
+
+""" movies with lowest average rating first """
+roles rating :avg:asc;movie :grp;;
+
+""" actors A-Z with sum of ratings """
+roles rating :sum;actor :grp:asc;;
+
+""" actors Z-A with sum of ratings """
+roles rating :sum;actor :grp:des;;
+
+""" actors ranked by total rating descending """
+roles rating :sum:des;actor :grp;;
+
+""" actors with smallest total rating first """
+roles rating :sum:asc;actor :grp;;
+
+""" movies A-Z with sum of role ratings """
+roles rating :sum;movie :grp:asc;;
+
+""" movies Z-A with sum of role ratings """
+roles rating :sum;movie :grp:des;;
+
+""" movies ranked by total rating high to low """
+roles rating :sum:des;movie :grp;;
+
+""" movies with lowest total rating first """
+roles rating :sum:asc;movie :grp;;
+
+""" actors A-Z with max rating """
+roles rating :max;actor :grp:asc;;
+
+""" actors Z-A with max rating """
+roles rating :max;actor :grp:des;;
+
+""" actors sorted by peak rating descending """
+roles rating :max:des;actor :grp;;
+
+""" actors sorted by peak rating ascending """
+roles rating :max:asc;actor :grp;;
+
+""" movies A-Z with max role rating """
+roles rating :max;movie :grp:asc;;
+
+""" movies Z-A with max role rating """
+roles rating :max;movie :grp:des;;
+
+""" movies ordered by highest rating first """
+roles rating :max:des;movie :grp;;
+
+""" movies ordered by highest rating low to high """
+roles rating :max:asc;movie :grp;;
+
+""" actors A-Z with min rating """
+roles rating :min;actor :grp:asc;;
+
+""" actors Z-A with min rating """
+roles rating :min;actor :grp:des;;
+
+""" actors sorted by lowest rating high to low """
+roles rating :min:des;actor :grp;;
+
+""" actors sorted by lowest rating low to high """
+roles rating :min:asc;actor :grp;;
+
+""" movies A-Z with minimum role rating """
+roles rating :min;movie :grp:asc;;
+
+""" movies Z-A with minimum role rating """
+roles rating :min;movie :grp:des;;
+
+""" movies ranked by minimum rating descending """
+roles rating :min:des;movie :grp;;
+
+""" movies ranked by minimum rating ascending """
+roles rating :min:asc;movie :grp;;
+
+""" actor groups A->Z with role count """
+roles id :cnt;actor :grp:asc;;
+
+""" Stars groups Z-A with role count """
+roles id :cnt;actor :grp:des;;
+
+""" movie groups A-Z with role count """
+roles id :cnt;movie :grp:asc;;
+
+""" Films groups Z->A with role count """
+roles id :cnt;movie :grp:des;;
+
+""" actors ranked by count then descending """
+roles id :cnt:des;actor :grp;;
+
+""" actors ranked by count then ascending """
+roles id :cnt:asc;actor :grp;;
+
+""" movies ranked by count high to low """
+roles id :cnt:des;movie :grp;;
+
+""" movies ranked by count low to high """
+roles id :cnt:asc;movie :grp;;
+
+""" actors A-Z with median proxy (min) """
+roles rating :min;actor :grp:asc;;
+
+""" movies z-a with spread proxy (max) """
+roles rating :max;movie :grp:des;;
+
+""" Film totals per year from 2001 onward, years ascending """
+movies id :cnt;year :grp:asc>=2001;;
+
+""" Titles A-Z that include "Star", with counts """
+movies id :cnt;title :grp:asc~"Star";;
+
+""" Genre drama grouped A-Z with film counts """
+movies id :cnt;genre :grp:asc="drama";;
+
+""" Actor age groups 65 and older, ages high to low """
+actors id :cnt;age :grp:des>=65;;
+
+""" Role counts by actor names matching "Lee", Z-A """
+roles id :cnt;actor :grp:des~"Lee";;
+
+""" Movie counts per year at most 1960, ascending by year """
+movies id :cnt;year :grp:asc<=1960;;
+
+""" Films made in exactly 1999, year group descending """
+movies id :cnt;year :grp:des=1999;;
+
+""" Movie titles with "Moon" grouped Z-A with counts """
+movies id :cnt;title :grp:des~"Moon";;
+
+""" Role totals for movies whose title contains "Alien", A-Z """
+roles id :cnt;movie :grp:asc~"Alien";;
+
+""" Actor age buckets 0 through 2 inclusive, ascending """
+actors age :grp:asc>=0;<=2;id :cnt;;
+
+""" Distinct actor names including "Ann", alphabetized with counts """
+actors id :cnt;name :grp:asc~"Ann";;
+
+""" Movies grouped by year from 1985 to 1995, years high to low """
+movies year :grp:des>=1985;<=1995;id :cnt;;
+
+""" Role counts for movie titles with "King", title groups Z-A """
+roles id :cnt;movie :grp:des~"King";;
+
+""" Comedy-related genres grouped A-Z with film totals """
+movies id :cnt;genre :grp:asc~"comedy";;
+
+""" Film counts per year strictly earlier than 1930, descending """
+movies id :cnt;year :grp:des<1930;;
+
+""" Actor name groups containing "Tom", A-Z, with role totals """
+roles id :cnt;actor :grp:asc~"Tom";;
+
+""" Titles that contain "The" grouped alphabetically with counts """
+movies id :cnt;title :grp:asc~"The";;
+
+""" Year groups greater than 2018, sorted high to low with film counts """
+movies id :cnt;year :grp:des>2018;;
+

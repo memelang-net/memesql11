@@ -1,0 +1,405 @@
+""" All users """
+users _ _;;
+
+""" Every user row """
+users _ _;;
+
+""" Users catalog """
+users _ _;;
+
+""" All profiles """
+profiles _ _;;
+
+""" Every profile row """
+profiles _ _;;
+
+""" Profiles catalog """
+profiles _ _;;
+
+""" All follows """
+follows _ _;;
+
+""" Every follow row """
+follows _ _;;
+
+""" Follows catalog """
+follows _ _;;
+
+""" All posts """
+posts _ _;;
+
+""" Every post row """
+posts _ _;;
+
+""" Posts catalog """
+posts _ _;;
+
+""" All comments """
+comments _ _;;
+
+""" Every comment row """
+comments _ _;;
+
+""" Comments catalog """
+comments _ _;;
+
+""" All likes """
+likes _ _;;
+
+""" Every like row """
+likes _ _;;
+
+""" Likes catalog """
+likes _ _;;
+
+""" All messages """
+messages _ _;;
+
+""" Every message row """
+messages _ _;;
+
+""" Messages catalog """
+messages _ _;;
+
+""" Users by id over 1000 """
+users id >1000;_;;
+
+""" User id equals 42 """
+users id 42;_;;
+
+""" User id at most 500 """
+users id <=500;_;;
+
+""" Usernames containing dev """
+users username ~"dev";_;;
+
+""" Username equals "alice" """
+users username "alice";_;;
+
+""" Username not "admin" """
+users username !="admin";_;;
+
+""" Emails at gmail.com """
+users email ~"@gmail.com";_;;
+
+""" Email equals "alice@example.com" """
+users email "alice@example.com";_;;
+
+""" Emails not at spam.org """
+users email !~"@spam.org";_;;
+
+""" Password hash contains "abc" """
+users password_hash ~"abc";_;;
+
+""" Password hash equals "5f4dcc3b5aa765d61d8327deb882cf99" """
+users password_hash "5f4dcc3b5aa765d61d8327deb882cf99";_;;
+
+""" Password hash not "00000000000000000000000000000000" """
+users password_hash !="00000000000000000000000000000000";_;;
+
+""" Users created on 2024-01-15 """
+users created_at 2024-01-15;_;;
+
+""" Users created after 2023-06-01 """
+users created_at >2023-06-01;_;;
+
+""" Users created on or before 2024-12-31 """
+users created_at <=2024-12-31;_;;
+
+""" Users updated on or after 2024-01-01 """
+users updated_at >=2024-01-01;_;;
+
+""" Users updated on 2025-02-20 """
+users updated_at 2025-02-20;_;;
+
+""" Users updated before 2025-03-01 """
+users updated_at <2025-03-01;_;;
+
+""" Users id 7 or 9 """
+users id 7,9;_;;
+
+""" Users id not 10 or 11 """
+users id !=10,11;_;;
+
+""" Users id equals 1001 or 1002 """
+users id 1001,1002;_;;
+
+""" Usernames "ana" or "bob" """
+users username "ana","bob";_;;
+
+""" Usernames not "root" or "admin" """
+users username !="root","admin";_;;
+
+""" Usernames containing "cat" or "dog" """
+users username ~"cat","dog";_;;
+
+""" Emails "alice@example.com" or "bob@example.com" """
+users email "alice@example.com","bob@example.com";_;;
+
+""" Emails not "root@sys" or "admin@sys" """
+users email !="root@sys","admin@sys";_;;
+
+""" Emails containing ".org" or ".net" """
+users email ~".org",".net";_;;
+
+""" Password hash "a1b2c3" or "b2c3d4" """
+users password_hash "a1b2c3","b2c3d4";_;;
+
+""" Password hash not "abcd" or "ef01" """
+users password_hash !="abcd","ef01";_;;
+
+""" Password hash contains "123" or "456" """
+users password_hash ~"123","456";_;;
+
+""" Users created on 2024-01-01 or 2024-01-31 """
+users created_at 2024-01-01,2024-01-31;_;;
+
+""" Users not created on 2023-12-24 or 2023-12-25 """
+users created_at !=2023-12-24,2023-12-25;_;;
+
+""" Users created on 2023-10-01 or 2023-10-15 """
+users created_at 2023-10-01,2023-10-15;_;;
+
+""" Users updated 2025-01-01 or 2025-01-02 """
+users updated_at 2025-01-01,2025-01-02;_;;
+
+""" Users not updated 2024-07-04 or 2024-07-05 """
+users updated_at !=2024-07-04,2024-07-05;_;;
+
+""" Users updated 2024-06-01 or 2024-06-30 """
+users updated_at 2024-06-01,2024-06-30;_;;
+
+""" Profiles id over 100 """
+profiles id >100;_;;
+
+""" Profile id equals 55 """
+profiles id 55;_;;
+
+""" Profile id under 1000 """
+profiles id <1000;_;;
+
+""" Profile owner user_id equals 42 """
+profiles user_id 42;_;;
+
+""" Profile owner user_id over 100 """
+profiles user_id >100;_;;
+
+""" Profile owner user_id not 7 """
+profiles user_id !=7;_;;
+
+""" Full name contains "Smith" """
+profiles full_name ~"Smith";_;;
+
+""" Full name equals "Jane Doe" """
+profiles full_name "Jane Doe";_;;
+
+""" Full name not "Test User" """
+profiles full_name !="Test User";_;;
+
+""" Bio semantic about "photography" (sim>=0.60) """
+profiles bio <=>"photography"<=0.60;_;;
+
+""" Bio contains "engineer" """
+profiles bio ~"engineer";_;;
+
+""" Bio not "retired" """
+profiles bio !="retired";_;;
+
+""" Location contains "York" """
+profiles location ~"York";_;;
+
+""" Location equals "Austin" """
+profiles location "Austin";_;;
+
+""" Location not "Nowhere" """
+profiles location !="Nowhere";_;;
+
+""" Website contains "https://" """
+profiles website ~"https://";_;;
+
+""" Website equals "https://example.com" """
+profiles website "https://example.com";_;;
+
+""" Website not "http://old.example" """
+profiles website !="http://old.example";_;;
+
+""" Avatar URL contains ".png" """
+profiles avatar_url ~".png";_;;
+
+""" Avatar URL equals "https://img.example/a1.png" """
+profiles avatar_url "https://img.example/a1.png";_;;
+
+""" Avatar URL not "http://cdn.example/old.jpg" """
+profiles avatar_url !="http://cdn.example/old.jpg";_;;
+
+""" Birthday on 1990-05-15 """
+profiles birthday 1990-05-15;_;;
+
+""" Birthday after 1980-01-01 """
+profiles birthday >1980-01-01;_;;
+
+""" Birthday on or before 2005-12-31 """
+profiles birthday <=2005-12-31;_;;
+
+""" Profile created on 2024-01-10 """
+profiles created_at 2024-01-10;_;;
+
+""" Profile created after 2023-06-01 """
+profiles created_at >2023-06-01;_;;
+
+""" Profile created before 2025-01-01 """
+profiles created_at <2025-01-01;_;;
+
+""" Profile updated on or after 2024-02-01 """
+profiles updated_at >=2024-02-01;_;;
+
+""" Profile updated on 2025-07-04 """
+profiles updated_at 2025-07-04;_;;
+
+""" Profile updated on or before 2025-08-01 """
+profiles updated_at <=2025-08-01;_;;
+
+""" Profiles id 7 or 9 """
+profiles id 7,9;_;;
+
+""" Profiles id not 10 or 11 """
+profiles id !=10,11;_;;
+
+""" Profiles id 100 or 101 """
+profiles id 100,101;_;;
+
+""" Profile user_id 1 or 2 """
+profiles user_id 1,2;_;;
+
+""" Profile user_id not 3 or 4 """
+profiles user_id !=3,4;_;;
+
+""" Profile user_id 10 or 20 """
+profiles user_id 10,20;_;;
+
+""" Full names "Ana Fox" or "Bob Lee" """
+profiles full_name "Ana Fox","Bob Lee";_;;
+
+""" Full names not "Admin User" or "Guest" """
+profiles full_name !="Admin User","Guest";_;;
+
+""" Full names containing "Alex" or "Kim" """
+profiles full_name ~"Alex","Kim";_;;
+
+""" Bios containing "travel" or "food" """
+profiles bio ~"travel","food";_;;
+
+""" Bios not "none" or "n/a" """
+profiles bio !="none","n/a";_;;
+
+""" Bios "Runner" or "Hiker" """
+profiles bio "Runner","Hiker";_;;
+
+""" Locations "Austin" or "Dallas" """
+profiles location "Austin","Dallas";_;;
+
+""" Locations not "Nowhere" or "Somewhere" """
+profiles location !="Nowhere","Somewhere";_;;
+
+""" Locations containing "San" or "Port" """
+profiles location ~"San","Port";_;;
+
+""" Websites "https://a.co" or "https://b.io" """
+profiles website "https://a.co","https://b.io";_;;
+
+""" Websites not "http://x" or "http://y" """
+profiles website !="http://x","http://y";_;;
+
+""" Websites containing ".org" or ".net" """
+profiles website ~".org",".net";_;;
+
+""" Avatar URLs "https://img/a.png" or "https://img/b.jpg" """
+profiles avatar_url "https://img/a.png","https://img/b.jpg";_;;
+
+""" Avatar URLs not "http://old/a" or "http://old/b" """
+profiles avatar_url !="http://old/a","http://old/b";_;;
+
+""" Avatar URLs containing ".jpg" or ".webp" """
+profiles avatar_url ~".jpg",".webp";_;;
+
+""" Birthdays 1992-03-01 or 1992-04-01 """
+profiles birthday 1992-03-01,1992-04-01;_;;
+
+""" Birthdays not 2000-01-01 or 2000-12-31 """
+profiles birthday !=2000-01-01,2000-12-31;_;;
+
+""" Birthdays 1985-07-20 or 1985-08-20 """
+profiles birthday 1985-07-20,1985-08-20;_;;
+
+""" Profiles created 2024-01-01 or 2024-01-31 """
+profiles created_at 2024-01-01,2024-01-31;_;;
+
+""" Profiles not created 2023-12-24 or 2023-12-25 """
+profiles created_at !=2023-12-24,2023-12-25;_;;
+
+""" Profiles created 2023-10-01 or 2023-10-15 """
+profiles created_at 2023-10-01,2023-10-15;_;;
+
+""" Profiles updated 2025-01-01 or 2025-01-02 """
+profiles updated_at 2025-01-01,2025-01-02;_;;
+
+""" Profiles not updated 2024-07-04 or 2024-07-05 """
+profiles updated_at !=2024-07-04,2024-07-05;_;;
+
+""" Profiles updated 2024-06-01 or 2024-06-30 """
+profiles updated_at 2024-06-01,2024-06-30;_;;
+
+""" Follows id over 100 """
+follows id >100;_;;
+
+""" Follow id equals 55 """
+follows id 55;_;;
+
+""" Follow id under 1000 """
+follows id <1000;_;;
+
+""" Follower equals 10 """
+follows follower_id 10;_;;
+
+""" Follower over 100 """
+follows follower_id >100;_;;
+
+""" Follower not 42 """
+follows follower_id !=42;_;;
+
+""" Followee equals 23 """
+follows followee_id 23;_;;
+
+""" Followee at least 200 """
+follows followee_id >=200;_;;
+
+""" Followee not 13 """
+follows followee_id !=13;_;;
+
+""" Follow created on or after 2024-01-01 """
+follows created_at >=2024-01-01;_;;
+
+""" Follow created on 2023-11-15 """
+follows created_at 2023-11-15;_;;
+
+""" Follow created on or before 2025-10-01 """
+follows created_at <=2025-10-01;_;;
+
+""" Follows id 7 or 9 """
+follows id 7,9;_;;
+
+""" Follows id not 10 or 11 """
+follows id !=10,11;_;;
+
+""" Follows id 100 or 101 """
+follows id 100,101;_;;
+
+""" Followers 1 or 2 """
+follows follower_id 1,2;_;;
+
+""" Followers not 3 or 4 """
+follows follower_id !=3,4;_;;
+
+""" Followers 10 or 20 """
+follows follower_id 10,20;_;;
+

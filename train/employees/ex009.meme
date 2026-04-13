@@ -1,0 +1,318 @@
+""" Employees hired on 2020-02-02 in departments named like Sales, include department name and email """
+departments name ~"Sales";id _;employees department_id @;hire_date 2020-02-02;first_name _;last_name _;email _;;
+
+""" Distinct job grades for titles containing Analyst, grades A-Z """
+jobs title ~"Analyst";grade :grp:asc;;
+
+""" Employees with approved timesheets in 2025-01 and overtime_hours 0, list names """
+timesheets approved 1;week_start >=2025-01-01;<=2025-01-31;overtime_hours 0;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Gross and net totals per employee for payroll run 1500, totals by gross desc """
+payroll_entries payroll_run_id 1500;gross_pay :sum:des;net_pay :sum;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Employees with plan names including HSA active on 2025-02-01, show names and plan type """
+benefit_plans name ~"HSA";type _;id _;employee_benefits benefit_plan_id @;start_date <=2025-02-01;end_date >=2025-02-01;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Approvers with average overtime >= 6 hours in 2024, avg desc with names """
+timesheets week_start >=2024-01-01;<=2024-12-31;overtime_hours :avg:des>=6;approver_id :grp;employees id @;first_name _;last_name _;;
+
+""" Employees in departments at location 9 hired after 2023-01-01, names by hire_date asc """
+departments location_id 9;employees department_id @;hire_date :asc>2023-01-01;first_name _;last_name _;;
+
+""" Top 20 employees by number of skills, include first and last names """
+employee_skills id :cnt:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 20;;
+
+""" Timesheets for employee 250 with approver names where submitted 1, newest first """
+timesheets employee_id 250;submitted 1;week_start :des;approver_id _;employees id @;first_name _;last_name _;;
+
+""" Payroll entries for runs with notes containing audit on 2024-12-01, currency and net_pay desc """
+payroll_runs notes ~"audit";pay_date 2024-12-01;id _;payroll_entries payroll_run_id @;net_pay :des;currency _;;
+
+""" Counts of employees per job within departments named like Tech, job titles A-Z with counts desc """
+departments name ~"Tech";id _;employees department_id @;id :cnt:des;job_id :grp;jobs id @;title :asc;;
+
+""" Employees with medical or vision plans active on 2025-08-15 and at least 2 plans, show names """
+benefit_plans type medical,vision;id _;employee_benefits benefit_plan_id @;start_date <=2025-08-15;end_date >=2025-08-15;id :cnt>=2;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Employees in grades P2 or S1 hired on 2024-03-15, job title included, salary high to low """
+jobs grade "P2","S1";title _;id _;employees job_id @;hire_date 2024-03-15;salary :des;;
+
+""" USD payroll entries in runs paid on 2025-03-31, show pay_date and net_pay sorted by net_pay descending """
+payroll_runs pay_date 2025-03-31;id _;payroll_entries payroll_run_id @;currency "USD";net_pay :des;;
+
+""" Active dental or vision benefit plans created in 2024, name A-Z, first 30 """
+benefit_plans active 1;type dental,vision;created >=2024-01-01;<=2024-12-31;name :asc;_;% lim 30;;
+
+""" Employees with last name like Kim who requested sick time on 2024-09-12, show hours and request_date """
+employees last_name ~"Kim";id _;time_off_requests employee_id @;type sick;request_date 2024-09-12;hours _;;
+
+""" Amount of overtime per approver in 2025-01, only totals >= 10, list approver names Z-A """
+timesheets week_start >=2025-01-01;<=2025-01-31;overtime_hours :sum>=10;approver_id :grp;employees id @;last_name :des;first_name _;;
+
+""" Top 5 jobs by average min_salary where avg >= 90000, show job title """
+jobs min_salary :avg:des>=90000;title :grp;% lim 5;;
+
+""" Employees with at least 2 approved time-off requests in 2024, list names """
+time_off_requests status approved;request_date >=2024-01-01;<=2024-12-31;id :cnt>=2;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Performance reviews between 2025-02-01 and 2025-02-28 mentioning customer, similarity sorted high first, include reviewer names """
+performance_reviews review_date >=2025-02-01;<=2025-02-28;comments <=>"customer":des>=$sim;reviewer_id _;employees id @;first_name _;last_name _;;
+
+""" Total gross pay and net pay per currency for payroll entries on 2025-10-31, currencies Z-A """
+payroll_runs pay_date 2025-10-31;id _;payroll_entries payroll_run_id @;gross_pay :sum;net_pay :sum;currency :grp:des;;
+
+""" Paid payroll runs in 2025 showing total net_pay per run sorted by total descending """
+payroll_runs status paid;pay_date >=2025-01-01;<=2025-12-31;id _;payroll_entries payroll_run_id @;net_pay :sum:des;payroll_run_id :grp;;
+
+""" Employees with performance ratings >= 4.5 during 2025 Q2, show employee names and review dates sorted latest first """
+performance_reviews review_date :des>=2025-04-01;<=2025-06-30;rating >=4.5;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Distinct reviewers of reviews on 2024-11-01, last names A-Z """
+performance_reviews review_date 2024-11-01;reviewer_id :grp;employees id @;last_name :asc;;
+
+""" Timesheets for employee 99 in 2024-03 ordered by hours_worked descending with approver names """
+timesheets employee_id 99;week_start >=2024-03-01;<=2024-03-31;hours_worked :des;approver_id _;employees id @;first_name _;last_name _;;
+
+""" Locations in country US created before 2020-01-01 with departments and department names A-Z """
+locations country "US";created <2020-01-01;name _;id _;departments location_id @;name :asc;;
+
+""" Active retirement plan enrollments overlapping 2025-06-15, show employee names and plan name sorted by start_date asc """
+benefit_plans type retirement;active 1;name _;id _;employee_benefits benefit_plan_id @;start_date :asc<=2025-06-15;end_date >=2025-06-15;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Job titles with exempt 1 and max_salary 120000..200000, sort title A-Z and include grade """
+jobs exempt 1;max_salary >=120000;<=200000;title :asc;grade _;;
+
+""" Employees with status on_leave who have timesheets approved in 2025-01, list names with week_start asc """
+employees status on_leave;first_name _;last_name _;id _;timesheets employee_id @;approved 1;week_start :asc>=2025-01-01;<=2025-01-31;;
+
+""" Top 10 employee last names by total gross pay in EUR during 2025 """
+payroll_entries currency "EUR";created >=2025-01-01;<=2025-12-31;gross_pay :sum:des;employee_id :grp;employees id @;last_name _;% lim 10;;
+
+""" Counts of time-off request types for employee 300 in 2025 Q3, type A-Z """
+time_off_requests employee_id 300;request_date >=2025-07-01;<=2025-09-30;id :cnt;type :grp:asc;;
+
+""" Employees with overtime above 40 hours on week 2025-08-04 with approver names, ordered by overtime_hours desc """
+timesheets week_start 2025-08-04;overtime_hours :des>40;approver_id _;employees id @;first_name _;last_name _;;
+
+""" Performance reviews with comments containing roadmap and rating <= 3.0, newest first """
+performance_reviews comments ~"roadmap";rating <=3.0;created :des;_;;
+
+""" Pay runs with notes similar to off-cycle (sim>0.85) in 2025-11, pay_date asc limit 20 """
+payroll_runs notes <=>"off-cycle"<0.85;pay_date :asc>=2025-11-01;<=2025-11-30;_;% lim 20;;
+
+""" Employees with family coverage ending on 2025-09-30, include plan type and emails """
+employee_benefits coverage_level family;end_date 2025-09-30;benefit_plan_id _;benefit_plans id @;type _;employee_id _;employees id @;email _;;
+
+""" Sum of hours_worked per employee in May 2025 where sum >= 160, list names """
+timesheets week_start >=2025-05-01;<=2025-05-31;hours_worked :sum>=160;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Which departments have average salary 110000 or more in 2025 hires, department names A-Z """
+employees hire_date >=2025-01-01;<=2025-12-31;salary :avg>=110000;department_id :grp;departments id @;name :asc;;
+
+""" Top 15 employees by average review rating in 2024, with names """
+performance_reviews review_date >=2024-01-01;<=2024-12-31;rating :avg:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 15;;
+
+""" Payroll entries for employee 222 in paid runs on 2025-01-31, show currency and net_pay, net_pay desc """
+payroll_runs status paid;pay_date 2025-01-31;id _;payroll_entries payroll_run_id @;employee_id 222;net_pay :des;currency _;;
+
+""" Employees in departments named like Sales with job titles, order by last_name then first_name """
+departments name ~"Sales";id _;employees department_id @;last_name :asc;first_name :asc;job_id _;jobs id @;title _;;
+
+""" Expert-level Cloud skills last used in 2025, list employee names and skill names sorted by last_used desc """
+skills category "Cloud";name _;id _;employee_skills skill_id @;level expert;last_used :des>=2025-01-01;<=2025-12-31;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Distinct job grades for non-exempt jobs where max_salary <= 90000, grades A-Z """
+jobs exempt 0;max_salary <=90000;grade :grp:asc;;
+
+""" Timesheets submitted but not approved for week 2025-09-01, show approver names and order by hours_worked desc """
+timesheets week_start 2025-09-01;submitted 1;approved 0;hours_worked :des;approver_id _;employees id @;first_name _;last_name _;;
+
+""" Locations with department counts >= 5 in departments created in 2024, location names """
+departments created >=2024-01-01;<=2024-12-31;id :cnt>=5;location_id :grp;locations id @;name _;;
+
+""" Employees with SQL or Python skills at advanced level, show emails and last_used sorted newest first """
+skills name "SQL","Python";id _;employee_skills skill_id @;level advanced;last_used :des;employee_id _;employees id @;email _;;
+
+""" Average net_pay by currency for entries created on 2025-02-15, only averages > 3500, currencies Z-A """
+payroll_entries created 2025-02-15;net_pay :avg>3500;currency :grp:des;;
+
+""" Parental time-off in 2025-03 grouped by employee with total hours >= 24, show first names """
+time_off_requests type parental;request_date >=2025-03-01;<=2025-03-31;hours :sum>=24;employee_id :grp;employees id @;first_name _;;
+
+""" Managers with on_leave direct reports, manager names A-Z """
+employees status on_leave;id :cnt>=1;manager_id :grp;employees id @;first_name _;last_name :asc;;
+
+""" Employees with same manager as employee #1234 """
+employees id 1234;manager_id _;@ @ @;employees id !=1234;first_name _;last_name _;;
+
+""" Employees with same manager as Jim Smith """
+employees first_name "Jim";last_name "Smith";id :$x;manager_id _;@ @ @;employees id !=$x;first_name _;last_name _;;
+
+""" Jobs with identical min salaries """
+jobs title _;id :$x;min_salary _;@ @ @;id !=$x;title _;;
+
+""" Pairs of jobs with the same max_salary """
+jobs title _;id :$x;max_salary _;@ @ @;id !=$x;title _;;
+
+""" Deptartment co-employees of employee #5678 """
+employees id 5678;department_id _;@ @ @;employees id !=5678;first_name _;last_name _;;
+
+""" Deptartment co-employees of employees id 10000+ """
+employees id :$x>10000;department_id _;@ @ @;employees id !=$x;first_name _;last_name _;;
+
+""" Top 5 approvers by average overtime in 2025-08 with names """
+timesheets week_start >=2025-08-01;<=2025-08-31;overtime_hours :avg:des;approver_id :grp;employees id @;first_name _;last_name _;% lim 5;;
+
+""" Jobs with title like Engineer where min_salary >= 80000, order by grade asc and title asc """
+jobs min_salary >=80000;grade :asc;title :asc~"Engineer";_;;
+
+""" Employees in department 30 with at least 3 performance reviews, include average rating and names """
+performance_reviews id :cnt>=3;rating :avg;employee_id :grp;employees id @;department_id 30;first_name _;last_name _;;
+
+""" Payroll run totals in 2024-12 for USD or GBP, show pay_date and sum of gross_pay per run """
+payroll_entries currency "USD","GBP";gross_pay :sum;payroll_run_id :grp;payroll_runs id @;pay_date >=2024-12-01;<=2024-12-31;;
+
+""" Family coverage counts per department as of 2025-01-01, departments with at least 10 """
+employee_benefits coverage_level family;start_date <=2025-01-01;end_date >=2025-01-01;employee_id _;employees id @;id :cnt>=10;department_id :grp;departments id @;name _;;
+
+""" Employees with total gross_pay >= 50000 in 2025-04, show names sorted by total desc """
+payroll_entries created >=2025-04-01;<=2025-04-30;gross_pay :sum:des>=50000;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" High-rated reviews about mentorship (sim>=0.85) on 2025-09-01, order by rating desc and include reviewer names """
+performance_reviews comments <=>"mentorship"<=0.85;review_date 2025-09-01;rating :des;reviewer_id _;employees id @;first_name _;last_name _;;
+
+""" Employees with bonus_target > 0 hired in 2021, department name and bonus_target desc """
+employees hire_date >=2021-01-01;<=2021-12-31;bonus_target :des>0;department_id _;departments id @;name _;;
+
+""" Average salary per department in locations region NY where avg >= 95000, department names A-Z """
+employees salary :avg>=95000;department_id :grp;departments id @;name :asc;location_id _;locations id @;region "NY";
+
+""" Top 20 employees by number of skills in Data category, list names """
+skills category "Data";id _;employee_skills skill_id @;id :cnt:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 20;;
+
+""" Sum of overtime_hours by week_start in 2025-10, weeks ascending """
+timesheets overtime_hours :sum;week_start :grp:asc>=2025-10-01;<=2025-10-31;;
+
+""" Locations mentioning Park with departments created after 2023-06-01 and department names """
+locations name ~"Park";id _;departments location_id @;created >2023-06-01;name _;;
+
+""" Employees with two or more approved vacation requests in 2025, last names Z-A """
+time_off_requests type vacation;status approved;start_date >=2025-01-01;<=2025-12-31;id :cnt>=2;employee_id :grp;employees id @;last_name :des;first_name _;;
+
+""" Finance department employees earning 90000..130000, list job titles and names by salary descending """
+departments name "Finance";id _;employees department_id @;salary :des>=90000;<=130000;job_id _;jobs id @;title _;first_name _;last_name _;;
+
+""" Top 5 departments by total bonus_target for employees hired in 2024, show department names """
+employees hire_date >=2024-01-01;<=2024-12-31;bonus_target :sum:des;department_id :grp;departments id @;name _;% lim 5;;
+
+""" Employees with 2+ reviews in 2025-01, provide names """
+performance_reviews review_date >=2025-01-01;<=2025-01-31;id :cnt>=2;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Paid payroll runs in 2025-07 with total gross_pay per run, include pay_date ordered by total desc """
+payroll_entries gross_pay :sum:des;payroll_run_id :grp;payroll_runs id @;status paid;pay_date >=2025-07-01;<=2025-07-31;;
+
+""" Employees with phone numbers containing 415, sort by last then first name """
+employees phone ~"415";last_name :asc;first_name :asc;_;;
+
+""" EU sites (FR or DE) with departments where avg salary < 100000, show location and department names """
+employees salary :avg<100000;department_id :grp;departments id @;name :asc;location_id _;locations id @;country "FR","DE";
+
+""" Life insurance plans with at least 10 active enrollments on 2025-12-01, list plan names """
+employee_benefits start_date <=2025-12-01;end_date >=2025-12-01;id :cnt>=10;benefit_plan_id :grp;benefit_plans id @;type life;name _;;
+
+""" Average review rating per employee in 2025-02 where avg >= 4.2, sort names A-Z """
+performance_reviews review_date >=2025-02-01;<=2025-02-28;rating :avg>=4.2;employee_id :grp;employees id @;last_name :asc;first_name _;;
+
+""" Timesheets on 2025-08-11 with hours >= 38, show employee names by hours desc """
+timesheets week_start 2025-08-11;hours_worked :des>=38;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Non-exempt roles with grades like S for employees hired in 2020, include names and job title """
+jobs grade ~"S";title _;exempt 0;id _;employees job_id @;hire_date >=2020-01-01;<=2020-12-31;first_name _;last_name _;;
+
+""" Top 15 reviewers by number of reviews in 2023 with reviewer names """
+performance_reviews review_date >=2023-01-01;<=2023-12-31;id :cnt:des;reviewer_id :grp;employees id @;last_name _;first_name _;% lim 15;;
+
+""" Average gross and net pay per currency for paid runs on 2025-05-31, currencies A-Z """
+payroll_runs status paid;pay_date 2025-05-31;id _;payroll_entries payroll_run_id @;gross_pay :avg;net_pay :avg;currency :grp:asc;;
+
+""" Active employees with timesheets in 2025-09 having zero overtime, list names """
+timesheets week_start >=2025-09-01;<=2025-09-30;overtime_hours 0;employee_id _;employees id @;status active;first_name _;last_name _;;
+
+""" Skill categories with at least 3 skills created on 2024-05-01, categories Z-A """
+skills created 2024-05-01;id :cnt>=3;category :grp:des;;
+
+""" Employees with vision coverage on 2025-10-20 who filed time off in 2025-10, show names """
+benefit_plans type vision;id _;employee_benefits benefit_plan_id @;start_date <=2025-10-20;end_date >=2025-10-20;employee_id _;time_off_requests employee_id @;request_date >=2025-10-01;<=2025-10-31;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Employees with total hours_worked >= 160 in 2025-12, names """
+timesheets week_start >=2025-12-01;<=2025-12-31;hours_worked :sum>=160;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Jobs with min_salary 60000..90000 and max_salary <= 140000, titles A-Z """
+jobs min_salary >=60000;<=90000;max_salary <=140000;title :asc;_;;
+
+""" Employees with emails containing acme.com who took approved vacation 2025-12-24..2025-12-31, show names """
+time_off_requests status approved;type vacation;start_date >=2025-12-24;<=2025-12-31;employee_id _;employees id @;email ~"acme.com";first_name _;last_name _;;
+
+""" USD payroll in 2025-02 grouped by employee with tax_withheld sum >= 8000, totals desc and names """
+payroll_entries currency "USD";created >=2025-02-01;<=2025-02-28;tax_withheld :sum:des>=8000;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Reports to manager 9 with grades containing M, list employee names A-Z """
+employees manager_id 9;first_name _;last_name :asc;job_id _;jobs id @;grade ~"M";;
+
+""" Active employees with any skill used on or after 2024-10-01, list names once """
+employee_skills last_used >=2024-10-01;id :cnt>=1;employee_id :grp;employees id @;status active;first_name _;last_name _;;
+
+""" Locations where approved June 2025 timesheets sum to at least 2000 hours, show location names """
+timesheets approved 1;week_start >=2025-06-01;<=2025-06-30;hours_worked :sum>=2000;employee_id _;employees id @;department_id _;departments id @;location_id :grp;locations id @;name _;;
+
+""" Active medical enrollments starting on or after 2025-01-01, show plan and employee names ordered by start_date """
+benefit_plans type medical;name _;active 1;id _;employee_benefits benefit_plan_id @;start_date :asc>=2025-01-01;employee_id _;employees id @;first_name _;last_name _;;
+
+""" EUR payroll on 2024-12-31 with run pay_date and employee names, order by net_pay desc """
+payroll_runs pay_date 2024-12-31;id _;payroll_entries payroll_run_id @;currency "EUR";net_pay :des;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Departments with employees who have expert Security skills, show department names """
+skills category "Security";id _;employee_skills skill_id @;level expert;employee_id _;employees id @;department_id :grp;departments id @;name _;;
+
+""" Employees with at least 2 reviews in 2024-06 and average rating >= 4, provide names """
+performance_reviews review_date >=2024-06-01;<=2024-06-30;id :cnt>=2;rating :avg>=4;employee_id :grp;employees id @;first_name _;last_name _;;
+
+""" Europe/ timezone sites with 3+ departments, list location names by department count desc """
+locations timezone ~"Europe/";name _;id :grp;departments location_id @;id :cnt:des>=3;;
+
+""" Approvers in 2025-01 whose average overtime >= 2 hours, show approver names A-Z """
+timesheets week_start >=2025-01-01;<=2025-01-31;overtime_hours :avg>=2;approver_id :grp;employees id @;last_name :asc;first_name _;;
+
+""" Jobs whose employees have max salary >= 180000, list grades A-Z with titles """
+employees salary :max>=180000;job_id :grp;jobs id @;grade :asc;title _;;
+
+""" Skill counts by category for employees hired in 2023, categories by count desc """
+employees hire_date >=2023-01-01;<=2023-12-31;id _;employee_skills employee_id @;id :cnt:des;skill_id _;skills id @;category :grp;;
+
+""" Enrollments by plan for benefits ending 2025-03-31, plan names A-Z with counts """
+employee_benefits end_date 2025-03-31;id :cnt;benefit_plan_id :grp;benefit_plans id @;name :asc;;
+
+""" Employee 101 payroll in 2025 grouped by currency with net_pay sums, totals desc """
+payroll_entries employee_id 101;created >=2025-01-01;<=2025-12-31;net_pay :sum:des;currency :grp;;
+
+""" Employees whose last names include Mc with at least one approved time-off in 2024, names A-Z """
+time_off_requests status approved;request_date >=2024-01-01;<=2024-12-31;id :cnt>=1;employee_id :grp;employees id @;first_name _;last_name ~"Mc";;
+
+""" Job grades with average min_salary >= 70000, grades Z-A """
+jobs min_salary :avg>=70000;grade :grp:des;;
+
+""" Kubernetes experts with last_used in 2025, list employee names newest first """
+skills name "Kubernetes";id _;employee_skills skill_id @;level expert;last_used :des>=2025-01-01;<=2025-12-31;employee_id _;employees id @;first_name _;last_name _;;
+
+""" Approvers with 5 or more submitted timesheets in 2024-12, show names """
+timesheets submitted 1;week_start >=2024-12-01;<=2024-12-31;id :cnt>=5;approver_id :grp;employees id @;first_name _;last_name _;;
+
+""" Departments with on_leave employees who had denied time off in 2025-01, show department names """
+time_off_requests status denied;request_date >=2025-01-01;<=2025-01-31;employee_id _;employees id @;status on_leave;department_id :grp;departments id @;name _;;
+
+""" Hires in 2022-04 with Data category skills, list employee names and skill names """
+employees hire_date >=2022-04-01;<=2022-04-30;first_name _;last_name _;id _;employee_skills employee_id @;skill_id _;skills id @;category "Data";name _;;
+
+""" Active enrollments per plan on 2025-05-01, plan names with counts desc """
+employee_benefits start_date <=2025-05-01;end_date >=2025-05-01;id :cnt:des;benefit_plan_id :grp;benefit_plans id @;name _;;
+

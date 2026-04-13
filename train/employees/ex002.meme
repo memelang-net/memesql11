@@ -1,0 +1,303 @@
+""" status approved """
+time_off_requests status approved;_;;
+
+""" requested hours >= 8 """
+time_off_requests hours >=8;_;;
+
+""" time_off created on 2024-11-01 """
+time_off_requests created 2024-11-01;_;;
+
+""" timesheet id 9090 """
+timesheets id 9090;_;;
+
+""" timesheets for employee 77 """
+timesheets employee_id 77;_;;
+
+""" week starting 2025-01-06 """
+timesheets week_start 2025-01-06;_;;
+
+""" hours worked >= 40 """
+timesheets hours_worked >=40;_;;
+
+""" overtime hours > 0 """
+timesheets overtime_hours >0;_;;
+
+""" submitted timesheets """
+timesheets submitted 1;_;;
+
+""" unapproved timesheets """
+timesheets approved 0;_;;
+
+""" approver id 33 """
+timesheets approver_id 33;_;;
+
+""" timesheets created 2024-04-01 """
+timesheets created 2024-04-01;_;;
+
+""" skill id 600 """
+skills id 600;_;;
+
+""" skills named Kubernetes """
+skills name "Kubernetes";_;;
+
+""" skill names including Java """
+skills name ~"Java";_;;
+
+""" category Data or Cloud """
+skills category "Data","Cloud";_;;
+
+""" skills created after 2023-09-01 """
+skills created >2023-09-01;_;;
+
+""" employee_skill id 30001 """
+employee_skills id 30001;_;;
+
+""" employee_skills for employee 501 """
+employee_skills employee_id 501;_;;
+
+""" employee_skills with skill 16 """
+employee_skills skill_id 16;_;;
+
+""" level advanced or expert """
+employee_skills level advanced,expert;_;;
+
+""" last used 2024-12-31 """
+employee_skills last_used 2024-12-31;_;;
+
+""" employee_skills created 2025-02-01 """
+employee_skills created 2025-02-01;_;;
+
+""" payroll run id 2002 """
+payroll_runs id 2002;_;;
+
+""" pay period starting 2025-06-01 """
+payroll_runs pay_period_start 2025-06-01;_;;
+
+""" pay period ending 2025-06-15 """
+payroll_runs pay_period_end 2025-06-15;_;;
+
+""" pay date 2025-06-20 """
+payroll_runs pay_date 2025-06-20;_;;
+
+""" run status processed or paid """
+payroll_runs status processed,paid;_;;
+
+""" runs created on 2025-06-21 """
+payroll_runs created 2025-06-21;_;;
+
+""" notes containing off-cycle """
+payroll_runs notes ~"off-cycle";_;;
+
+""" payroll entry id 88001 """
+payroll_entries id 88001;_;;
+
+""" entries for payroll_run 2002 """
+payroll_entries payroll_run_id 2002;_;;
+
+""" entries for employee 777 """
+payroll_entries employee_id 777;_;;
+
+""" gross pay >= 3000 """
+payroll_entries gross_pay >=3000;_;;
+
+""" tax withheld 0 """
+payroll_entries tax_withheld 0;_;;
+
+""" net pay <= 5000 """
+payroll_entries net_pay <=5000;_;;
+
+""" currency equals USD """
+payroll_entries currency "USD";_;;
+
+""" payroll entries created 2025-06-20 """
+payroll_entries created 2025-06-20;_;;
+
+""" employees by last name A-Z """
+employees last_name :asc;_;;
+
+""" employees by salary high to low """
+employees salary :des;_;;
+
+""" employees by hire date newest first """
+employees hire_date :des;_;;
+
+""" departments by name ascending """
+departments name :asc;_;;
+
+""" jobs by title descending """
+jobs title :des;_;;
+
+""" locations by country A-Z """
+locations country :asc;_;;
+
+""" benefit plans by type A-Z """
+benefit_plans type :asc;_;;
+
+""" employee_benefits by start_date ascending """
+employee_benefits start_date :asc;_;;
+
+""" performance reviews by rating desc """
+performance_reviews rating :des;_;;
+
+""" time off by start_date ascending """
+time_off_requests start_date :asc;_;;
+
+""" timesheets by week_start descending """
+timesheets week_start :des;_;;
+
+""" skills by name A-Z """
+skills name :asc;_;;
+
+""" employee_skills by level A-Z """
+employee_skills level :asc;_;;
+
+""" payroll runs by pay_date newest first """
+payroll_runs pay_date :des;_;;
+
+""" payroll entries by net_pay descending """
+payroll_entries net_pay :des;_;;
+
+""" employees sort last name asc then salary desc """
+employees last_name :asc;salary :des;_;;
+
+""" employees by status asc then hire_date desc """
+employees status :asc;hire_date :des;_;;
+
+""" departments by name asc then id asc """
+departments name :asc;id :asc;_;;
+
+""" jobs by grade asc then title asc """
+jobs grade :asc;title :asc;_;;
+
+""" locations by country asc then region asc """
+locations country :asc;region :asc;_;;
+
+""" payroll entries by payroll_run_id asc then gross_pay desc """
+payroll_entries payroll_run_id :asc;gross_pay :des;_;;
+
+""" employees hired 2023-01-01..2023-12-31 """
+employees hire_date >=2023-01-01;<=2023-12-31;_;;
+
+""" employees salary 60000..120000 """
+employees salary >=60000;<=120000;_;;
+
+""" employees created 2024-05-01..2024-06-01 """
+employees created >=2024-05-01;<=2024-06-01;_;;
+
+""" departments created 2023-01-01..2023-12-31 """
+departments created >=2023-01-01;<=2023-12-31;_;;
+
+""" jobs min_salary 40000..90000 """
+jobs min_salary >=40000;<=90000;_;;
+
+""" jobs min_salary 40000..90000, not 57000 """
+jobs min_salary >=40000;<=90000;!=57000;_;;
+
+""" jobs created 2024-01-01..2024-12-31 """
+jobs created >=2024-01-01;<=2024-12-31;_;;
+
+""" locations created 2020-01-01..2020-12-31 """
+locations created >=2020-01-01;<=2020-12-31;_;;
+
+""" performance ratings 3.5..5.0 """
+performance_reviews rating >=3.5;<=5.0;_;;
+
+""" time off hours 8..80 """
+time_off_requests hours >=8;<=80;_;;
+
+""" timesheets hours_worked 35 to 45 """
+timesheets hours_worked >=35;<=45;_;;
+
+""" employee_skills last_used in 2024 """
+employee_skills last_used >=2024-01-01;<=2024-12-31;_;;
+
+""" payroll entries gross_pay 2000-5000 """
+payroll_entries gross_pay >=2000;<=5000;_;;
+
+""" active full-time employees hired after 2022-01-01 """
+employees status active;full_time 1;hire_date >2022-01-01;_;;
+
+""" employees in dept 10 with salary >=90000 """
+employees department_id 10;salary >=90000;_;;
+
+""" employees under manager 5 hired before 2020-01-01 """
+employees manager_id 5;hire_date <2020-01-01;_;;
+
+""" employees named like Lee with emails @acme.com """
+employees last_name ~"Lee";email ~"@acme.com";_;;
+
+""" departments at location 7 created after 2023-06-01 """
+departments location_id 7;created >2023-06-01;_;;
+
+""" jobs grade P3 with min_salary >= 70000 """
+jobs grade "P3";min_salary >=70000;_;;
+
+""" locations in US region CA timezone America/ """
+locations country "US";region "CA";timezone ~"America/";_;;
+
+""" benefit plans of type medical active only """
+benefit_plans type medical;active 1;_;;
+
+""" employee_benefits for employee 42 covering family """
+employee_benefits employee_id 42;coverage_level family;_;;
+
+""" reviews for employee 88 with rating >= 4 """
+performance_reviews employee_id 88;rating >=4;_;;
+
+""" approved vacation requests in 2025-07 """
+time_off_requests type vacation;status approved;start_date >=2025-07-01;<=2025-07-31;_;;
+
+""" submitted but unapproved timesheets for employee 77 """
+timesheets employee_id 77;submitted 1;approved 0;_;;
+
+""" skills in category Cloud named like AWS """
+skills category "Cloud";name ~"AWS";_;;
+
+""" employee_skills expert level last used after 2023-01-01 """
+employee_skills level expert;last_used >2023-01-01;_;;
+
+""" payroll runs paid in 2025-06 """
+payroll_runs status paid;pay_date >=2025-06-01;<=2025-06-30;_;;
+
+""" payroll entries USD with net_pay >= 2500 """
+payroll_entries currency "USD";net_pay >=2500;_;;
+
+""" employees named like Sam, sort by hire_date desc """
+employees first_name ~"Sam";hire_date :des;_;;
+
+""" departments at location 3, name A-Z """
+departments location_id 3;name :asc;_;;
+
+""" jobs exempt 1, sort by max_salary desc """
+jobs exempt 1;max_salary :des;_;;
+
+""" locations in country US, region A-Z """
+locations country "US";region :asc;_;;
+
+""" benefit plans active, type A-Z """
+benefit_plans active 1;type :asc;_;;
+
+""" payroll entries for employee 700, net_pay desc """
+payroll_entries employee_id 700;net_pay :des;_;;
+
+""" First 10 employees """
+employees _ _;% lim 10;;
+
+""" first 10 departments """
+departments _ _;% lim 10;;
+
+""" job records 100-110 """
+jobs _ _;% lim 10;% beg 100;;
+
+""" locations starting at 55 """
+locations _ _;% beg 55;;
+
+""" starting at 200, show benefit_plans """
+benefit_plans _ _;% beg 200;;
+
+""" benefit plans page 3 (100 per page) """
+benefit_plans _ _;% lim 100;% beg 200;;
+
+""" active employees limit 10 """
+employees status active;_;% lim 10;;
+

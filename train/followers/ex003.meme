@@ -1,0 +1,317 @@
+""" users by id ascending """
+users id :asc;_;;
+
+""" users by username ascending """
+users username :asc;_;;
+
+""" users by email ascending """
+users email :asc;_;;
+
+""" users by password_hash ascending """
+users password_hash :asc;_;;
+
+""" users by created_at ascending """
+users created_at :asc;_;;
+
+""" users by updated_at ascending """
+users updated_at :asc;_;;
+
+""" users by id descending """
+users id :des;_;;
+
+""" users by username descending """
+users username :des;_;;
+
+""" users by email descending """
+users email :des;_;;
+
+""" users by password_hash descending """
+users password_hash :des;_;;
+
+""" users by created_at descending """
+users created_at :des;_;;
+
+""" users by updated_at descending """
+users updated_at :des;_;;
+
+""" users by id asc then created_at des """
+users id :asc;created_at :des;_;;
+
+""" users by username des then updated_at asc """
+users username :des;updated_at :asc;_;;
+
+""" users by created_at asc then updated_at des then id asc """
+users created_at :asc;updated_at :des;id :asc;_;;
+
+""" users id from 10 to 250 """
+users id >=10;<=250;_;;
+
+""" users created_at from 2024-01-15 to 2025-07-04 """
+users created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" users updated_at from 2023-10-10 to 2025-01-01 """
+users updated_at >=2023-10-10;<=2025-01-01;_;;
+
+""" users username contains ana, email contains .org """
+users username ~"ana";email ~".org";_;;
+
+""" users email not containing spam, created_at at least 2024-01-15, updated_at at most 2025-10-01 """
+users email !~"spam";created_at >=2024-01-15;updated_at <=2025-10-01;_;;
+
+""" users id at least 42, username contains dev, email contains .com, updated_at at most 2025-10-01 """
+users id >=42;username ~"dev";email ~".com";updated_at <=2025-10-01;_;;
+
+""" users username contains dev, created_at at least 2024-01-15, sort by id asc """
+users username ~"dev";created_at >=2024-01-15;id :asc;_;;
+
+""" users email contains .com, updated_at at most 2025-10-01, sort by created_at des """
+users email ~".com";updated_at <=2025-10-01;created_at :des;_;;
+
+""" users username contains dev, created_at at least 2024-01-15, sort by id des with limit 5 """
+users username ~"dev";created_at >=2024-01-15;id :des;_;% lim 5;;
+
+""" users email contains .com, updated_at at most 2025-10-01, sort by created_at asc with limit 10 """
+users email ~".com";updated_at <=2025-10-01;created_at :asc;_;% lim 10;;
+
+""" users username contains ana, id at least 100, sort by updated_at des with limit 5 """
+users username ~"ana";id >=100;updated_at :des;_;% lim 5;;
+
+""" users username contains dev, created_at at least 2024-01-15, sort by id asc with limit 10 offset 20 """
+users username ~"dev";created_at >=2024-01-15;id :asc;_;% lim 10;% beg 20;;
+
+""" users email contains .org, updated_at at most 2025-10-01, sort by created_at des with limit 10 offset 30 """
+users email ~".org";updated_at <=2025-10-01;created_at :des;_;% lim 10;% beg 30;;
+
+""" users id at least 42, username contains ana, sort by updated_at asc with limit 5 offset 15 """
+users id >=42;username ~"ana";updated_at :asc;_;% lim 5;% beg 15;;
+
+""" profiles by id ascending """
+profiles id :asc;_;;
+
+""" profiles by user_id ascending """
+profiles user_id :asc;_;;
+
+""" profiles by full_name ascending """
+profiles full_name :asc;_;;
+
+""" profiles by bio ascending """
+profiles bio :asc;_;;
+
+""" profiles by location ascending """
+profiles location :asc;_;;
+
+""" profiles by website ascending """
+profiles website :asc;_;;
+
+""" profiles by avatar_url ascending """
+profiles avatar_url :asc;_;;
+
+""" profiles by birthday ascending """
+profiles birthday :asc;_;;
+
+""" profiles by created_at ascending """
+profiles created_at :asc;_;;
+
+""" profiles by updated_at ascending """
+profiles updated_at :asc;_;;
+
+""" profiles by id descending """
+profiles id :des;_;;
+
+""" profiles by user_id descending """
+profiles user_id :des;_;;
+
+""" profiles by full_name descending """
+profiles full_name :des;_;;
+
+""" profiles by bio descending """
+profiles bio :des;_;;
+
+""" profiles by location descending """
+profiles location :des;_;;
+
+""" profiles by website descending """
+profiles website :des;_;;
+
+""" profiles by avatar_url descending """
+profiles avatar_url :des;_;;
+
+""" profiles by birthday descending """
+profiles birthday :des;_;;
+
+""" profiles by created_at descending """
+profiles created_at :des;_;;
+
+""" profiles by updated_at descending """
+profiles updated_at :des;_;;
+
+""" profiles by user_id asc then created_at des """
+profiles user_id :asc;created_at :des;_;;
+
+""" profiles by full_name des then updated_at asc """
+profiles full_name :des;updated_at :asc;_;;
+
+""" profiles by created_at asc then updated_at des then id asc """
+profiles created_at :asc;updated_at :des;id :asc;_;;
+
+""" profiles id from 10 to 250 """
+profiles id >=10;<=250;_;;
+
+""" profiles user_id from 42 to 2500 """
+profiles user_id >=42;<=2500;_;;
+
+""" profiles birthday from 1990-05-15 to 2005-12-31 """
+profiles birthday >=1990-05-15;<=2005-12-31;_;;
+
+""" profiles created_at from 2024-01-15 to 2025-07-04 """
+profiles created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" profiles updated_at from 2023-10-10 to 2025-01-01 """
+profiles updated_at >=2023-10-10;<=2025-01-01;_;;
+
+""" profiles full_name contains Smith, location contains York """
+profiles full_name ~"Smith";location ~"York";_;;
+
+""" profiles website contains .org, avatar_url not containing .gif, bio contains travel """
+profiles website ~".org";avatar_url !~".gif";bio ~"travel";_;;
+
+""" profiles id at least 100, user_id at least 10, location contains San, updated_at at most 2025-10-01 """
+profiles id >=100;user_id >=10;location ~"San";updated_at <=2025-10-01;_;;
+
+""" profiles location contains Austin, created_at at least 2024-01-15, sort by full_name asc """
+profiles location ~"Austin";created_at >=2024-01-15;full_name :asc;_;;
+
+""" profiles website contains .com, updated_at at most 2025-10-01, sort by created_at des """
+profiles website ~".com";updated_at <=2025-10-01;created_at :des;_;;
+
+""" profiles bio contains engineer, location contains York, sort by updated_at des with limit 5 """
+profiles bio ~"engineer";location ~"York";updated_at :des;_;% lim 5;;
+
+""" profiles full_name contains Jane, website contains .io, sort by created_at asc with limit 10 """
+profiles full_name ~"Jane";website ~".io";created_at :asc;_;% lim 10;;
+
+""" profiles id at least 42, birthday at most 2005-12-31, sort by updated_at des with limit 5 """
+profiles id >=42;birthday <=2005-12-31;updated_at :des;_;% lim 5;;
+
+""" profiles location contains San, created_at at least 2024-01-15, sort by full_name asc with limit 10 offset 20 """
+profiles location ~"San";created_at >=2024-01-15;full_name :asc;_;% lim 10;% beg 20;;
+
+""" profiles website contains .org, updated_at at most 2025-10-01, sort by created_at des with limit 10 offset 30 """
+profiles website ~".org";updated_at <=2025-10-01;created_at :des;_;% lim 10;% beg 30;;
+
+""" profiles id at least 100, location contains Austin, sort by updated_at asc with limit 5 offset 15 """
+profiles id >=100;location ~"Austin";updated_at :asc;_;% lim 5;% beg 15;;
+
+""" follows by id ascending """
+follows id :asc;_;;
+
+""" follows by follower_id ascending """
+follows follower_id :asc;_;;
+
+""" follows by followee_id ascending """
+follows followee_id :asc;_;;
+
+""" follows by created_at ascending """
+follows created_at :asc;_;;
+
+""" follows by id descending """
+follows id :des;_;;
+
+""" follows by follower_id descending """
+follows follower_id :des;_;;
+
+""" follows by followee_id descending """
+follows followee_id :des;_;;
+
+""" follows by created_at descending """
+follows created_at :des;_;;
+
+""" follows by follower_id asc then created_at des """
+follows follower_id :asc;created_at :des;_;;
+
+""" follows by followee_id des then id asc """
+follows followee_id :des;id :asc;_;;
+
+""" follows by created_at asc then id des then follower_id asc """
+follows created_at :asc;id :des;follower_id :asc;_;;
+
+""" follows id from 10 to 250 """
+follows id >=10;<=250;_;;
+
+""" follows follower_id from 42 to 2500 """
+follows follower_id >=42;<=2500;_;;
+
+""" follows followee_id from 5 to 1000 """
+follows followee_id >=5;<=1000;_;;
+
+""" follows created_at from 2024-01-15 to 2025-07-04 """
+follows created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" follows follower_id at least 100, followee_id at least 10 """
+follows follower_id >=100;followee_id >=10;_;;
+
+""" follows id at least 42, created_at at least 2024-01-15, followee_id at most 1000 """
+follows id >=42;created_at >=2024-01-15;followee_id <=1000;_;;
+
+""" follows follower_id at least 100, created_at at least 2024-01-15, sort by id asc """
+follows follower_id >=100;created_at >=2024-01-15;id :asc;_;;
+
+""" follows followee_id at most 1000, id at least 10, sort by created_at des """
+follows followee_id <=1000;id >=10;created_at :des;_;;
+
+""" follows follower_id at least 100, sort by created_at des with limit 5 """
+follows follower_id >=100;created_at :des;_;% lim 5;;
+
+""" follows followee_id at most 1000, sort by id asc with limit 10 """
+follows followee_id :asc<=1000;_;% lim 10;;
+
+""" follows id at least 42, sort by created_at asc with limit 5 """
+follows id >=42;created_at :asc;_;% lim 5;;
+
+""" follows follower_id at least 100, sort by created_at des with limit 10 offset 20 """
+follows follower_id >=100;created_at :des;_;% lim 10;% beg 20;;
+
+""" follows followee_id at most 1000, sort by id asc with limit 10 offset 30 """
+follows followee_id :asc<=1000;_;% lim 10;% beg 30;;
+
+""" follows id at least 10, sort by created_at asc with limit 5 offset 15 """
+follows id >=10;created_at :asc;_;% lim 5;% beg 15;;
+
+""" posts by id ascending """
+posts id :asc;_;;
+
+""" posts by user_id ascending """
+posts user_id :asc;_;;
+
+""" posts by body ascending """
+posts body :asc;_;;
+
+""" posts by image_url ascending """
+posts image_url :asc;_;;
+
+""" posts by visibility ascending """
+posts visibility :asc;_;;
+
+""" posts by created_at ascending """
+posts created_at :asc;_;;
+
+""" posts by updated_at ascending """
+posts updated_at :asc;_;;
+
+""" posts by id descending """
+posts id :des;_;;
+
+""" posts by user_id descending """
+posts user_id :des;_;;
+
+""" posts by body descending """
+posts body :des;_;;
+
+""" posts by image_url descending """
+posts image_url :des;_;;
+
+""" posts by visibility descending """
+posts visibility :des;_;;
+
+""" posts by created_at descending """
+posts created_at :des;_;;

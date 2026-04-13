@@ -1,0 +1,306 @@
+""" Titles Z-A with total ratings > 40 """
+roles rating :sum>40;movie :grp:des;;
+
+""" Movies A-Z whose role count  3 """
+roles id :cnt=3;movie :grp:asc;;
+
+""" Movies Z-A where role count != 1 """
+roles id :cnt;movie :grp:des!=1;;
+
+""" Find roles where actor equals movie title """
+roles actor _;movie @;;
+
+""" actor same as movie title """
+roles actor _;movie @;;
+
+""" character same as movie title """
+roles character _;movie @;;
+
+""" actor name equals character name """
+roles actor _;character @;;
+
+""" Roles in movies containing "Inception" in title where actor name equals the movie title """
+roles movie ~"Inception";actor @;;
+
+""" Movie title = character's name = actor's name """
+roles movie _;character @;actor @;;
+
+""" All three values are the same: character name, actor name, movie title """
+roles character _;actor @;movie @;;
+
+""" actor name = movie title = character name """
+roles actor _;movie @;character @;;
+
+""" Roles of actors over 60 """
+actors age >60;name _;roles actor @;_;;
+
+""" roles of actors under 25 """
+actors age <25;name _;roles actor @;_;;
+
+""" Ratings for actors appearing in movies released after 2010 """
+movies year >2010;title _;roles movie @;_;;
+
+""" roles in movies before 1980 """
+movies year <1980;title _;roles movie @;_;;
+
+""" roles in movies about Africa """
+movies description <=>"Africa"<=$sim;title _;roles movie @;_;;
+
+""" roles in movies mentioning robot rated 3+ """
+movies description <=>"robot"<=$sim;title _;roles movie @;rating >=3;;
+
+""" war movies roles """
+movies description <=>"war"<=$sim;title _;roles movie @;_;;
+
+""" Movies with roles rated at least 3.5 """
+roles rating >=3.5;movie _;movies title @;_;;
+
+""" movies with roles rated below 2.0 """
+roles rating <2.0;movie _;movies title @;_;;
+
+""" roles of actors 30 and older """
+actors age >=30;name _;roles actor @;_;;
+
+""" ROLES OF ACTORS AT MOST 12 """
+actors age <=12;name _;roles actor @;_;;
+
+""" roles for actors exactly 50 """
+actors age 50;name _;roles actor @;_;;
+
+""" roles in movies from 2020 and later """
+movies year >=2020;title _;roles movie @;_;;
+
+""" roles in movies up to 2005 """
+movies year <=2005;title _;roles movie @;_;;
+
+""" roles in movies involving space """
+movies description <=>"space"<=$sim;title _;roles movie @;_;;
+
+""" Acting roles for movies mentioning "ocean" """
+movies description <=>"ocean"<=$sim;title _;roles movie @;_;;
+
+""" movies with roles rated above 4.5 """
+roles rating >4.5;movie _;movies title @;_;;
+
+""" movies with roles rated no more than 1.2 """
+roles rating <=1.2;movie _;movies title @;_;;
+
+""" actor roles rated above 4.0 """
+roles rating >4.0;actor _;actors name @;_;;
+
+""" actors from roles rated above 4.0 with age under 30 """
+roles rating >4.0;actor _;actors name @;age <30;;
+
+""" Co-stars of Mark Hamill """
+roles actor :$x~"Mark Hamill";movie _;@ @ @;actor !=$x;;
+
+""" People who acted with names like Carrie """
+roles actor :$x~"Carrie";movie _;@ @ @;actor !=$x;;
+
+""" Castmates who shared a film with Harrison Ford """
+roles actor :$x~"Harrison Ford";movie _;@ @ @;actor !=$x;;
+
+""" Actors appearing alongside Keanu Reeves """
+roles actor :$x~"Keanu Reeves";movie _;@ @ @;actor !=$x;;
+
+""" Names of co-actors with Tom Hanks """
+roles actor :$x~"Tom Hanks";movie _;@ @ @;actor !=$x;;
+
+""" Who worked with Meryl Streep """
+roles actor :$x~"Meryl Streep";movie _;@ @ @;actor !=$x;;
+
+""" Co-performers opposite Leonardo DiCaprio """
+roles actor :$x~"Leonardo DiCaprio";movie _;@ @ @;actor !=$x;;
+
+""" Actors who shared credits with Natalie Portman """
+roles actor :$x~"Natalie Portman";movie _;@ @ @;actor !=$x;;
+
+""" Cast who appeared with Scarlett Johansson """
+roles actor :$x~"Scarlett Johansson";movie _;@ @ @;actor !=$x;;
+
+""" Who starred with Samuel L. Jackson """
+roles actor :$x~"Samuel L. Jackson";movie _;@ @ @;actor !=$x;;
+
+""" Costars that worked with Bruce Willis """
+roles actor :$x~"Bruce Willis";movie _;@ @ @;actor !=$x;;
+
+""" Actors sharing the screen with Morgan Freeman """
+roles actor :$x~"Morgan Freeman";movie _;@ @ @;actor !=$x;;
+
+""" With whom did Robert De Niro act """
+roles actor :$x~"Robert De Niro";movie _;@ @ @;actor !=$x;;
+
+""" Co-actors who performed with Al Pacino """
+roles actor :$x~"Al Pacino";movie _;@ @ @;actor !=$x;;
+
+""" Actors who worked alongside Amy Adams """
+roles actor :$x~"Amy Adams";movie _;@ @ @;actor !=$x;;
+
+""" People appearing in films with Emma Stone """
+roles actor :$x~"Emma Stone";movie _;@ @ @;actor !=$x;;
+
+""" Co-stars of Tom Hanks and Meg Ryan """
+roles actor :$x~"Tom Hanks","Meg Ryan";movie _;@ @ @;actor !=$x;;
+
+""" Actors who worked with Robert De Niro or Al Pacino """
+roles actor :$x~"Robert De Niro","Al Pacino";movie _;@ @ @;actor !=$x;;
+
+""" People appearing with Harrison Ford and Sean Connery """
+roles actor :$x~"Harrison Ford","Sean Connery";movie _;@ @ @;actor !=$x;;
+
+""" Castmates of Leonardo DiCaprio or Kate Winslet """
+roles actor :$x~"Leonardo DiCaprio","Kate Winslet";movie _;@ @ @;actor !=$x;;
+
+""" Who acted alongside Emma Stone and Ryan Gosling """
+roles actor :$x~"Emma Stone","Ryan Gosling";movie _;@ @ @;actor !=$x;;
+
+""" Names of co-actors with Meryl Streep or Anne Hathaway """
+roles actor :$x~"Meryl Streep","Anne Hathaway";movie _;@ @ @;actor !=$x;;
+
+""" Costars seen with Bruce Willis and Uma Thurman """
+roles actor :$x~"Bruce Willis","Uma Thurman";movie _;@ @ @;actor !=$x;;
+
+""" Actors appearing with Samuel L. Jackson or John Travolta """
+roles actor :$x~"Samuel L. Jackson","John Travolta";movie _;@ @ @;actor !=$x;;
+
+""" Who shared a film with Keanu Reeves and Charlize Theron """
+roles actor :$x~"Keanu Reeves","Charlize Theron";movie _;@ @ @;actor !=$x;;
+
+""" Cast who appeared with Mark Hamill or Carrie Fisher """
+roles actor :$x~"Mark Hamill","Carrie Fisher";movie _;@ @ @;actor !=$x;;
+
+""" Co-stars of people named 'Mark' and 'Carrie', alphabetical """
+roles actor :$x~"Mark","Carrie";movie _;@ @ @;actor :asc!=$x;;
+
+""" Higher-rated co-stars of people named 'Mark' and 'Carrie', sort by rating """
+roles actor :$x~"Mark","Carrie";rating :$y;movie _;@ @ @;actor !=$x;rating :asc>$y;;
+
+""" Co-stars Z-A with higher ratings of actors named 'Mark' rated over 1 """
+roles actor :$x~"Mark";rating :$y>1;movie _;@ @ @;actor :des!=$x;rating >$y;;
+
+""" movies with same title, different years chronological, different genres """
+movie year :$x;genre :$y;title _;@ @ @;year :asc!=$x;genre !=$y;;
+
+""" same genre, different year and title movies, sort by title a-z """
+movie year :$x;title :$y;genre _;@ @ @;year !=$x;title :asc!=$y;;
+
+""" Role counts for movies with "Star" in the title, highest first """
+roles movie :grp~"Star";id :cnt:des;;
+
+""" Movies with count of roles between 5 and 12 ordered by count desc """
+roles id :cnt:des>=5;:cnt<=12;movie :grp;;
+
+""" Actors whose maximum rating is under 2, ordered by name """
+roles rating :max<2;actor :grp:asc;;
+
+""" Actors with at least 5 roles and maximum rating at least 4.5 """
+roles id :cnt>=5;rating :max>=4.5;actor :grp;;
+
+""" Actors with average rating between 3 and 4 inclusive, by name """
+roles rating :avg>=3;:avg<=4;actor :grp:asc;;
+
+""" Movies ordered by highest maximum rating """
+roles rating :max:des;movie :grp;;
+
+""" Top 10 movies by minimum role rating """
+roles rating :min:des;movie :grp;% lim 10;;
+
+""" Actors appearing in movies released in 2015 (A-Z) """
+movies year 2015;title _;roles movie @;actor :grp:asc;;
+
+""" Movies released after 2018 ordered by title """
+movies year >2018;title :asc;_;;
+
+""" Oldest movie with 'star' in title """
+movies title ~"star";year :asc;% lim 1;;
+
+""" Newest movie with 'star' in title """
+movies title ~"star";year :des;% lim 1;;
+
+""" Documentaries related to climate change, newest first """
+movies genre documentary;year :des;description <=>"climate change"<=$sim;_;;
+
+""" Movies about robots ordered by relevance """
+movies description <=>"robots":des;_;;
+
+""" Roles per movie after 2011, count descending """
+movies year >2011;title :grp;roles movie @;id :cnt:des;;
+
+""" Count of roles per movie after 1980 (descending) """
+movies year >1980;title :grp;roles movie @;id :cnt:des;;
+
+""" Count of roles per movie after 1990 (ascending) """
+movies title :$x:grp;year >1990;roles movie $x;id :cnt:asc;;
+
+""" count roles per movie after 1980 descending """
+movies year >1980;title :$x:grp;id :cnt:des;roles movie $x;;
+
+""" Actors with at least 3 roles order by age low-high """
+roles id :cnt>=3;actor :$x:grp;actors name $x;age :asc;;
+
+""" Actors with average rating at least 4, ordered by count descending """
+roles rating :avg>=4;id :cnt:des;actor :grp;;
+
+""" Actors with average rating between 2.5 and 3.5 inclusive, name Z-A """
+roles rating :avg>=2.5;:avg<=3.5;actor :grp:des;;
+
+""" Actors ordered by average rating descending, breaking ties by maximum rating descending """
+roles rating :avg:des;:max:des;actor :grp;;
+
+""" Actors ordered by sum of ratings descending, then by name ascending """
+roles rating :sum:des;actor :grp:asc;;
+
+""" Top 5 actors by average rating with name as tiebreak (A-Z) """
+roles rating :avg:des;actor :grp:asc;% lim 5;;
+
+""" Top 3 actors by role count, breaking ties by average rating desc """
+roles id :cnt:des;rating :avg:des;actor :grp;% lim 3;;
+
+""" Actors whose name equals a movie title and are at least 30 """
+actors age >=30;name :$x;movies title $x;;
+
+""" Actors with name containing "Ana" and average rating >= 3.8 """
+roles rating :avg>=3.8;actor :grp~"Ana";;
+
+""" Actors with maximum rating no more than 3, ordered by average rating ascending """
+roles rating :max<=3;:avg:asc;actor :grp;;
+
+""" Actors with a count of roles between 2 and 6 """
+roles id :cnt>=2;:cnt<=6;actor :grp;;
+
+""" Roles where actor equals movie title and rating >= 4 """
+roles actor _;movie @;rating >=4;_;;
+
+""" Movies with ratings sum between 10 and 20 inclusive, title ascending """
+roles rating :sum>=10;:sum<=20;movie :grp:asc;;
+
+""" Movies with count at least 10 and average rating at least 3, ordered by title """
+roles id :cnt>=10;rating :avg>=3;movie :grp:asc;;
+
+""" Movies with maximum role rating under 2 and at least 3 roles """
+roles rating :max<2;id :cnt>=3;movie :grp;;
+
+""" Roles for movies released in 2005 with rating > 4 """
+movies year 2005;title _;roles movie @;rating >4;_;;
+
+""" Movies ordered by minimum rating ascending, then count descending """
+roles rating :min:asc;id :cnt:des;movie :grp;;
+
+""" Top 20 movies by count of roles, then by title """
+roles id :cnt:des;movie :grp:asc;% lim 20;;
+
+""" Second page of movies by count of roles, 25 per page """
+roles id :cnt:des;movie :grp;% lim 25;% beg 25;;
+
+""" movies made per year about the titanic, order by movie year """
+movies description ~"Titanic";id :cnt;year :grp:asc;;
+
+""" Drama movies about clowns newest to oldest, page 3 (40 per page) """
+movies year :des;genre drama;description <=>"clowns"<=$sim;% lim 40;% beg 80;;
+
+""" Top 15 sci-fi movies about time travel """
+movies genre scifi;description <=>"time travel":des;_;% lim 15;;
+
+""" Space exploration films, newest first """
+movies description <=>"space exploration":des;year :des;_;;
+

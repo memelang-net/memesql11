@@ -1,0 +1,195 @@
+""" March 2025 signup days with at least 5 customers, sort dates newest first """
+customers id :cnt>=5;created :grp:des>=2025-03-01;<=2025-03-31;;
+
+""" Active products similar to 'USB-C hub 7 port' created on 2024-10-10, order by similarity """
+products name <=>"USB-C hub 7 port":des;active 1;created 2024-10-10;_;;
+
+""" Invoice items on 2025-09-01 for products with SKU containing QX, quantities 3 to 10 """
+products sku ~"QX";id _;invoice_items product_id @;quantity >=3;<=10;invoice_id _;invoices id @;invoice_date 2025-09-01;;
+
+""" On 2024-12-01, total line amount by product for items mentioning Cable, highest first with product name """
+invoices invoice_date 2024-12-01;id _;invoice_items invoice_id @;description ~"Cable";line_total :sum:des;product_id :grp;products id @;name _;;
+
+""" Invoice statuses on 2025-12-31 with counts at least 10, sort ascending """
+invoices invoice_date 2025-12-31;id :cnt:asc>=10;status :grp;;
+
+""" Top 5 customers by total invoiced amount in January 2025, include customer name """
+invoices invoice_date >=2025-01-01;<=2025-01-31;total :sum:des;customer_id :grp;customers id @;name _;% lim 5;% beg 0;;
+
+""" Overdue invoices with total >= 500 created on 2024-07-04, newest due dates first """
+invoices status overdue;total >=500;created 2024-07-04;due_date :des;_;;
+
+""" Average product price by active flag for products added on 2025-06-15, sort high to low """
+products created 2025-06-15;unit_price :avg:des;active :grp;;
+
+""" On 2025-05-01, tax totals by invoice status, smallest sums first """
+invoices invoice_date 2025-05-01;tax :sum:asc;status :grp;;
+
+""" Customers named like Olsen with paid invoices after 2025-01-01, sort totals low to high """
+customers name ~"Olsen";id _;invoices customer_id @;status paid;invoice_date >2025-01-01;total :asc;_;;
+
+""" Active products similar to 'adapter pro v2' in 2024, similarity at least 0.75, sort by closeness """
+products name <=>"adapter pro v2":des>=0.75;active 1;created >=2024-01-01;<=2024-12-31;_;;
+
+""" In November 2025, maximum invoice total per due date, sort high to low """
+invoices invoice_date >=2025-11-01;<=2025-11-30;total :max:des;due_date :grp;;
+
+""" Items on 2025-10-20 with description like USB and unit price 15..40 """
+invoices invoice_date 2025-10-20;id _;invoice_items invoice_id @;unit_price >=15;<=40;description ~"USB";_;;
+
+""" December 2024 invoice dates ranked by count where count is at least 30, top 20 """
+invoices id :cnt:des>=30;invoice_date :grp>=2024-12-01;<=2024-12-31;% lim 20;;
+
+""" Customers created 2025-02-14 with emails ending .io and name including Dev, A-Z by name """
+customers created 2025-02-14;email ~".io";name :asc~"Dev";_;;
+
+""" Invoices due on or before 2025-09-15 with item counts per invoice, sort counts descending """
+invoices due_date <=2025-09-15;id _;invoice_items invoice_id @;id :cnt:des;invoice_id :grp;;
+
+""" Customers with at least 3 paid invoices in April 2025, customer name Z-A """
+invoices status paid;invoice_date >=2025-04-01;<=2025-04-30;id :cnt>=3;customer_id :grp;customers id @;name :des;;
+
+""" After 2023-11-01, average invoice total per issue date, latest dates first """
+invoices total :avg;invoice_date :grp:des>2023-11-01;;
+
+""" For items mentioning HDMI with line total at least 100, maximum quantity per product, include product name """
+invoice_items description ~"HDMI";line_total >=100;quantity :max:des;product_id :grp;products id @;name _;;
+
+""" On 2025-07-04, statuses by summed subtotals where sum >= 1000, highest first """
+invoices invoice_date 2025-07-04;subtotal :sum:des>=1000;status :grp;;
+
+""" Open invoices due 2025-12-01 for customers with name containing Vega, order by invoice number ascending """
+customers name ~"Vega";id _;invoices customer_id @;status open;due_date 2025-12-01;invoice_no :asc;_;;
+
+""" Products created on 2024-11-11 with price above 75 and name has Cable, price high to low """
+products created 2024-11-11;unit_price :des>75;name ~"Cable";_;;
+
+""" Customers similar to 'Global Tech Partners' created on 2024-04-10 """
+customers name <=>"Global Tech Partners"<=$sim;created 2024-04-10;_;;
+
+""" Top 15 customers by total invoiced in 2025-06, include customer name """
+invoices invoice_date >=2025-06-01;<=2025-06-30;total :sum:des;customer_id :grp;customers id @;name _;% lim 15;;
+
+""" Days in 2024-11 with invoice counts at least 10, sorted descending """
+invoices id :cnt:des>=10;invoice_date :grp>=2024-11-01;<=2024-11-30;;
+
+""" Products with 'Pro' in name created 2025-01-15..2025-02-28, price over 75, A-Z """
+products name :asc~"Pro";created >=2025-01-15;<=2025-02-28;unit_price >75;_;;
+
+""" Invoice items on 2025-08-01 invoices for customer 420, quantity 2..4 """
+invoices invoice_date 2025-08-01;customer_id 420;id _;invoice_items invoice_id @;quantity >=2;<=4;_;;
+
+""" Average total by status for invoices due on 2025-12-31, smallest first """
+invoices due_date 2025-12-31;total :avg:asc;status :grp;;
+
+""" Customers with names like Chen and more than 3 invoices in 2025-03, sorted by count descending """
+invoices invoice_date >=2025-03-01;<=2025-03-31;id :cnt:des>3;customer_id :grp;customers id @;name ~"Chen";;
+
+""" Top 5 product SKUs by sum of item quantities on 2025-07-04 """
+invoices invoice_date 2025-07-04;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;sku _;% lim 5;;
+
+""" Open invoices with totals between 300 and 800 created on 2024-10-10, newest due dates first """
+invoices status open;total >=300;<=800;created 2024-10-10;due_date :des;_;;
+
+""" Counts of overdue invoices per customer after 2025-02-01, highest first with customer name """
+invoices status overdue;invoice_date >2025-02-01;id :cnt:des;customer_id :grp;customers id @;name _;;
+
+""" For active products mentioning Cable, average line total per product with names, sorted high to low """
+invoice_items line_total :avg:des;product_id :grp;products id @;active 1;name ~"Cable";;
+
+""" First 20 invoices for customers with email ending @acme.com issued on 2025-09-01 """
+customers email ~"@acme.com";id _;invoices customer_id @;invoice_date 2025-09-01;_;% lim 20;;
+
+""" Invoice dates in 2023-12 where total sums reach 5000 or more, latest first """
+invoices total :sum:des>=5000;invoice_date :grp>=2023-12-01;<=2023-12-31;;
+
+""" Products priced 0 created on 2024-01-01 ordered by name A-Z """
+products unit_price 0;created 2024-01-01;name :asc;_;;
+
+""" Customers from 2025-05-05 whose phone starts with 646- and name includes Lee """
+customers created 2025-05-05;phone ~"646-";name ~"Lee";_;;
+
+""" Maximum item unit price per product on invoices dated 2025-01-31, include product name, highest first """
+invoices invoice_date 2025-01-31;id _;invoice_items invoice_id @;unit_price :max:des;product_id :grp;products id @;name _;;
+
+""" Signup days in 2025-02 with at least 5 customers, ascending dates """
+customers id :cnt>=5;created :grp:asc>=2025-02-01;<=2025-02-28;;
+
+""" Active products with HDMI in the name, item counts per product where quantity at least 2, sorted descending with product name """
+invoice_items quantity >=2;id :cnt:des;product_id :grp;products id @;active 1;name ~"HDMI";;
+
+""" On 2024-11-20, paid invoice totals by customer smallest to largest with customer name """
+invoices invoice_date 2024-11-20;status paid;total :sum:asc;customer_id :grp;customers id @;name _;;
+
+""" Items priced at least 50 on invoices issued on or after 2025-06-01: average quantity per invoice high to low """
+invoices invoice_date >=2025-06-01;id _;invoice_items invoice_id @;unit_price >=50;quantity :avg:des;invoice_id :grp;;
+
+""" Top 10 invoice numbers by summed tax in May 2024 """
+invoices invoice_date >=2024-05-01;<=2024-05-31;tax :sum:des;invoice_no :grp;% lim 10;;
+
+""" Customers with overdue invoices due on 2025-10-15, totals per customer high to low including names """
+invoices status overdue;due_date 2025-10-15;total :sum:des;customer_id :grp;customers id @;name _;;
+
+""" In 2024-12, daily tax totals at least 500, highest totals first, limit 5 """
+invoices tax :sum:des>=500;invoice_date :grp>=2024-12-01;<=2024-12-31;% lim 5;;
+
+""" Customers created during 2025-03 with emails containing io, names Z-A, all fields """
+customers created >=2025-03-01;<=2025-03-31;email ~"io";name :des;_;;
+
+""" Active products most similar to 'fast charging cable' with similarity at least 0.6, ordered by similarity """
+products active 1;name <=>"fast charging cable":des>=0.6;_;;
+
+""" On 2025-09-15, paid invoices with items quantity 1 to 3, include product names """
+invoices invoice_date 2025-09-15;status paid;id _;invoice_items invoice_id @;quantity >=1;<=3;product_id _;products id @;name _;;
+
+""" Open invoices due in 2025-10 summed by customer, largest totals first, attach customer name """
+invoices status open;due_date >=2025-10-01;<=2025-10-31;total :sum:des;customer_id :grp;customers id @;name _;;
+
+""" Customers created on 2024-07-04 whose open invoices total at least 500 """
+invoices status open;total :sum>=500;customer_id :grp;customers id @;created 2024-07-04;name _;;
+
+""" Invoice dates in 2025-02 with at least 20 invoices, newest dates first """
+invoices id :cnt:des>=20;invoice_date :grp>=2025-02-01;<=2025-02-28;;
+
+""" For 2023-12, average invoice total by status, lowest averages first """
+invoices invoice_date >=2023-12-01;<=2023-12-31;total :avg:asc;status :grp;;
+
+""" Invoices for customer 300 from 2024-05-01 to 2024-05-31 with totals between 100 and 500, order by due_date, all columns """
+invoices customer_id 300;invoice_date >=2024-05-01;<=2024-05-31;total >=100;<=500;due_date :asc;_;;
+
+""" Active products created in 2024-10 grouped by day with counts of 5 or more, dates ascending """
+products active 1;id :cnt>=5;created :grp:asc>=2024-10-01;<=2024-10-31;;
+
+""" Product SKUs most similar to 'USB-C hub' with similarity cutoff 0.7, sort by similarity """
+products sku <=>"USB-C hub":des>=0.7;_;;
+
+""" For invoices dated 2025-01-15, maximum line_total per invoice for items mentioning HDMI """
+invoices invoice_date 2025-01-15;id _;invoice_items invoice_id @;description ~"HDMI";line_total :max;invoice_id :grp;;
+
+""" On 2025-06-01, paid invoices with zero tax and subtotal under 200, all fields """
+invoices invoice_date 2025-06-01;status paid;tax 0;subtotal <200;_;;
+
+""" Customers with at least 3 invoices in 2024-11, names A-Z """
+invoices invoice_date >=2024-11-01;<=2024-11-30;id :cnt>=3;customer_id :grp;customers id @;name :asc;;
+
+""" Invoices on 2025-04-10 sorted by invoice_no ascending, all columns """
+invoices invoice_date 2025-04-10;invoice_no :asc;_;;
+
+""" Sum of line_total by product for items with quantity 2..4, highest first, include product name """
+invoice_items quantity >=2;<=4;line_total :sum:des;product_id :grp;products id @;name _;;
+
+""" Items on invoice 8001 with unit_price 10..50 and description containing Cable, order quantity high to low """
+invoice_items invoice_id 8001;unit_price >=10;<=50;description ~"Cable";quantity :des;_;;
+
+""" Customers whose name includes Garcia created from 2024-01-01 to 2024-12-31, all columns """
+customers name ~"Garcia";created >=2024-01-01;<=2024-12-31;_;;
+
+""" Overdue invoices in 2025-01 through 2025-03: sum totals by due_date ascending """
+invoices status overdue;total :sum;due_date :grp:asc>=2025-01-01;<=2025-03-31;;
+
+""" Top 20 customers by average invoice total during 2024, include customer name """
+invoices invoice_date >=2024-01-01;<=2024-12-31;total :avg:des;customer_id :grp;customers id @;name _;% lim 20;;
+
+""" Invoice_no similar to 'INV-2025-09-01' with similarity at least 0.8, newest created first, all fields """
+invoices invoice_no <=>"INV-2025-09-01"<=0.8;created :des;_;;
+

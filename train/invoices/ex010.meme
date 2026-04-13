@@ -1,0 +1,207 @@
+""" Products on 2025-08-08 with total line amounts at least 500, highest totals first, include product names """
+invoices invoice_date 2025-08-08;id _;invoice_items invoice_id @;line_total :sum:des>=500;product_id :grp;products id @;name _;;
+
+""" On 2025-01-01, per-invoice item counts of 10 or more, sort counts descending, show invoice numbers """
+invoices invoice_date 2025-01-01;id _;invoice_items invoice_id @;id :cnt:des>=10;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" Paid invoices on 2025-05-05 with per-product line total sums of 300 or more, sorted high to low, include product names """
+invoices status paid;invoice_date 2025-05-05;id _;invoice_items invoice_id @;line_total :sum:des>=300;product_id :grp;products id @;name _;;
+
+""" For 2024-09-09, maximum item quantity per invoice not exceeding 10, ascending, with invoice numbers """
+invoices invoice_date 2024-09-09;id _;invoice_items invoice_id @;quantity :max:asc<=10;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" On 2025-10-10, average item quantities per product of at least 2, sort high to low, include product names """
+invoices invoice_date 2025-10-10;id _;invoice_items invoice_id @;quantity :avg:des>=2;product_id :grp;products id @;name _;;
+
+""" Overdue invoices due 2025-03-20 with product quantity sums of 5 or more, top to bottom, show product names """
+invoices status overdue;due_date 2025-03-20;id _;invoice_items invoice_id @;quantity :sum:des>=5;product_id :grp;products id @;name _;;
+
+""" Products created 2024-11-11 with invoice line total sums per invoice at least 200, sort sums ascending, include invoice numbers """
+products created 2024-11-11;id _;invoice_items product_id @;line_total :sum:asc>=200;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" Open invoices on 2025-06-06 with per-product average quantities not above 5, sort ascending, include product names """
+invoices status open;invoice_date 2025-06-06;id _;invoice_items invoice_id @;quantity :avg:asc<=5;product_id :grp;products id @;name _;;
+
+""" Overdue invoices on 2025-07-01 with per-invoice line total sums of at least 1000, sort high to low, show invoice numbers """
+invoices status overdue;invoice_date 2025-07-01;id _;invoice_items invoice_id @;line_total :sum:des>=1000;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" Products priced at least 75 with quantity sums per invoice of 20 or more, sort high to low, display invoice dates """
+products unit_price >=75;id _;invoice_items product_id @;quantity :sum:des>=20;invoice_id :grp;invoices id @;invoice_date _;;
+
+""" On 2024-04-04, minimum item unit price per product no less than 5, ascending, include product names """
+invoices invoice_date 2024-04-04;id _;invoice_items invoice_id @;unit_price :min:asc>=5;product_id :grp;products id @;name _;;
+
+""" On 2025-11-11, average line_total per invoice of at least 150, high to low, show due dates """
+invoices invoice_date 2025-11-11;id _;invoice_items invoice_id @;line_total :avg:des>=150;invoice_id :grp;invoices id @;due_date _;;
+
+""" On 2025-03-03, per-product sums of line_total for items mentioning HDMI of 400 or more, sorts descending, include names """
+invoices invoice_date 2025-03-03;id _;invoice_items invoice_id @;description ~"HDMI";line_total :sum:des>=400;product_id :grp;products id @;name _;;
+
+""" Paid invoices on 2024-06-06 with average item unit price per product no more than 50, sort ascending, include product names """
+invoices status paid;invoice_date 2024-06-06;id _;invoice_items invoice_id @;unit_price :avg:asc<=50;product_id :grp;products id @;name _;;
+
+""" Products created 2025-01-01 with invoice quantity sums per invoice id 6000..7000, totals at least 30, sort descending, show invoice numbers """
+products created 2025-01-01;id _;invoice_items product_id @;quantity :sum:des>=30;invoice_id :grp>=6000;<=7000;invoices id @;invoice_no _;;
+
+""" On 2024-12-12, per-product maximum unit price for open invoices at least 15, highest first, include product names """
+invoices status open;invoice_date 2024-12-12;id _;invoice_items invoice_id @;unit_price :max:des>=15;product_id :grp;products id @;name _;;
+
+""" Customer 505 on 2025-07-04: average item quantity per product at least 1.5, sort high to low, list SKUs """
+invoices customer_id 505;invoice_date 2025-07-04;id _;invoice_items invoice_id @;quantity :avg:des>=1.5;product_id :grp;products id @;sku _;;
+
+""" Open invoices on 2025-10-10: maximum item line_total per product under 2000, sort ascending, include product names """
+invoices status open;invoice_date 2025-10-10;id _;invoice_items invoice_id @;line_total :max:asc<=2000;product_id :grp;products id @;name _;;
+
+""" On 2025-09-01 paid invoices: quantity sums per product for ids 100..900, highest first with product names """
+invoices status paid;invoice_date 2025-09-01;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp>=100;<=900;products id @;name _;;
+
+""" On 2024-12-12, items mentioning USB: average unit price per product up to id 5000, sort high to low and include product names """
+invoices invoice_date 2024-12-12;id _;invoice_items invoice_id @;description ~"USB";unit_price :avg:des;product_id :grp<=5000;products id @;name _;;
+
+""" Maximum line totals per invoice on 2025-01-15 for invoice ids 7000..8000, sort groups A-Z and show invoice numbers """
+invoices invoice_date 2025-01-15;id _;invoice_items invoice_id @;line_total :max:asc;invoice_id :grp:asc>=7000;<=8000;invoices id @;invoice_no _;;
+
+""" Open invoices on 2025-06-30: item counts per product where count at least 10, sort count descending with product names """
+invoices status open;invoice_date 2025-06-30;id _;invoice_items invoice_id @;id :cnt:des>=10;product_id :grp;products id @;name _;;
+
+""" Customer 440 on 2024-07-04: summed line totals per invoice 3000..5000, sort group ids high to low and include invoice numbers """
+invoices customer_id 440;invoice_date 2024-07-04;id _;invoice_items invoice_id @;line_total :sum:des;invoice_id :grp:des>=3000;<=5000;invoices id @;invoice_no _;;
+
+""" On 2025-05-05, HDMI items: maximum quantity per product for product ids 2000 or higher, sort groups descending with product names """
+invoices invoice_date 2025-05-05;id _;invoice_items invoice_id @;description ~"HDMI";quantity :max;product_id :grp:des>=2000;products id @;name _;;
+
+""" Active products created 2024-04-04: average line_total by invoice id 800..1200 with invoice dates, groups ascending """
+products active 1;created 2024-04-04;id _;invoice_items product_id @;line_total :avg;invoice_id :grp:asc>=800;<=1200;invoices id @;invoice_date _;;
+
+""" Paid invoices on 2024-03-03: item counts per invoice at most 5, sort count low to high and include invoice numbers """
+invoices status paid;invoice_date 2024-03-03;id _;invoice_items invoice_id @;id :cnt:asc<=5;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" Invoices on 2024-10-10 with zero tax: average unit price per product up to id 4000, sort groups A-Z and include product names """
+invoices invoice_date 2024-10-10;tax 0;id _;invoice_items invoice_id @;unit_price :avg;product_id :grp:asc<=4000;products id @;name _;;
+
+""" Overdue invoices on 2025-11-01: minimum unit price per product for ids 500..1500, order units ascending and include product names """
+invoices status overdue;invoice_date 2025-11-01;id _;invoice_items invoice_id @;unit_price :min:asc;product_id :grp>=500;<=1500;products id @;name _;;
+
+""" On 2023-12-24, USB items priced 10..30: maximum quantity per invoice with ids at least 6000, sort high to low and show invoice numbers """
+invoices invoice_date 2023-12-24;id _;invoice_items invoice_id @;description ~"USB";unit_price >=10;<=30;quantity :max:des;invoice_id :grp>=6000;invoices id @;invoice_no _;;
+
+""" On 2024-11-11, Dock items: total line amounts per product where sums at least 400, sort totals high to low with product names """
+invoices invoice_date 2024-11-11;id _;invoice_items invoice_id @;description ~"Dock";line_total :sum:des>=400;product_id :grp;products id @;name _;;
+
+""" Customer 300 on 2025-02-02: average item quantity per product up to id 900, sort ascending and include product names """
+invoices customer_id 300;invoice_date 2025-02-02;id _;invoice_items invoice_id @;quantity :avg:asc;product_id :grp<=900;products id @;name _;;
+
+""" Open invoices on 2025-08-08: item counts per product for ids 100..800, sort groups A-Z and show SKUs """
+invoices status open;invoice_date 2025-08-08;id _;invoice_items invoice_id @;id :cnt;product_id :grp:asc>=100;<=800;products id @;sku _;;
+
+""" On 2025-04-04, items with line_total at least 50: average unit price per product with ids 2000 or higher, sort groups descending and include names """
+invoices invoice_date 2025-04-04;id _;invoice_items invoice_id @;line_total >=50;unit_price :avg;product_id :grp:des>=2000;products id @;name _;;
+
+""" Cable products created 2025-05-05: summed line totals per invoice up to id 4000, sort high to low and include invoice numbers """
+products created 2025-05-05;name ~"Cable";id _;invoice_items product_id @;line_total :sum:des;invoice_id :grp:des<=4000;invoices id @;invoice_no _;;
+
+""" Overdue invoices on 2025-12-12: average line_total per product where average at least 100, sort high to low with product names """
+invoices status overdue;invoice_date 2025-12-12;id _;invoice_items invoice_id @;line_total :avg:des>=100;product_id :grp;products id @;name _;;
+
+""" Customers named Lee on 2024-09-09: maximum item quantity per invoice for ids 8000..9000, require max at least 2 and sort descending """
+customers name ~"Lee";id _;invoices customer_id @;invoice_date 2024-09-09;id _;invoice_items invoice_id @;quantity :max:des>=2;invoice_id :grp>=8000;<=9000;;
+
+""" Paid invoices on 2025-02-14: quantity sums per product up to id 1200, sort groups A-Z and include product names """
+invoices status paid;invoice_date 2025-02-14;id _;invoice_items invoice_id @;quantity :sum;product_id :grp:asc<=1200;products id @;name _;;
+
+""" Adapter products created 2024-02-29: minimum item unit price grouped by invoice date in 2024-02, newest dates first """
+products created 2024-02-29;name ~"Adapter";id _;invoice_items product_id @;unit_price :min;invoice_id _;invoices id @;invoice_date :grp:des>=2024-02-01;<=2024-02-29;;
+
+""" For @contoso.com customers on 2025-07-01: sum of item line_total per invoice where sums at least 200, invoice ids 5000..9000 """
+customers email ~"@contoso.com";id _;invoices customer_id @;invoice_date 2025-07-01;id _;invoice_items invoice_id @;line_total :sum:des>=200;invoice_id :grp>=5000;<=9000;;
+
+""" Overdue invoices due 2025-03-20: average item quantity per product at least 2, product ids 300 or higher, sort groups A-Z with names """
+invoices status overdue;due_date 2025-03-20;id _;invoice_items invoice_id @;quantity :avg:des>=2;product_id :grp:asc>=300;products id @;name _;;
+
+""" USB SKUs created 2025-10-10: maximum line_total per invoice up to id 4000, sort ascending and include invoice numbers """
+products sku ~"USB";created 2025-10-10;id _;invoice_items product_id @;line_total :max:asc;invoice_id :grp<=4000;invoices id @;invoice_no _;;
+
+""" Open invoices on 2024-08-08: item counts per invoice where count at least 15, invoice groups descending from 2000, include invoice numbers """
+invoices status open;invoice_date 2024-08-08;id _;invoice_items invoice_id @;id :cnt:des>=15;invoice_id :grp:des>=2000;invoices id @;invoice_no _;;
+
+""" Customer 505 on 2025-05-15: minimum item unit price per product for ids 100..900, groups ascending with product names """
+invoices customer_id 505;invoice_date 2025-05-15;id _;invoice_items invoice_id @;unit_price :min;product_id :grp:asc>=100;<=900;products id @;name _;;
+
+""" On 2024-12-01: sum of line_total per product where sum at least 500, product ids up to 3000, sort groups high to low with names """
+invoices invoice_date 2024-12-01;id _;invoice_items invoice_id @;line_total :sum:des>=500;product_id :grp:des<=3000;products id @;name _;;
+
+""" Customers named Chen on 2025-11-30: average unit price per invoice for ids 6000..6500, sort averages low to high """
+customers name ~"Chen";id _;invoices customer_id @;invoice_date 2025-11-30;id _;invoice_items invoice_id @;unit_price :avg:asc;invoice_id :grp>=6000;<=6500;;
+
+""" Invoices on 2023-11-11: maximum item quantity per product at least 3, totals high to low for products named like Pro """
+invoices invoice_date 2023-11-11;id _;invoice_items invoice_id @;quantity :max:des>=3;product_id :grp;products id @;name ~"Pro";;
+
+""" 2025-04-01 item quantity totals per product at least 10, highest first with product names """
+invoices invoice_date 2025-04-01;id _;invoice_items invoice_id @;quantity :sum:des>=10;product_id :grp;products id @;name _;;
+
+""" On 2024-12-31 paid invoices, average item unit price per product of at least 20, high to low, include product names """
+invoices status paid;invoice_date 2024-12-31;id _;invoice_items invoice_id @;unit_price :avg:des>=20;product_id :grp;products id @;name _;;
+
+""" Overdue invoices due 2025-10-15: product-level sums of item quantities at least 8, sorted descending with product names """
+invoices status overdue;due_date 2025-10-15;id _;invoice_items invoice_id @;quantity :sum:des>=8;product_id :grp;products id @;name _;;
+
+""" Active Cable products: on 2024-09 invoices, average item unit price per issue date where average is at least 10, newest dates first """
+products active 1;name ~"Cable";id _;invoice_items product_id @;unit_price :avg:des>=10;invoice_id _;invoices id @;invoice_date :grp:des>=2024-09-01;<=2024-09-30;;
+
+""" On 2025-06-15 due date, per-product item counts of at least 3 for those invoices, restrict product ids 200..800 and include product names """
+invoices due_date 2025-06-15;id _;invoice_items invoice_id @;id :cnt:des>=3;product_id :grp>=200;<=800;products id @;name _;;
+
+""" Paid invoices on 2024-03-03: summed item line totals per invoice of at least 250, sort ascending and show invoice numbers """
+invoices status paid;invoice_date 2024-03-03;id _;invoice_items invoice_id @;line_total :sum:asc>=250;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" On 2025-10-20, items mentioning USB: maximum quantity per product where the max is 2 or more, highest first with product names """
+invoices invoice_date 2025-10-20;id _;invoice_items invoice_id @;description ~"USB";quantity :max:des>=2;product_id :grp;products id @;name _;;
+
+""" For @acme.com customers on 2025-09-01, per-invoice sums of item line_total at least 200, invoice ids 8000..9000 descending """
+customers email ~"@acme.com";id _;invoices customer_id @;invoice_date 2025-09-01;id _;invoice_items invoice_id @;line_total :sum:des>=200;invoice_id :grp:des>=8000;<=9000;;
+
+""" Overdue invoices on 2025-11-11: item counts per product where count is at least 10 and product_id is 2000 or higher, groups descending, filter SKUs with QX and include product names """
+invoices status overdue;invoice_date 2025-11-11;id _;invoice_items invoice_id @;id :cnt:des>=10;product_id :grp:des>=2000;products id @;sku ~"QX";name _;;
+
+""" Open invoices on 2025-08-08: per-product line_total sums of 500 or more, only product ids 5000 or less, sort groups high to low with product names """
+invoices status open;invoice_date 2025-08-08;id _;invoice_items invoice_id @;line_total :sum:des>=500;product_id :grp:des<=5000;products id @;name _;;
+
+""" On 2025-04-01, quantities per product for paid invoices, sum at least 5, highest first with product names """
+invoices status paid;invoice_date 2025-04-01;id _;invoice_items invoice_id @;quantity :sum:des>=5;product_id :grp;products id @;name _;;
+
+""" Active products with SKU containing QX created on 2024-10-10: average item unit price per product >= 20, sort high to low, include product name """
+products sku ~"QX";active 1;created 2024-10-10;id _;invoice_items product_id @;unit_price :avg:des>=20;product_id :grp;products id @;name _;;
+
+""" For customer 220 on 2025-06-30, item counts per product where count >= 2, order by count descending and show product names """
+invoices customer_id 220;invoice_date 2025-06-30;id _;invoice_items invoice_id @;id :cnt:des>=2;product_id :grp;products id @;name _;;
+
+""" Open invoices due on 2025-12-15: sum of line totals per product at least 1000, sort highest first with product names """
+invoices status open;due_date 2025-12-15;id _;invoice_items invoice_id @;line_total :sum:des>=1000;product_id :grp;products id @;name _;;
+
+""" Cable products created 2024-09-10: per-invoice line total sums at least 300, sort descending and include invoice numbers """
+products name ~"Cable";created 2024-09-10;id _;invoice_items product_id @;line_total :sum:des>=300;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" Customer 505 on 2025-03-03: HDMI item quantity sums per product at least 10, order highest first, show product names """
+invoices customer_id 505;invoice_date 2025-03-03;id _;invoice_items invoice_id @;description ~"HDMI";quantity :sum:des>=10;product_id :grp;products id @;name _;;
+
+""" For customer 880 on 2024-12-24, item counts per invoice where count >= 5, sorted descending with invoice numbers """
+invoices customer_id 880;invoice_date 2024-12-24;id _;invoice_items invoice_id @;id :cnt:des>=5;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" Active products created 2025-01-01: per-invoice line total sums >= 500, order ascending and include invoice numbers """
+products active 1;created 2025-01-01;id _;invoice_items product_id @;line_total :sum:asc>=500;invoice_id :grp;invoices id @;invoice_no _;;
+
+""" On 2024-05-05 tax-free invoices, item counts per product at least 2 for product_id <= 3000, counts high to low with product names """
+invoices tax 0;invoice_date 2024-05-05;id _;invoice_items invoice_id @;id :cnt:des>=2;product_id :grp<=3000;products id @;name _;;
+
+""" Overdue invoices due 2025-10-01: average item unit price per product (product_id >= 1200) at least 15, high to low with product names """
+invoices status overdue;due_date 2025-10-01;id _;invoice_items invoice_id @;unit_price :avg:des>=15;product_id :grp>=1200;products id @;name _;;
+
+""" Customer 300 on 2025-12-31 with Dock items: line total sums per product at least 200, product ids 100..900, ascending with names """
+invoices customer_id 300;invoice_date 2025-12-31;id _;invoice_items invoice_id @;description ~"Dock";line_total :sum:asc>=200;product_id :grp:asc>=100;<=900;products id @;name _;;
+
+""" On 2025-11-11, QX SKU products: summed line totals per product at least 500, product ids up to 5000, sort descending with product names """
+products sku ~"QX";id _;invoice_items product_id @;line_total :sum:des>=500;product_id :grp<=5000;products id @;name _;;
+
+""" Customer 505 on 2025-06-06: average unit price per product (product_id >= 100) at least 10, highest first with product names """
+invoices customer_id 505;invoice_date 2025-06-06;id _;invoice_items invoice_id @;unit_price :avg:des>=10;product_id :grp>=100;products id @;name _;;
+

@@ -1,0 +1,641 @@
+'''
+info@memelang.net | (c)2026 HOLTWORK LLC | Patented
+This script parses MEMELANG, a terse query DSL with grid grammar
+Grid(Axis2) -> Axis1 -> Axis0 -> Cell
+Whitespaces are syntactic and trigger "new Cell"
+Never space between operator/comparator/comma/flag and values
+'''
+
+MEMELANG_VER = 11.02
+
+import re, sys, json
+from typing import Optional, Union, List, Iterator, Pattern, Any
+Err = SyntaxError
+
+### SYNTAX ###
+
+CELL_PATTERN = (
+	('QUO',   	r'"(?:[^"\\\n\r]|\\.)*"'),
+	('EMB',		r'\[(?:-?\d+(?:\.\d+)?)(?:\s*,\s*-?\d+(?:\.\d+)?)*\]'),
+	('L2',		r'<->'),
+	('COS',		r'<=>'),
+	('IP',		r'<#>'),
+	('GE',	 	r'>='),
+	('LE',	 	r'<='),
+	('DSIM', 	r'!~'),
+	('NOT',	 	r'!=?'), # a!=b or a!b
+	('EQL',		r'='),
+	('GT',		r'>'),
+	('LT',		r'<'),
+	('SIM',		r'~'),
+	('BIND',	r':\$\w+'),
+	('FLAG',	r':[a-zA-Z]+'),
+	('TYPE',	r'&[a-z]+'),
+	('VAR',		r'\$\w+'),
+	('REL0',  	r'@0'),
+	('REL1',  	r'@1'),
+	('REL2',  	r'@2'),
+	('REL3',  	r'@3'),
+	('REL4',  	r'@4'),
+	('SAM0',	r'@'),
+	('SAM1',	r'\^'),
+	('WLD', 	r'_'),
+	('META', 	r'%[a-zA-Z0-9_]+'),
+	('TIM',		r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'),
+	('DEC',		r'-?\d*\.\d+'),
+	('INT',		r'-?\d+'),
+	('ALN',		r'[A-Za-z][A-Za-z0-9_]*'),
+	('OR',		r','),
+	('WS',		r'\s+'),
+	('MISMATCH', r'.'),
+)
+
+CELL_REGEX=re.compile("|".join(f"(?P<{k}>{p})" for k, p in CELL_PATTERN))
+
+PAD_MODES = {'qry','tab'}
+MOD_KINDS = {'L2','COS', 'IP'}
+FLAG_KINDS = {'FLAG','BIND','TYPE','META'}
+CMP_KINDS = {'EQL','GE','LE','DSIM','NOT','EQL','GT','LT','SIM'}
+LIT_KINDS = {'TIM','DEC','INT','ALN','QUO','EMB'}
+VAR_KINDS = {'VAR','WLD','SAM0','SAM1','REL0','REL1','REL2','REL3','REL4','META'}
+DAT_KINDS = LIT_KINDS | VAR_KINDS
+RELKINDS = {
+	'REL0': ['-1','-1'],
+	'REL1': ['-1','-2'],
+	'REL2': ['-1','-3'],
+	'REL3': ['-1','-4'],
+	'REL4': ['-1','-5'],
+	'SAM0'  : ['-1','+0'],
+	'SAM1'  : ['-1','end','+0'],
+}
+
+
+# Atomic token
+class Tok:
+	def __init__(self, kind: str, lex: str):
+		self.kind = kind
+		self.lex = lex
+		if   kind == 'QUO': self.dat = json.loads(lex)
+		elif kind == 'EMB': self.dat = json.loads(lex)
+		elif kind == 'DEC': self.dat = float(lex)
+		elif kind == 'INT': self.dat = int(lex)
+		else: self.dat = lex
+	def __str__(self): return self.lex
+	def __repr__(self): return self.lex
+	def __eq__(self, other): return str(self) == str(other)
+	def __hash__(self): return hash(self.lex)
+	def __bool__(self): return bool(self.lex)
+
+
+TOK_NULL = Tok('NULL', '')
+TOK_EQL = Tok('EQL', '=')
+TOK_EQL_ELIDE = Tok('EQL', '')  # default, elided '='
+
+
+# Sequence of tokens
+class Seq(list[Tok]):
+	opr: Tok = TOK_NULL
+	def __init__(self, *items):
+		super().__init__(items)
+		self.opr = TOK_NULL
+	def __str__(self): return self.opr.lex.join(map(str, self))
+
+
+# Predicate expression
+class Cell:
+	left: Seq
+	flag: Seq
+	comp: Tok
+	right: Seq
+	env: dict[str,Any]
+	padded = False
+
+	def __init__(self, src: str):
+		self.left = Seq()
+		self.flag = Seq()
+		self.comp = TOK_EQL_ELIDE
+		self.right = Seq()
+		self.env = {}
+
+		toks = []
+		for m in CELL_REGEX.finditer(src):
+			kind = m.lastgroup
+			text = m.group()
+			if kind == 'WS': continue
+			if kind == 'MISMATCH': raise Err(f'E_TOK {text!r}')
+			toks.append(Tok(kind, text))
+
+		i, n = 0, len(toks)
+
+		def peek(): return toks[i].kind if i < n else ''
+
+		def take():
+			nonlocal i
+			if i >= n: raise Err('E_EOF')
+			t = toks[i]
+			i += 1
+			return t
+
+		# LEFT (prefix MOD)
+		if peek() in MOD_KINDS:
+			self.left.opr = take()
+			self.left.append(TOK_NULL)
+			t = take()
+			if not t.kind in DAT_KINDS: raise Err('E_TERM_DAT')
+			self.left.append(t)
+
+		# FLAGS
+		while peek() in FLAG_KINDS:
+			self.flag.append(take())
+
+		# COMPARATOR
+		if peek() in CMP_KINDS:
+			self.comp = take()
+			if not peek() in DAT_KINDS: raise Err('E_DAT')
+
+		# RIGHT (values, OR-joined)
+		while peek() in DAT_KINDS:
+			self.right.append(take())
+			if peek() == 'OR':
+				self.right.opr = take()
+				if not peek() in DAT_KINDS: raise Err('E_OR_TRAIL')
+
+		if i != n: raise Err(f'E_EXPR_TRAIL {toks[i:]}')
+
+	# PLACEHOLDER: OVERWRITE WITH YOUR EMBEDDING FUNCTION
+	def vectorize(self, tok: Tok) -> Tok:
+		if tok.kind == 'EMB': return tok
+		if tok.kind not in {'QUO', 'ALN'}: raise Err('E_EMBED')
+		return Tok('EMB', json.dumps([0.1, 0.2]))
+
+	@property
+	def single(self) -> Tok:
+		return (
+			self.right[0]
+			if self.comp.kind == 'EQL' and len(self.right) == 1
+			else TOK_NULL
+		)
+
+	@property
+	def literal(self) -> Tok:
+		tok = self.single
+		return tok if tok.kind in LIT_KINDS else TOK_NULL
+
+	@property
+	def type(self) -> Tok:
+		for flag in self.flag:
+			if flag.kind=='TYPE': return flag
+		return TOK_NULL
+
+	@property
+	def meta(self) -> Tok:
+		for flag in self.flag:
+			if flag.kind=='META': return flag
+		return TOK_NULL
+
+	def bind(self, name: str):
+		lex = f':${name}'
+		if any(flag.kind == 'BIND' and flag.lex == lex for flag in self.flag): return
+		self.flag.append(Tok('BIND', lex))
+		if self.comp.kind == 'EQL' and self.right: self.comp = TOK_EQL
+
+	def __str__(self) -> str: return f"{self.left}{self.flag}{self.comp.lex}{self.right}"
+
+	def __repr__(self) -> str: return str(self)
+
+	def __bool__(self):
+		return bool(self.left or self.flag or self.right or self.comp.lex)
+
+
+### GRAMMAR ###
+
+class Axis(list):
+	src: str = ''
+	sep: str = None			# SEPERATOR TOKEN
+	sepreg: str = None		# SEPERATOR REG EXP
+	sepstr: str = None		# SEPERATOR OUT
+	empt: bool = False		# ALLOW EMPTY SUB-AXES?
+	sub = None				# SUB-AXIS NAME
+
+	def __init__(self, src: str):
+		if self.sep is None: raise Err('E_AXIS_SEP')
+		if not self.sepreg: self.sepreg = re.escape(self.sep)
+		if not self.sepstr: self.sepstr = self.sep + ' '
+		self.src= src
+		self.parse(src.strip())
+
+	@property
+	def regex(self) -> Pattern[str]:
+		return re.compile(rf'''
+		(?P<COMM>"""(?:(?!""")[^\n\r\\]|\\.)*""")|
+		(?P<EXPQ>"(?:[^"\\\n\r]|\\.)*")|
+		(?P<SEP>{self.sepreg})|
+		(?P<EXPM>[^"{re.escape(self.sep[0])}]+)|
+		(?P<EXPS>.)
+		''', re.VERBOSE)
+
+	def parse(self, src: str):
+		exprs: List[str] = []
+
+		for m in self.regex.finditer(src):
+			# build expression
+			if m.lastgroup in {"EXPQ", "EXPM", "EXPS"}: exprs.append(m.group())
+			# append sub-axis
+			elif m.lastgroup == "SEP" and (exprs or self.empt):
+				self.append(self.sub("".join(exprs)))
+				exprs.clear()
+
+		# debuffer expression
+		if exprs: self.append(self.sub("".join(exprs)))
+
+	def pull(self, coords):
+		value = self
+		for coord in coords: value = value[coord]
+		return value
+
+	def __str__(self) -> str:
+		items = [str(t) for t in self]
+		return self.sepstr.join([s for s in items if (s or self.empt)])
+
+
+# "Table column value" semantic sequence of Cell predicates
+class Axis0(Axis):
+	sep = ' '
+	sepstr = ' '
+	sepreg = r'\s+'
+	sub = Cell
+
+# AND-joined sequence of Axis0
+class Axis1(Axis):
+	sep = ';'
+	sub = Axis0
+
+# OR-joined sequence of Axis1
+class Axis2(Axis):
+	sep = ';;'
+	sub = Axis1
+	slot = ['%tab','%col','%val']
+
+	@staticmethod
+	def coordrel(coords, rel):
+		rel = ["+0"] * max(0, len(coords) - len(rel)) + [str(op) for op in rel]
+		out = []
+
+		for coord, op in zip(coords, rel):
+			if op == "end": out.append(-1)
+			else:
+				if op[0] in "+-": out.append(coord + int(op))
+				elif op[0].isdigit(): out.append(int(op))
+				else: raise ValueError(f"E_RELOPR")
+				if out[-1]<0: raise ValueError('E_RELBIND')
+
+		return out
+
+	# Left-pad Axis0
+	# Replace relatives `@` with coordinate vars `$x_y_z`
+	def rect(self):
+		env = {'mode':'qry','slots':self.slot}
+
+		for i, axis1 in enumerate(self):
+			idx = [i, None, None]
+
+			for i, axis0 in enumerate(axis1):
+				if not axis0: continue
+				idx[1:] = [i, None]
+
+				# Meta axis
+				# %KEY=VAL %KEY=VAL
+				if bool(axis0[0].meta):
+					for i, cell in enumerate(axis0):
+						if not bool(cell.meta): raise Err('E_MET_AXIS')
+						k=cell.meta.lex[1:]
+						if k=='slots': env[k] = [t.dat for t in cell.right]
+						else: env[k] = cell.single.dat
+					continue
+	
+				if env['mode'] not in PAD_MODES: continue
+
+				# Pad Axis0
+				axis0len=len(env['slots'])
+				if len(axis0) > axis0len: raise Err('E_AXIS0_LONG')
+				for _ in range(axis0len - len(axis0)):
+					cell = axis0.sub('@')
+					cell.padded=True
+					axis0.insert(0, cell)
+
+				for i, cell in enumerate(axis0):
+					idx[2] = i
+
+					# Assign slot
+					cell.env['slot'] = str(env['slots'][i])
+
+					# Replace relative tokens with coordinate vars
+					for seq in (cell.left, cell.right):
+						for n, tok in enumerate(seq):
+							if tok.kind not in RELKINDS: continue
+
+							coords=self.coordrel(idx, RELKINDS[tok.kind])
+							src=self.pull(coords)
+							name = '_'.join(map(str, coords)).replace('-1','E')
+
+							if src.literal.kind != 'NULL':
+								seq[n] = src.literal
+								continue
+
+							seq[n] = Tok('VAR', f'${name}')
+							src.bind(name)
+
+### PG SQL ###
+
+PH = '%s'
+Param = List[Union[int, float, str, list]]
+
+class SQL:
+	def __init__(self, sql: str = '', param: Optional[Param] = None):
+		self.sql = sql
+		self.param = [] if param is None else list(param)
+
+	def sql_value(self) -> "SQL":
+		return self
+
+	def __str__(self) -> str:
+		sql = self.sql
+		for p in self.param: sql = sql.replace(PH, json.dumps(p), 1)
+		return sql
+
+	def __repr__(self) -> str: return str((self.sql, self.param))
+
+	@staticmethod
+	def uniq(terms: "SQL") -> list["SQL"]:
+		out, seen = [], set()
+		for term in terms:
+			if term is None: continue
+			key = (term.sql, tuple(map(repr, term.param)))
+			if key in seen: continue
+			seen.add(key)
+			out.append(term)
+		return out
+
+
+class CellSQL(Cell):
+	flag2agg = {':cnt':'COUNT', ':sum':'SUM', ':avg':'AVG', ':min':'MIN', ':max':'MAX', ':last':'MAX'}
+	cmp2sql = {'EQL':'=', 'NOT':'!=', 'GT':'>', 'GE':'>=', 'LT':'<', 'LE':'<=', 'SIM':' ILIKE ', 'DSIM':' NOT ILIKE '}
+	mod2sql = {'COS':'<=>', 'L2':'<->', 'IP':'<#>'}
+
+	def __init__(self, src: str):
+		super().__init__(src)
+		self.base = self.alias = ''
+		self.param = []
+		flags = {t.lex for t in self.flag if t.kind == 'FLAG'}
+		self.agg = next((sql for flag, sql in self.flag2agg.items() if flag in flags), '')
+		self.grouped = ':grp' in flags
+		self.sort = 'ASC' if ':asc' in flags else 'DESC' if ':des' in flags else ''
+
+	def deref(self, bind: dict[str, SQL], with_agg: bool = True) -> Iterator[SQL]:
+		for t in self.right:
+			if t.kind == 'VAR':
+				key = t.lex[1:]
+				if key not in bind: raise Err(f'E_VAR_BIND {key}')
+				ref = bind[key]
+			else:
+				yield SQL(PH, [t.dat])
+				continue
+
+			if isinstance(ref, CellSQL): yield ref.sql_value(with_agg=with_agg)
+			else: yield ref.sql_value()
+
+	@property
+	def sql_groupby(self) -> Optional[SQL]:
+		if not self.grouped: return None
+		if self.agg: raise Err('E_GRP_AGG')
+		return SQL(self.base, self.param)
+
+	def sql_value(self, grouped: bool = False, alias: bool = False, order: bool = False, with_agg: bool = True) -> SQL:
+		sql, param = self.base, list(self.param)
+		if self.left.opr.kind in self.mod2sql:
+			sql = f'({sql}{self.mod2sql[self.left.opr.kind]}{PH}::VECTOR)'
+			param.append(self.vectorize(self.left[1]).lex)
+		agg = self.agg or ('MAX' if grouped and not self.grouped else '') if with_agg else ''
+		if agg: sql = f'{agg}({sql})'
+		if alias and self.alias: sql = f'{sql} AS {self.alias}'
+		if order and self.sort: sql = f'{sql} {self.sort}'
+		return SQL(sql, param)
+
+	def sql_clause(self, bind: dict[str, SQL]) -> Optional[tuple[str, SQL]]:
+		if not self.right or self.single.lex == '_': return None
+
+		left = self.sql_value()
+		rights = list(self.deref(bind, with_agg=bool(self.agg)))
+		comp = self.comp.kind
+
+		if comp in {'GT', 'GE', 'LT', 'LE'} and len(rights) != 1: raise Err('E_COMP_OR')
+
+		items, params = [], []
+		for right in rights:
+			items.append(f"CONCAT('%', {right.sql}, '%')" if comp in {'SIM', 'DSIM'} else right.sql)
+			params.extend(right.param)
+
+		if len(items) == 1: beg, end = '', ''
+		elif comp in {'EQL', 'SIM'}: beg, end = 'ANY(ARRAY[', '])'
+		elif comp in {'NOT', 'DSIM'}: beg, end = 'ALL(ARRAY[', '])'
+		else: raise Err('E_COMP_OR')
+
+		return ('having' if self.agg else 'where'), SQL(f"{left.sql}{self.cmp2sql[comp]}{beg}{','.join(items)}{end}", left.param + params)
+
+
+# Axis0 is sparse-dict `TAB COL VAL;`
+class Grid(Axis2):
+	syntax = '[table WS] [column WS] ["<=>" "\"" string "\""] [":" "$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")][":" ("asc"|"des")] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
+
+	examples = '''
+	%mode=tab;
+	roles id &int>0;rating :DESC="Decimal 0-5 star rating of performance";&dec>0;<=5;actor :DESC="Actor's full name";&str;movie :DESC="Movie's full name";&str;character :DESC="Character's full name";&str;;
+	actors id &int>0;name :DESC="Actor's full name";&str;age :DESC="Actor's age in years";&int>=0;<200;;
+	movies id &int>0;description :DESC="Brief description of movie plot";&str;year :DESC="Year of production AD";&int>1800;<2100;genre scifi,drama,comedy,documentary;&str;title :DESC="Full movie title";&str;;
+	actors name _;roles actor @;;
+	movies title _;roles movie @;;
+	roles id :gct=1;;
+	roles movie :grp;actor :grp;character :gct=1;;
+	actors id :gct=1;;
+	movies id :gct=1;;
+
+	%mode=qry;
+	""" All movies """
+	movies _ _;;
+
+	""" Every role """
+	roles _ _;;
+
+	""" Titles and descriptions for movies """
+	movies title _;description _;;
+
+	""" Actor name and ages """
+	actors name _;age _;;
+
+	""" Actors age 41 years or older """
+	actors age >=41;_;;
+
+	""" Role 567 and 8901 """
+	roles id 567,8901;_;;
+
+	""" Films with dystopian society narratives sim>.33 """
+	movies description <=>"dystopian"<0.33;_;;
+
+	""" Movies titled with Star released in 1977 or 1980 """
+	movies title ~"Star";year 1977,1980;_;;
+
+	""" Actors named like Ana aged 20 to 35 inclusive """
+	actors name ~"Ana";age >=20;<=35;_;;
+
+	""" Roles rated below 1.5 for movies before 1980 """
+	movies year <1980;title _;roles movie @;rating <1.5;_;;
+
+	""" Roles sort rating descending, movie descending """
+	roles rating :des;movie :des;;
+
+	""" All movies before 1970 ordered by year ascending """
+	movies year :asc<1970;_;;
+
+	""" Average performer rating at least 4.2 """
+	roles rating :avg>=4.2;actor :grp;;
+
+	""" Minimum role rating by actor, low to high """
+	roles rating :min:asc;actor :grp;;
+
+	""" Roles in movies mentioning robot rated 3+ """
+	movies description <=>"robot"<=$sim;title _;roles movie @;rating >=3;;
+
+	""" Costars seen with Bruce Willis or Uma Thurman """
+	roles actor :$a~"Bruce Willis","Uma Thurman";movie _;@ @ @;actor !$a;;
+
+	""" War stories before 1980: top 12 movies by minimum role rating """
+	movies year <1980;description <=>"war"<=$sim;title :grp;roles movie @;rating :min:des;%beg=0;%lim=12;;
+
+	""" Roles for movies Hero or House of Flying Daggers where actor name includes Li, actor A-Z """
+	movies title "Hero","House of Flying Daggers";roles movie @;actor :asc~"Li";;
+
+	""" Titles containing Here about robots between 1900 and 2000 """
+	movies title ~"Hero";description <=>"robot";year >=1900;<=2000;;
+	%tab=movies %slots=title,description,year; ~"Hero" <=>"robot" >=1900;<=2000;;
+	%tab=movies %col=title %slots=%val;~"Hero";%col=description;<=>"robot";%col=year;>=1900;<=2000;;
+	'''
+
+	def select(self) -> List[SQL]:
+		self.rect()
+		out = []
+		env = {'mode':'qry', 'sim':0.5,'tab':'','taba':'','cola':''}
+
+		for axis1 in self:
+			env['lim'], env['beg'] = 0, 0
+			bind = {k: SQL(PH, [v]) for k, v in env.items()}
+			tab_cnt = 0
+			qry = {'select':[], 'from':[], 'fromall':[], 'groupby':[], 'where':[], 'having':[], 'orderby':[]}
+			grouped = False
+			allselected = False
+
+			for axis0 in axis1:
+
+				if env['mode']!='qry': continue
+
+				if axis0.src == '_':
+					allselected = True
+					continue
+	
+				for idx0, cell in enumerate(axis0):
+					if cell.padded: continue
+					single = cell.single.dat
+
+					if cell.meta=='%tab' or cell.env.get('slot')=='%tab':
+						if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', single): raise Err('E_TAB_NAME')
+						tab_cnt += 1
+						env['tab']=single
+						env['taba']=f"t{tab_cnt}"
+						qry['from'].append(SQL(f"{env['tab']} AS {env['taba']}"))
+						qry['fromall'].append(env['taba'])
+						continue
+					
+					elif cell.meta=='%col' or cell.env.get('slot')=='%col':
+						if single == '_': allselected = True
+						else:
+							if not re.fullmatch(r'[A-Za-z_]+[A-Za-z0-9_$]{0,62}', single): raise Err('E_COL_NAME')
+							env['cola'] = single
+						continue
+
+					# %KEY=VAL
+					elif bool(cell.meta) and cell.meta.lex!='%val':
+						k=cell.meta.lex[1:]
+						if bool(cell.single):
+							env[k] = cell.single.dat
+							bind[k]=SQL(PH, [env[k]])
+						continue
+
+					elif cell.env.get('slot'):
+						if not cell.env['slot'].startswith('%'): env['cola'] = cell.env['slot']
+
+					if not env['taba']: raise Err('E_TAB_REQ')
+					
+					valcell = CellSQL(str(cell))
+					valcell.base = f"{env['taba']}.{env['cola']}"
+
+					qry['select'].append(valcell)
+
+					if valcell.grouped:
+						grouped = True
+						qry['groupby'].append(valcell)
+
+					if valcell.sort: qry['orderby'].append(valcell)
+
+					clause = valcell.sql_clause(bind)
+					if clause:
+						key, term = clause
+						qry[key].append(term)
+
+					for flag in valcell.flag:
+						if flag.kind != 'BIND': continue
+						if flag.lex[2:] in env: raise Err('E_ENV_BIND')
+						bind[flag.lex[2:]] = valcell
+
+		
+			if not qry['from']:
+				out.append(SQL())
+				continue
+
+			parts = (
+				('SELECT', ', ', [SQL(f"{a}.*") for a in qry['fromall']] if allselected else SQL.uniq(t.sql_value(grouped, True) for t in qry['select'])),
+				('FROM', ', ', qry['from']),
+				('WHERE', ' AND ', qry['where']),
+				('GROUP BY', ', ', SQL.uniq(t.sql_groupby for t in qry['groupby'])),
+				('HAVING', ' AND ', qry['having']),
+				('ORDER BY', ', ', SQL.uniq(t.sql_value(grouped, False, True) for t in qry['orderby'])),
+			)
+
+			sql, param = [], []
+			for keyword, sep, terms in parts:
+				if not terms: continue
+				sql.append(f"{keyword} " + sep.join(t.sql for t in terms))
+				for t in terms: param.extend(t.param)
+
+			if env['lim']: sql.append(f"LIMIT {int(env['lim'])}")
+			if env['beg']: sql.append(f"OFFSET {int(env['beg'])}")
+
+			out.append(SQL(' '.join(sql), param))
+
+		return out
+
+
+### CLI ###
+
+if __name__ == "__main__":
+	if len(sys.argv)>1: lines=[' '.join(sys.argv[1:])]
+	else: lines = Grid.examples.splitlines()
+	if not lines: exit()
+	for i in range(len(lines)):
+		line=lines[i].strip()
+		if not line: continue
+		if line.startswith('"""'): print(f'{line}')
+		else:
+			grid=Grid(line)
+			print(str(grid))
+			sel = grid.select()
+			if sel: print(str(sel[0]))
+			print()

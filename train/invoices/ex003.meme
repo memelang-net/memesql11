@@ -1,0 +1,300 @@
+""" rank invoice items by line total high to low """
+invoice_items line_total :des;_;;
+
+""" invoice items alphabetized by description """
+invoice_items description :asc;_;;
+
+""" invoice items ordered by id ascending """
+invoice_items id :asc;_;;
+
+""" customers sorted by name A-Z then created newest first """
+customers name :asc;created :des;_;;
+
+""" order customers by signup date oldest first, tie-break by id """
+customers created :asc;id :asc;_;;
+
+""" customers by email alphabetically, then name Z-A """
+customers email :asc;name :des;_;;
+
+""" rank customers by phone descending and name ascending """
+customers phone :des;name :asc;_;;
+
+""" customers by id high to low, break ties with created newest """
+customers id :des;created :des;_;;
+
+""" products by price high to low, then name A-Z """
+products unit_price :des;name :asc;_;;
+
+""" alphabetize products by name, sku ascending """
+products name :asc;sku :asc;_;;
+
+""" products sorted by active status then price low to high """
+products active :des;unit_price :asc;_;;
+
+""" products by created date descending, then id ascending """
+products created :des;id :asc;_;;
+
+""" products ordered by sku Z-A, then name Z-A """
+products sku :des;name :des;_;;
+
+""" invoices by issue date newest first, then total high to low """
+invoices invoice_date :des;total :des;_;;
+
+""" sort invoices by due date earliest first, then status A-Z """
+invoices due_date :asc;status :asc;_;;
+
+""" order invoices by customer id ascending, then invoice number ascending """
+invoices customer_id :asc;invoice_no :asc;_;;
+
+""" invoices by total low to high and tax low to high """
+invoices total :asc;tax :asc;_;;
+
+""" invoices sorted by created date newest, then id ascending """
+invoices created :des;id :asc;_;;
+
+""" invoice items by line total high to low, then quantity low to high """
+invoice_items line_total :des;quantity :asc;_;;
+
+""" order invoice items by unit price low to high, then description A-Z """
+invoice_items unit_price :asc;description :asc;_;;
+
+""" items sorted by invoice id ascending, item id ascending """
+invoice_items invoice_id :asc;id :asc;_;;
+
+""" invoice items by product id descending, then unit price high to low """
+invoice_items product_id :des;unit_price :des;_;;
+
+""" items alphabetized by description / line total low to high """
+invoice_items description :asc;line_total :asc;_;;
+
+""" customers from mid-2024 onward, oldest first """
+customers created :asc>=2024-06-01;_;;
+
+""" customers up to 2025-03-31, newest first """
+customers created :des<=2025-03-31;_;;
+
+""" customers with id 150 and above, low to high """
+customers id :asc>=150;_;;
+
+""" customers with id at most 900, high to low """
+customers id :des<=900;_;;
+
+""" customers with names starting from M, A-Z """
+customers name :asc>="M";_;;
+
+""" products priced from 10 and up, low to high """
+products unit_price :asc>=10;_;;
+
+""" products priced up to 250, high to low """
+products unit_price :des<=250;_;;
+
+""" products added since 2023-01-01, oldest first """
+products created :asc>=2023-01-01;_;;
+
+""" products created no later than 2024-07-01, newest first """
+products created :des<=2024-07-01;_;;
+
+""" products with id 2000 and above, ascending """
+products id :asc>=2000;_;;
+
+""" invoices issued up to 2025-09-30, newest first """
+invoices invoice_date :des<=2025-09-30;_;;
+
+""" invoices dated from 2024-01-01 onward, oldest first """
+invoices invoice_date :asc>=2024-01-01;_;;
+
+""" invoices with totals at least 200, low to high """
+invoices total :asc>=200;_;;
+
+""" invoices with totals up to 5000, high to low """
+invoices total :des<=5000;_;;
+
+""" invoices with tax from 10 and up, ascending """
+invoices tax :asc>=10;_;;
+
+""" invoice items with quantity 2 and above, low to high """
+invoice_items quantity :asc>=2;_;;
+
+""" invoice items with quantity up to 25, high to low """
+invoice_items quantity :des<=25;_;;
+
+""" invoice items priced from 5 and up, ascending """
+invoice_items unit_price :asc>=5;_;;
+
+""" invoice items with line totals up to 750, high to low """
+invoice_items line_total :des<=750;_;;
+
+""" invoice items with id 10000 and above, ascending """
+invoice_items id :asc>=10000;_;;
+
+""" Top 10 customers A-Z by name """
+customers name :asc;_;% lim 10;;
+
+""" First 25 newest customers """
+customers created :des;_;% lim 25;;
+
+""" customers by id ascending, first 50 """
+customers id :asc;_;% lim 50;;
+
+""" Top 15 customers by email Z-A """
+customers email :des;_;% lim 15;;
+
+""" customers by phone high-to-low, first 5 """
+customers phone :des;_;% lim 5;;
+
+""" Top 20 products by price high-to-low """
+products unit_price :des;_;% lim 20;;
+
+""" First 30 products alphabetized by name """
+products name :asc;_;% lim 30;;
+
+""" products oldest first by created date, first 12 """
+products created :asc;_;% lim 12;;
+
+""" Top 40 products by SKU ascending """
+products sku :asc;_;% lim 40;;
+
+""" products by id descending, first 18 """
+products id :des;_;% lim 18;;
+
+""" Top 25 invoices by newest issue date """
+invoices invoice_date :des;_;% lim 25;;
+
+""" First 10 biggest invoices by total """
+invoices total :des;_;% lim 10;;
+
+""" invoices with earliest due dates, first 15 """
+invoices due_date :asc;_;% lim 15;;
+
+""" Top 50 invoices by status A-Z """
+invoices status :asc;_;% lim 50;;
+
+""" invoices by id ascending, first 5 """
+invoices id :asc;_;% lim 5;;
+
+""" Top 100 invoice items by line total high-to-low """
+invoice_items line_total :des;_;% lim 100;;
+
+""" First 60 invoice items by unit price low-to-high """
+invoice_items unit_price :asc;_;% lim 60;;
+
+""" invoice items by quantity descending, first 30 """
+invoice_items quantity :des;_;% lim 30;;
+
+""" Top 22 invoice items alphabetized by description """
+invoice_items description :asc;_;% lim 22;;
+
+""" invoice items by id ascending, first 12 """
+invoice_items id :asc;_;% lim 12;;
+
+""" customers A-Z by name, page 3 of 20 per page """
+customers name :asc;_;% lim 20;% beg 40;;
+
+""" newest customers, page 1 size 25 """
+customers created :des;_;% lim 25;% beg 0;;
+
+""" customers by id descending, limit 50 offset 100 """
+customers id :des;_;% lim 50;% beg 100;;
+
+""" alphabetize customer emails, page 4 with 15 per page """
+customers email :asc;_;% lim 15;% beg 45;;
+
+""" customers by phone high-to-low, fetch 5 from offset 10 """
+customers phone :des;_;% lim 5;% beg 10;;
+
+""" products by price high-to-low, page 2 of 20 """
+products unit_price :des;_;% lim 20;% beg 20;;
+
+""" alphabetize products by name, limit 30, offset 30 """
+products name :asc;_;% lim 30;% beg 30;;
+
+""" products oldest first by created date, page 5 size 12 """
+products created :asc;_;% lim 12;% beg 48;;
+
+""" products ordered by SKU ascending, show 40 starting at 80 """
+products sku :asc;_;% lim 40;% beg 80;;
+
+""" products by id ascending, page 3 of 18 each """
+products id :asc;_;% lim 18;% beg 36;;
+
+""" invoices newest issue date first, page 1 of 25 """
+invoices invoice_date :des;_;% lim 25;% beg 0;;
+
+""" biggest invoices by total, limit 10, offset 10 """
+invoices total :des;_;% lim 10;% beg 10;;
+
+""" earliest due invoices first, page 2 size 15 """
+invoices due_date :asc;_;% lim 15;% beg 15;;
+
+""" invoices sorted by status A-Z, 50 starting at 50 """
+invoices status :asc;_;% lim 50;% beg 50;;
+
+""" invoices by id ascending, page 4 of 5 per page """
+invoices id :asc;_;% lim 5;% beg 15;;
+
+""" invoice items by line total high-to-low, page 1 100 per page """
+invoice_items line_total :des;_;% lim 100;% beg 0;;
+
+""" invoice items by unit price low-to-high, page 2 size 60 """
+invoice_items unit_price :asc;_;% lim 60;% beg 60;;
+
+""" invoice items by quantity descending, limit 30 offset 30 """
+invoice_items quantity :des;_;% lim 30;% beg 30;;
+
+""" invoice items alphabetized by description, page 3 of 22 per page """
+invoice_items description :asc;_;% lim 22;% beg 44;;
+
+""" invoice items by id ascending, 12 beginning at 24 """
+invoice_items id :asc;_;% lim 12;% beg 24;;
+
+""" daily customer signups (count) """
+customers id :cnt;name _;created :grp;;
+
+""" latest customer id per signup date """
+customers id :max;name _;created :grp;;
+
+""" earliest customer id per signup date """
+customers id :min;name _;created :grp;;
+
+""" products by active flag (count) """
+products id :cnt;name _;active :grp;;
+
+""" average price for active vs inactive products """
+products unit_price :avg;name _;active :grp;;
+
+""" highest product price per active flag """
+products unit_price :max;name _;active :grp;;
+
+""" lowest product price per active flag """
+products unit_price :min;name _;active :grp;;
+
+""" products added per day (count) """
+products id :cnt;name _;created :grp;;
+
+""" average unit price per product creation date """
+products unit_price :avg;name _;created :grp;;
+
+""" maximum unit price per product creation date """
+products unit_price :max;name _;created :grp;;
+
+""" invoice volume per customer """
+invoices id :cnt;customer_id :grp;customers id @;name _;;
+
+""" average invoice total per customer """
+invoices total :avg;customer_id :grp;customers id @;name _;;
+
+""" largest invoice total per customer """
+invoices total :max;customer_id :grp;customers id @;name _;;
+
+""" average tax per customer """
+invoices tax :avg;customer_id :grp;customers id @;name _;;
+
+""" invoice count by status """
+invoices id :cnt;status :grp;;
+
+""" average invoice total by status """
+invoices total :avg;status :grp;;
+
+""" invoices per issue date (count) """
+invoices id :cnt;invoice_date :grp;;
+

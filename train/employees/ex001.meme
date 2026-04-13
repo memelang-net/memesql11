@@ -1,0 +1,300 @@
+""" All employees """
+employees _ _;;
+
+""" every department row """
+departments _ _;;
+
+""" all job records """
+jobs _ _;;
+
+""" complete locations table """
+locations _ _;;
+
+""" benefit plans dataset """
+benefit_plans _ _;;
+
+""" all employee_benefits rows """
+employee_benefits _ _;;
+
+""" all performance reviews """
+performance_reviews _ _;;
+
+""" time off requests (all fields) """
+time_off_requests _ _;;
+
+""" every timesheet entry """
+timesheets _ _;;
+
+""" skills table (full) """
+skills _ _;;
+
+""" employee_skills complete list """
+employee_skills _ _;;
+
+""" payroll runs (all columns) """
+payroll_runs _ _;;
+
+""" all payroll entries """
+payroll_entries _ _;;
+
+""" employees id 101 """
+employees id 101;_;;
+
+""" employees with id over 500 """
+employees id >500;_;;
+
+""" employee ids 12 or 34 """
+employees id 12,34;_;;
+
+""" first names like Ann """
+employees first_name ~"Ann";_;;
+
+""" first name not like Rob """
+employees first_name !~"Rob";_;;
+
+""" first names Ann or Ana """
+employees first_name ~"Ann","Ana";_;;
+
+""" last name equals Lee """
+employees last_name "Lee";_;;
+
+""" last names Park or Clark """
+employees last_name "Park","Clark";_;;
+
+""" emails ending @acme.com """
+employees email ~"@acme.com";_;;
+
+""" email equals sam@acme.com """
+employees email "sam@acme.com";_;;
+
+""" phones containing 212- """
+employees phone ~"212-";_;;
+
+""" phones with 555 or 404 """
+employees phone ~"555","404";_;;
+
+""" hire date 2024-07-15 """
+employees hire_date 2024-07-15;_;;
+
+""" hire dates after 2023-01-01 """
+employees hire_date >2023-01-01;_;;
+
+""" hire dates 2023-01-01 or 2024-01-01 """
+employees hire_date 2023-01-01,2024-01-01;_;;
+
+""" department id 10 """
+employees department_id 10;_;;
+
+""" department ids 5 or 7 """
+employees department_id 5,7;_;;
+
+""" job id equals 301 """
+employees job_id 301;_;;
+
+""" job ids 100 or 200 """
+employees job_id 100,200;_;;
+
+""" manager id 42 """
+employees manager_id 42;_;;
+
+""" manager ids 7 or 8 """
+employees manager_id 7,8;_;;
+
+""" active employees only """
+employees status active;_;;
+
+""" on_leave or terminated employees """
+employees status on_leave,terminated;_;;
+
+""" salary at least 100000 """
+employees salary >=100000;_;;
+
+""" salary below 60000 """
+employees salary <60000;_;;
+
+""" salaries 80000 or 120000 """
+employees salary 80000,120000;_;;
+
+""" bonus target equals 15000 """
+employees bonus_target 15000;_;;
+
+""" bonus target over 5000 """
+employees bonus_target >5000;_;;
+
+""" bonus targets 0 or 10000 """
+employees bonus_target 0,10000;_;;
+
+""" full-time staff """
+employees full_time 1;_;;
+
+""" part-time staff """
+employees full_time 0;_;;
+
+""" created on 2025-01-01 """
+employees created 2025-01-01;_;;
+
+""" created before 2024-01-01 """
+employees created <2024-01-01;_;;
+
+""" created dates 2023-05-01 or 2024-05-01 """
+employees created 2023-05-01,2024-05-01;_;;
+
+""" departments id 3 """
+departments id 3;_;;
+
+""" department names like Eng """
+departments name ~"Eng";_;;
+
+""" department names HR or Legal """
+departments name "HR","Legal";_;;
+
+""" location_id equals 20 """
+departments location_id 20;_;;
+
+""" location_ids 7 or 8 """
+departments location_id 7,8;_;;
+
+""" departments created on 2024-03-01 """
+departments created 2024-03-01;_;;
+
+""" departments created after 2023-01-01 """
+departments created >2023-01-01;_;;
+
+""" job id 9 """
+jobs id 9;_;;
+
+""" titles containing Manager """
+jobs title ~"Manager";_;;
+
+""" grades P3 or P4 """
+jobs grade "P3","P4";_;;
+
+""" min_salary >= 50000 """
+jobs min_salary >=50000;_;;
+
+""" max_salary <= 250000 """
+jobs max_salary <=250000;_;;
+
+""" exempt jobs only """
+jobs exempt 1;_;;
+
+""" non-exempt roles """
+jobs exempt 0;_;;
+
+""" jobs created 2024-09-09 """
+jobs created 2024-09-09;_;;
+
+""" location id 100 """
+locations id 100;_;;
+
+""" site names including HQ """
+locations name ~"HQ";_;;
+
+""" country equals US """
+locations country "US";_;;
+
+""" regions CA or NY """
+locations region "CA","NY";_;;
+
+""" timezones like America/ """
+locations timezone ~"America/";_;;
+
+""" locations created before 2022-01-01 """
+locations created <2022-01-01;_;;
+
+""" benefit plan id 55 """
+benefit_plans id 55;_;;
+
+""" plan names with PPO """
+benefit_plans name ~"PPO";_;;
+
+""" plan type medical or dental """
+benefit_plans type medical,dental;_;;
+
+""" active plans only """
+benefit_plans active 1;_;;
+
+""" inactive benefit plans """
+benefit_plans active 0;_;;
+
+""" plans created on 2024-10-01 """
+benefit_plans created 2024-10-01;_;;
+
+""" employee_benefits id 9001 """
+employee_benefits id 9001;_;;
+
+""" employee_benefits for employee 42 """
+employee_benefits employee_id 42;_;;
+
+""" employee_benefits for plan 7 """
+employee_benefits benefit_plan_id 7;_;;
+
+""" benefit coverage starting 2025-01-01 """
+employee_benefits start_date 2025-01-01;_;;
+
+""" coverage end before 2025-12-31 """
+employee_benefits end_date <2025-12-31;_;;
+
+""" coverage level family or employee """
+employee_benefits coverage_level family,employee;_;;
+
+""" employee_benefits created 2024-02-01 """
+employee_benefits created 2024-02-01;_;;
+
+""" performance review id 700 """
+performance_reviews id 700;_;;
+
+""" reviews for employee 88 """
+performance_reviews employee_id 88;_;;
+
+""" reviews by reviewer 12 """
+performance_reviews reviewer_id 12;_;;
+
+""" review date 2025-06-01 """
+performance_reviews review_date 2025-06-01;_;;
+
+""" period starting 2024-01-01 """
+performance_reviews period_start 2024-01-01;_;;
+
+""" period ending 2024-12-31 """
+performance_reviews period_end 2024-12-31;_;;
+
+""" rating >= 4.5 """
+performance_reviews rating >=4.5;_;;
+
+""" ratings 3.0 or 5.0 """
+performance_reviews rating 3.0,5.0;_;;
+
+""" comments mentioning leadership """
+performance_reviews comments ~"leadership";_;;
+
+""" review notes by similarity to teamwork """
+performance_reviews comments <=>"teamwork":des;_;;
+
+""" reviews created on 2025-07-07 """
+performance_reviews created 2025-07-07;_;;
+
+""" performance reviews relating to teamwork, similarity>=0.9 """
+performance_reviews comments <=>"teamwork"<=0.9;_;;
+
+""" performance reviews relating to communication skills (sim>0.75) order by sim """
+performance_reviews comments <=>"communication skills":des>0.75;_;;
+
+""" time-off request id 444 """
+time_off_requests id 444;_;;
+
+""" time off for employee 25 """
+time_off_requests employee_id 25;_;;
+
+""" request date 2025-03-10 """
+time_off_requests request_date 2025-03-10;_;;
+
+""" time-off start 2025-08-01 """
+time_off_requests start_date 2025-08-01;_;;
+
+""" time-off end before 2025-08-31 """
+time_off_requests end_date <2025-08-31;_;;
+
+""" type vacation or sick """
+time_off_requests type vacation,sick;_;;
+

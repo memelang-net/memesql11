@@ -1,0 +1,300 @@
+""" All movies """
+movies _ _;;
+
+""" films """
+movies _ _;;
+
+""" roles """
+roles _ _;;
+
+""" all columns for roles """
+roles _ _;;
+
+""" all data for acting roles """
+roles _ _;;
+
+""" all roles dataset """
+roles _ _;;
+
+""" Show all columns for roles """
+roles _ _;;
+
+""" every actor """
+actors _ _;;
+
+""" actors """
+actors _ _;;
+
+""" List all movies """
+movies _ _;;
+
+""" All films """
+movies _ _;;
+
+""" every movie """
+movies _ _;;
+
+""" All roles """
+roles _ _;;
+
+""" acting roles """
+roles _ _;;
+
+""" all columns for movies """
+movies _ _;;
+
+""" all data for roles """
+roles _ _;;
+
+""" Show all actors """
+actors _ _;;
+
+""" all actors dataset """
+actors _ _;;
+
+""" list actors """
+actors _ _;;
+
+""" movie titles """
+movies title _;;
+
+""" only title and description for movies """
+movies title _;description _;;
+
+""" every film description """
+movies description _;;
+
+""" film descriptions """
+movies description _;;
+
+""" film title/descriptions """
+movies title _;description _;;
+
+""" Titles and descriptions for movies """
+movies title _;description _;;
+
+""" actor names """
+actors name _;;
+
+""" actor name and ages """
+actors name _;age _;;
+
+""" performer names, ages """
+actors name _;age _;;
+
+""" All roles showing actor and movie only """
+roles actor _;movie _;;
+
+""" actor name and rating for each role """
+roles actor _;rating _;;
+
+""" rating, actor, movie title """
+roles rating _;actor _;movie _;;
+
+""" movie 74569497 """
+movies id 74569497;_;;
+
+""" movie #1356 """
+movies id 1356;_;;
+
+""" film id 987657 """
+movies id 987657;_;;
+
+""" films 54676 and 68487 """
+movies id 54676,68487;_;;
+
+""" picture 4598679 57949 34860 5685768 """
+movies id 4598679,57949,34860,5685768;_;;
+
+""" All films with IDs over 1000 """
+movies id >1000;_;;
+
+""" movies >=57958 """
+movies id >=57958;_;;
+
+""" Movies released in 1977 """
+movies year 1977;_;;
+
+""" Films released before 1960 """
+movies year <1960;_;;
+
+""" Jaws movie """
+movies title "Jaws";_;;
+
+""" Jaws """
+movies title "Jaws";_;;
+
+""" Movies with 'drama' genre """
+movies genre drama;_;;
+
+""" Movies with comedy or scifi genre """
+movies genre comedy,scifi;_;;
+
+""" Movies whose description mentions 'galaxy' """
+movies description ~"galaxy";_;;
+
+""" movies with genre drama """
+movies genre drama;_;;
+
+""" films tagged drama """
+movies genre drama;_;;
+
+""" documentary genre movies """
+movies genre documentary;_;;
+
+""" Titanic movie """
+movies title "Titanic";_;;
+
+""" E.T. """
+movies title "E.T.";_;;
+
+""" film citizen kane """
+movies title "Citizen Kane";_;;
+
+""" show movies The Matrix or Inception """
+movies title "The Matrix","Inception";_;;
+
+""" list films Titanic and The Godfather """
+movies title "Titanic","The Godfather";_;;
+
+""" give me movies Pulp Fiction, Reservoir Dogs """
+movies title "Pulp Fiction","Reservoir Dogs";_;;
+
+""" fetch films Jurassic Park / E.T. the Extra-Terrestrial """
+movies title "Jurassic Park","E.T. the Extra-Terrestrial";_;;
+
+""" display movies The Dark Knight or Batman Begins """
+movies title "The Dark Knight","Batman Begins";_;;
+
+""" films Alien & Aliens """
+movies title "Alien","Aliens";_;;
+
+""" return movies Back to the Future or Terminator 2: Judgment Day """
+movies title "Back to the Future","Terminator 2: Judgment Day";_;;
+
+""" movies titled Toy Story, Monsters, Inc., or Finding Nemo """
+movies title "Toy Story","Monsters, Inc.","Finding Nemo";_;;
+
+""" pull films Gladiator or Braveheart """
+movies title "Gladiator","Braveheart";_;;
+
+""" movies Casablanca or Citizen Kane or Titanic """
+movies title "Casablanca","Citizen Kane","Titanic";_;;
+
+""" show movies Star Wars: A New Hope, The Empire Strikes Back, or Return of the Jedi """
+movies title "Star Wars: A New Hope","The Empire Strikes Back","Return of the Jedi";_;;
+
+""" movies The Lord of the Rings: The Fellowship of the Ring, The Lord of the Rings: The Two Towers, or The Lord of the Rings: The Return of the King """
+movies title "The Lord of the Rings: The Fellowship of the Ring","The Lord of the Rings: The Two Towers","The Lord of the Rings: The Return of the King";_;;
+
+""" films The Hobbit: An Unexpected Journey, The Hobbit: The Desolation of Smaug, or The Hobbit: The Battle of the Five Armies """
+movies title "The Hobbit: An Unexpected Journey","The Hobbit: The Desolation of Smaug","The Hobbit: The Battle of the Five Armies";_;;
+
+""" movies Spider-Man: Homecoming and Spider-Man: Far From Home and Spider-Man: No Way Home """
+movies title "Spider-Man: Homecoming","Spider-Man: Far From Home","Spider-Man: No Way Home";_;;
+
+""" films Pirates of the Caribbean: The Curse of the Black Pearl, Pirates of the Caribbean: Dead Man's Chest, Pirates of the Caribbean: At World's End, Pirates of the Caribbean: On Stranger Tides, Pirates of the Caribbean: Dead Men Tell No Tales """
+movies title "Pirates of the Caribbean: The Curse of the Black Pearl","Pirates of the Caribbean: Dead Man's Chest","Pirates of the Caribbean: At World's End","Pirates of the Caribbean: On Stranger Tides","Pirates of the Caribbean: Dead Men Tell No Tales";_;;
+
+""" films with 'Titanic' in the description """
+movies description ~"Titanic";_;;
+
+""" pictures described as scary """
+movies description ~"scary";_;;
+
+""" movies not described as happy """
+movies description !~"happy";_;;
+
+""" Movies whose title contains 'War' """
+movies title ~"War";_;;
+
+""" Movies whose description contains 'space opera' """
+movies description ~"space opera";_;;
+
+""" Actor id 101 """
+actors id 101;_;;
+
+""" actor 9487 """
+actors id 9487;_;;
+
+""" Actor #74458739 """
+actors id 74458739;_;;
+
+""" actor #74458739 #28575 """
+actors id 74458739,28575;_;;
+
+""" actors 4355,7676,233 """
+actors id 4355,7676,233;_;;
+
+""" stars 6756757 and 56647 and 867966 and 794792 """
+actors id 6756757,56647,867966,794792;_;;
+
+""" actors named exactly 'Chris Evans' """
+actors name "Chris Evans";_;;
+
+""" actor mark hamill """
+actors name "Mark Hamill";_;;
+
+""" Ben Stiller """
+actors name "Ben Stiller";_;;
+
+""" actors other than Tom Cruise """
+actors name !="Tom Cruise";_;;
+
+""" actors named mark """
+actors name ~"mark";_;;
+
+""" actors not named Jeff """
+actors name !~"Jeff";_;;
+
+""" actors age 25 """
+actors age 25;_;;
+
+""" actors age 41 years or older """
+actors age >=41;_;;
+
+""" Actors with age 30, 35, or 40 """
+actors age 30,35,40;_;;
+
+""" Actors exactly 19 years old """
+actors age 19;_;;
+
+""" performers younger than 16 """
+actors age <16;_;;
+
+""" Actor ages 30, 32, or 35 """
+actors age 30,32,35;_;;
+
+""" Exact ages 22 or 44 for actors """
+actors age 22,44;_;;
+
+""" Role ID 7953749 """
+roles id 7953749;_;;
+
+""" role id 683899 """
+roles id 683899;_;;
+
+""" Role 567 and 9766324436 """
+roles id 567,9766324436;_;;
+
+""" Actor rating of 3 """
+roles rating 3;_;;
+
+""" List roles rated 4 and above """
+roles rating >=4;_;;
+
+""" Which roles having ratings less than 2? """
+roles rating <2;_;;
+
+""" Acting roles rated 3 or greater? """
+roles rating >=3;_;;
+
+""" Roles rated either 1 or 5 """
+roles rating 1,5;_;;
+
+""" Roles rated either 2, 3, or 5 """
+roles rating 2,3,5;_;;
+
+""" Roles where rating is not equal to 1 """
+roles rating !=1;_;;
+

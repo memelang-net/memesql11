@@ -1,0 +1,324 @@
+
+""" posts by updated_at descending """
+posts updated_at :des;_;;
+
+""" posts by user_id asc then created_at des """
+posts user_id :asc;created_at :des;_;;
+
+""" posts by created_at asc then updated_at des then id asc """
+posts created_at :asc;updated_at :des;id :asc;_;;
+
+""" posts by image_url des then body asc """
+posts image_url :des;body :asc;_;;
+
+""" posts id from 10 to 250 """
+posts id >=10;<=250;_;;
+
+""" posts user_id from 42 to 2500 """
+posts user_id >=42;<=2500;_;;
+
+""" posts created_at from 2024-01-15 to 2025-07-04 """
+posts created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" posts updated_at from 2023-10-10 to 2025-01-01 """
+posts updated_at >=2023-10-10;<=2025-01-01;_;;
+
+""" posts visibility equals public, body contains sale """
+posts visibility =public;body ~"sale";_;;
+
+""" posts image_url contains .png, body not containing draft, created_at at least 2024-01-15 """
+posts image_url ~".png";body !~"draft";created_at >=2024-01-15;_;;
+
+""" posts id at least 100, user_id at least 10, visibility equals friends, updated_at at most 2025-10-01 """
+posts id >=100;user_id >=10;visibility =friends;updated_at <=2025-10-01;_;;
+
+""" posts visibility equals public, created_at at least 2024-01-15, sort by id asc """
+posts visibility =public;created_at >=2024-01-15;id :asc;_;;
+
+""" posts image_url contains .jpg, updated_at at most 2025-10-01, sort by created_at des """
+posts image_url ~".jpg";updated_at <=2025-10-01;created_at :des;_;;
+
+""" posts visibility equals friends, body contains update, sort by updated_at des with limit 5 """
+posts visibility =friends;body ~"update";updated_at :des;_;% lim 5;;
+
+""" posts image_url contains .png, created_at at least 2024-01-15, sort by id asc with limit 10 """
+posts image_url ~".png";created_at >=2024-01-15;id :asc;_;% lim 10;;
+
+""" posts user_id at least 42, visibility equals public, sort by created_at asc with limit 5 """
+posts user_id >=42;visibility =public;created_at :asc;_;% lim 5;;
+
+""" posts visibility equals public, body contains release, sort by created_at asc with limit 10 offset 20 """
+posts visibility =public;body ~"release";created_at :asc;_;% lim 10;% beg 20;;
+
+""" posts image_url contains .jpg, updated_at at most 2025-10-01, sort by id des with limit 10 offset 30 """
+posts image_url ~".jpg";updated_at <=2025-10-01;id :des;_;% lim 10;% beg 30;;
+
+""" posts user_id at least 100, visibility equals friends, sort by updated_at asc with limit 5 offset 15 """
+posts user_id >=100;visibility =friends;updated_at :asc;_;% lim 5;% beg 15;;
+
+""" comments by id ascending """
+comments id :asc;_;;
+
+""" comments by post_id ascending """
+comments post_id :asc;_;;
+
+""" comments by user_id ascending """
+comments user_id :asc;_;;
+
+""" comments by parent_comment_id ascending """
+comments parent_comment_id :asc;_;;
+
+""" comments by body ascending """
+comments body :asc;_;;
+
+""" comments by created_at ascending """
+comments created_at :asc;_;;
+
+""" comments by updated_at ascending """
+comments updated_at :asc;_;;
+
+""" comments by id descending """
+comments id :des;_;;
+
+""" comments by post_id descending """
+comments post_id :des;_;;
+
+""" comments by user_id descending """
+comments user_id :des;_;;
+
+""" comments by parent_comment_id descending """
+comments parent_comment_id :des;_;;
+
+""" comments by body descending """
+comments body :des;_;;
+
+""" comments by created_at descending """
+comments created_at :des;_;;
+
+""" comments by updated_at descending """
+comments updated_at :des;_;;
+
+""" comments by post_id asc then created_at des """
+comments post_id :asc;created_at :des;_;;
+
+""" comments by created_at asc then updated_at des then id asc """
+comments created_at :asc;updated_at :des;id :asc;_;;
+
+""" comments by user_id des then body asc """
+comments user_id :des;body :asc;_;;
+
+""" comments id from 10 to 250 """
+comments id >=10;<=250;_;;
+
+""" comments post_id from 42 to 2500 """
+comments post_id >=42;<=2500;_;;
+
+""" comments user_id from 5 to 1000 """
+comments user_id >=5;<=1000;_;;
+
+""" comments parent_comment_id from 1 to 5000 """
+comments parent_comment_id >=1;<=5000;_;;
+
+""" comments created_at from 2024-01-15 to 2025-07-04 """
+comments created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" comments updated_at from 2023-10-10 to 2025-01-01 """
+comments updated_at >=2023-10-10;<=2025-01-01;_;;
+
+""" comments body contains fix, created_at at least 2024-01-15 """
+comments body ~"fix";created_at >=2024-01-15;_;;
+
+""" comments body not containing spam, updated_at at most 2025-10-01, user_id at least 100 """
+comments body !~"spam";updated_at <=2025-10-01;user_id >=100;_;;
+
+""" comments id at least 100, post_id at least 10, body contains thanks, updated_at at most 2025-10-01 """
+comments id >=100;post_id >=10;body ~"thanks";updated_at <=2025-10-01;_;;
+
+""" comments body contains fix, created_at at least 2024-01-15, sort by id asc """
+comments body ~"fix";created_at >=2024-01-15;id :asc;_;;
+
+""" comments body contains update, updated_at at most 2025-10-01, sort by created_at des """
+comments body ~"update";updated_at <=2025-10-01;created_at :des;_;;
+
+""" comments body contains thanks, post_id at least 42, sort by updated_at des with limit 5 """
+comments body ~"thanks";post_id >=42;updated_at :des;_;% lim 5;;
+
+""" comments user_id at least 100, created_at at least 2024-01-15, sort by id asc with limit 10 """
+comments user_id >=100;created_at >=2024-01-15;id :asc;_;% lim 10;;
+
+""" comments post_id at least 42, body contains reply, sort by created_at asc with limit 5 """
+comments post_id >=42;body ~"reply";created_at :asc;_;% lim 5;;
+
+""" comments body contains fix, created_at at least 2024-01-15, sort by id asc with limit 10 offset 20 """
+comments body ~"fix";created_at >=2024-01-15;id :asc;_;% lim 10;% beg 20;;
+
+""" comments user_id at least 100, updated_at at most 2025-10-01, sort by created_at des with limit 10 offset 30 """
+comments user_id >=100;updated_at <=2025-10-01;created_at :des;_;% lim 10;% beg 30;;
+
+""" comments post_id at least 10, body contains reply, sort by updated_at asc with limit 5 offset 15 """
+comments post_id >=10;body ~"reply";updated_at :asc;_;% lim 5;% beg 15;;
+
+""" likes by id ascending """
+likes id :asc;_;;
+
+""" likes by user_id ascending """
+likes user_id :asc;_;;
+
+""" likes by post_id ascending """
+likes post_id :asc;_;;
+
+""" likes by created_at ascending """
+likes created_at :asc;_;;
+
+""" likes by id descending """
+likes id :des;_;;
+
+""" likes by user_id descending """
+likes user_id :des;_;;
+
+""" likes by post_id descending """
+likes post_id :des;_;;
+
+""" likes by created_at descending """
+likes created_at :des;_;;
+
+""" likes by user_id asc then created_at des """
+likes user_id :asc;created_at :des;_;;
+
+""" likes by created_at asc then id des then post_id asc """
+likes created_at :asc;id :des;post_id :asc;_;;
+
+""" likes by post_id des then user_id asc """
+likes post_id :des;user_id :asc;_;;
+
+""" likes id from 10 to 250 """
+likes id >=10;<=250;_;;
+
+""" likes user_id from 42 to 2500 """
+likes user_id >=42;<=2500;_;;
+
+""" likes post_id from 5 to 1000 """
+likes post_id >=5;<=1000;_;;
+
+""" likes created_at from 2024-01-15 to 2025-07-04 """
+likes created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" likes user_id at least 100, post_id at least 10 """
+likes user_id >=100;post_id >=10;_;;
+
+""" likes id at least 42, created_at at least 2024-01-15, post_id at most 1000 """
+likes id >=42;created_at >=2024-01-15;post_id <=1000;_;;
+
+""" likes user_id at least 100, created_at at least 2024-01-15, sort by id asc """
+likes user_id >=100;created_at >=2024-01-15;id :asc;_;;
+
+""" likes post_id at most 1000, id at least 10, sort by created_at des """
+likes post_id <=1000;id >=10;created_at :des;_;;
+
+""" likes user_id at least 100, sort by created_at des with limit 5 """
+likes user_id >=100;created_at :des;_;% lim 5;;
+
+""" likes post_id at most 1000, sort by id asc with limit 10 """
+likes post_id :asc<=1000;_;% lim 10;;
+
+""" likes id at least 42, sort by created_at asc with limit 5 """
+likes id >=42;created_at :asc;_;% lim 5;;
+
+""" likes user_id at least 100, sort by created_at des with limit 10 offset 20 """
+likes user_id >=100;created_at :des;_;% lim 10;% beg 20;;
+
+""" likes post_id at most 1000, sort by id asc with limit 10 offset 30 """
+likes post_id :asc<=1000;_;% lim 10;% beg 30;;
+
+""" likes id at least 10, sort by created_at asc with limit 5 offset 15 """
+likes id >=10;created_at :asc;_;% lim 5;% beg 15;;
+
+""" messages by id ascending """
+messages id :asc;_;;
+
+""" messages by sender_id ascending """
+messages sender_id :asc;_;;
+
+""" messages by recipient_id ascending """
+messages recipient_id :asc;_;;
+
+""" messages by body ascending """
+messages body :asc;_;;
+
+""" messages by created_at ascending """
+messages created_at :asc;_;;
+
+""" messages by read_flag ascending """
+messages read_flag :asc;_;;
+
+""" messages by id descending """
+messages id :des;_;;
+
+""" messages by sender_id descending """
+messages sender_id :des;_;;
+
+""" messages by recipient_id descending """
+messages recipient_id :des;_;;
+
+""" messages by body descending """
+messages body :des;_;;
+
+""" messages by created_at descending """
+messages created_at :des;_;;
+
+""" messages by read_flag descending """
+messages read_flag :des;_;;
+
+""" messages by sender_id asc then created_at des """
+messages sender_id :asc;created_at :des;_;;
+
+""" messages by created_at asc then id des then recipient_id asc """
+messages created_at :asc;id :des;recipient_id :asc;_;;
+
+""" messages by read_flag des then created_at asc """
+messages read_flag :des;created_at :asc;_;;
+
+""" messages id from 10 to 250 """
+messages id >=10;<=250;_;;
+
+""" messages sender_id from 42 to 2500 """
+messages sender_id >=42;<=2500;_;;
+
+""" messages recipient_id from 5 to 1000 """
+messages recipient_id >=5;<=1000;_;;
+
+""" messages created_at from 2024-01-15 to 2025-07-04 """
+messages created_at >=2024-01-15;<=2025-07-04;_;;
+
+""" messages body contains hello, read_flag equals true """
+messages body ~"hello";read_flag =true;_;;
+
+""" messages body not containing spam, created_at at least 2024-01-15, sender_id at least 100 """
+messages body !~"spam";created_at >=2024-01-15;sender_id >=100;_;;
+
+""" messages id at least 100, recipient_id at least 10, body contains update, created_at at most 2025-10-01 """
+messages id >=100;recipient_id >=10;body ~"update";created_at <=2025-10-01;_;;
+
+""" messages body contains hello, created_at at least 2024-01-15, sort by id asc """
+messages body ~"hello";created_at >=2024-01-15;id :asc;_;;
+
+""" messages body contains meeting, read_flag equals true, sort by created_at des """
+messages body ~"meeting";read_flag =true;created_at :des;_;;
+
+""" messages body contains hello, sender_id at least 42, sort by created_at des with limit 5 """
+messages body ~"hello";sender_id >=42;created_at :des;_;% lim 5;;
+
+""" messages read_flag not true, created_at at least 2024-01-15, sort by id asc with limit 10 """
+messages read_flag !=true;created_at >=2024-01-15;id :asc;_;% lim 10;;
+
+""" messages recipient_id at least 100, body contains update, sort by created_at asc with limit 5 """
+messages recipient_id >=100;body ~"update";created_at :asc;_;% lim 5;;
+
+""" messages body contains hello, created_at at least 2024-01-15, sort by id asc with limit 10 offset 20 """
+messages body ~"hello";created_at >=2024-01-15;id :asc;_;% lim 10;% beg 20;;
+
+""" messages read_flag not true, sender_id at least 42, sort by created_at des with limit 10 offset 30 """
+messages read_flag !=true;sender_id >=42;created_at :des;_;% lim 10;% beg 30;;
+
+""" messages recipient_id at least 10, body contains meeting, sort by created_at asc with limit 5 offset 15 """
+messages recipient_id >=10;body ~"meeting";created_at :asc;_;% lim 5;% beg 15;;

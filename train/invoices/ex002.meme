@@ -1,0 +1,300 @@
+""" customers before 2022-01-01 and phone area 212- """
+customers created <2022-01-01;phone ~"212-";_;;
+
+""" customers with name 'Acme Corp' and created after 2024-01-01 """
+customers name "Acme Corp";created >2024-01-01;_;;
+
+""" customers with phone containing 404 and email contains support """
+customers phone ~"404";email ~"support";_;;
+
+""" customers created on 2024-06-15, email like .io, and name has Dev """
+customers created 2024-06-15;email ~".io";name ~"Dev";_;;
+
+""" customers after 2023-10-10 with name O'Neil and phone 646 """
+customers created >2023-10-10;name ~"O'Neil";phone ~"646";_;;
+
+""" customer id 250 with email info@eastside.io and created before 2025-01-01 """
+customers id 250;email "info@eastside.io";created <2025-01-01;_;;
+
+""" active products named Adapter with price at least 25 """
+products active 1;name ~"Adapter";unit_price >=25;_;;
+
+""" inactive products created before 2024-07-01 with sku containing USB """
+products active 0;created <2024-07-01;sku ~"USB";_;;
+
+""" product id 2450 with exact sku ZX-500 """
+products id 2450;sku "ZX-500";_;;
+
+""" products priced 19.99 named Cable """
+products unit_price 19.99;name ~"Cable";_;;
+
+""" products after 2023-01-01 with sku INV-ADPT-01 and active """
+products created >2023-01-01;sku "INV-ADPT-01";active 1;_;;
+
+""" products before 2022-12-31 priced under 5 """
+products created <=2022-12-31;unit_price <5;_;;
+
+""" products named HDMI Cable 2m with price at least 10 and active """
+products name "HDMI Cable 2m";unit_price >=10;active 1;_;;
+
+""" product id 3003 with name including Pro and created on 2024-09-09 """
+products id 3003;name ~"Pro";created 2024-09-09;_;;
+
+""" products priced above 100 with sku containing -MAX and created after 2024-01-01 """
+products unit_price >100;sku ~"-MAX";created >2024-01-01;_;;
+
+""" inactive products with name including Refurb and price equal 0 """
+products active 0;name ~"Refurb";unit_price 0;_;;
+
+""" paid invoices issued after 2025-01-01 for customer 101 """
+invoices status paid;invoice_date >2025-01-01;customer_id 101;_;;
+
+""" open invoices due before 2025-10-01 with tax 0 """
+invoices status open;due_date <2025-10-01;tax 0;_;;
+
+""" invoice number INV-3020 on 2025-09-15 """
+invoices invoice_no "INV-3020";invoice_date 2025-09-15;_;;
+
+""" invoices subtotal at least 500 created on 2024-12-01 """
+invoices subtotal >=500;created 2024-12-01;_;;
+
+""" invoices with total below 50 and status open """
+invoices total <50;status open;_;;
+
+""" invoices for customer 220 issued on or before 2023-06-30 """
+invoices customer_id 220;invoice_date <=2023-06-30;_;;
+
+""" invoice id 5001 with tax at least 50 """
+invoices id 5001;tax >=50;_;;
+
+""" invoices due on 2025-11-15 with total 1000 """
+invoices due_date 2025-11-15;total 1000;_;;
+
+""" invoices created before 2022-01-01 with subtotal under 100 and tax 0 """
+invoices created <2022-01-01;subtotal <100;tax 0;_;;
+
+""" invoices issued on 2024-06-01 with status paid and invoice number INV-0001 """
+invoices invoice_date 2024-06-01;status paid;invoice_no "INV-0001";_;;
+
+""" line items for invoice 7002 where quantity at least 5 """
+invoice_items invoice_id 7002;quantity >=5;_;;
+
+""" invoice items for product 2105 priced below 20 """
+invoice_items product_id 2105;unit_price <20;_;;
+
+""" items with description USB-C and line total at least 100 """
+invoice_items description ~"USB-C";line_total >=100;_;;
+
+""" invoice item id 90550 with quantity 1 """
+invoice_items id 90550;quantity 1;_;;
+
+""" items where unit price equals 0 and description contains Sample """
+invoice_items unit_price 0;description ~"Sample";_;;
+
+""" items for invoice 6001 with quantity under 3 and unit price 19.99 """
+invoice_items invoice_id 6001;quantity <3;unit_price 19.99;_;;
+
+""" items tied to product 9999 with line total below 25 """
+invoice_items product_id 9999;line_total <25;_;;
+
+""" items quantity at most 10 and description includes Adapter """
+invoice_items quantity <=10;description ~"Adapter";_;;
+
+""" items with unit price at least 250 and line total at least 1000 """
+invoice_items unit_price >=250;line_total >=1000;_;;
+
+""" items for invoice 7002 with description including HDMI and quantity 2 """
+invoice_items invoice_id 7002;description ~"HDMI";quantity 2;_;;
+
+""" Customers with IDs between 100 and 150 inclusive """
+customers id >=100;<=150;_;;
+
+""" Customer id range 501 through 575 """
+customers id >=501;<=575;_;;
+
+""" Only customer ids 900 to 950 """
+customers id >=900;<=950;_;;
+
+""" Customers created from 2024-05-01 to 2024-06-30 """
+customers created >=2024-05-01;<=2024-06-30;_;;
+
+""" Signup dates spanning 2023-01-01 through 2023-03-31 """
+customers created >=2023-01-01;<=2023-03-31;_;;
+
+""" Customer records created 2025-02-01 to 2025-02-28 """
+customers created >=2025-02-01;<=2025-02-28;_;;
+
+""" Products with ids from 2000 to 2050 """
+products id >=2000;<=2050;_;;
+
+""" Product id band 3100 through 3150 """
+products id >=3100;<=3150;_;;
+
+""" Show product ids 77 to 99 """
+products id >=77;<=99;_;;
+
+""" Products added between 2024-07-01 and 2024-12-31 """
+products created >=2024-07-01;<=2024-12-31;_;;
+
+""" Product creation window 2023-01-01 to 2023-06-30 """
+products created >=2023-01-01;<=2023-06-30;_;;
+
+""" Products created 2025-03-01 through 2025-03-31 """
+products created >=2025-03-01;<=2025-03-31;_;;
+
+""" Invoice ids in the 5000 to 5200 range """
+invoices id >=5000;<=5200;_;;
+
+""" Invoices with id from 100 to 140 """
+invoices id >=100;<=140;_;;
+
+""" Only invoice ids 90001 through 90050 """
+invoices id >=90001;<=90050;_;;
+
+""" Invoices for customer_id between 300 and 350 """
+invoices customer_id >=300;<=350;_;;
+
+""" Customer id on invoices 101 through 125 """
+invoices customer_id >=101;<=125;_;;
+
+""" Invoice customer_id window 800 to 825 """
+invoices customer_id >=800;<=825;_;;
+
+""" Invoices issued from 2025-01-01 to 2025-03-31 """
+invoices invoice_date >=2025-01-01;<=2025-03-31;_;;
+
+""" Invoice dates spanning 2024-10-01 through 2024-12-31 """
+invoices invoice_date >=2024-10-01;<=2024-12-31;_;;
+
+""" Invoices on 2025-06-01 to 2025-06-15 """
+invoices invoice_date >=2025-06-01;<=2025-06-15;_;;
+
+""" Invoices due between 2025-09-01 and 2025-09-30 """
+invoices due_date >=2025-09-01;<=2025-09-30;_;;
+
+""" Due date window 2025-10-01 through 2025-10-07 """
+invoices due_date >=2025-10-01;<=2025-10-07;_;;
+
+""" Invoices with due_date 2025-12-01 to 2025-12-31 """
+invoices due_date >=2025-12-01;<=2025-12-31;_;;
+
+""" Invoices created from 2024-02-01 to 2024-02-29 """
+invoices created >=2024-02-01;<=2024-02-29;_;;
+
+""" Created invoices date span 2025-07-01 through 2025-07-15 for invoices """
+invoices created >=2025-07-01;<=2025-07-15;_;;
+
+""" Invoices created 2023-11-01 to 2023-11-30 """
+invoices created >=2023-11-01;<=2023-11-30;_;;
+
+""" Invoice item ids 10000 to 10500 """
+invoice_items id >=10000;<=10500;_;;
+
+""" Item id band from 75000 through 75250 """
+invoice_items id >=75000;<=75250;_;;
+
+""" Only invoice_item ids 300 to 325 """
+invoice_items id >=300;<=325;_;;
+
+""" Invoice items for invoice_id between 6000 and 6050 """
+invoice_items invoice_id >=6000;<=6050;_;;
+
+""" invoice_id range 90001 through 90025 on items """
+invoice_items invoice_id >=90001;<=90025;_;;
+
+""" Items tied to invoice_id 42 to 60 """
+invoice_items invoice_id >=42;<=60;_;;
+
+""" Invoice items for product_id from 200 to 240 """
+invoice_items product_id >=200;<=240;_;;
+
+""" product_id window 501 through 550 on line items """
+invoice_items product_id >=501;<=550;_;;
+
+""" Line items with product_id 77 to 99 """
+invoice_items product_id >=77;<=99;_;;
+
+""" Invoice items where quantity between 2 and 5 """
+invoice_items quantity >=2;<=5;_;;
+
+""" Line item quantities 10 through 15 """
+invoice_items quantity >=10;<=15;_;;
+
+""" Only quantities from 25 to 30 on items """
+invoice_items quantity >=25;<=30;_;;
+
+""" Customers with id from 100 to 150 and name like 'Lee' """
+customers id >=100;<=150;name ~"Lee";_;;
+
+""" Products with id between 2000 and 2050, active only """
+products id >=2000;<=2050;active 1;_;;
+
+""" Invoices with id 5000 through 5050 that are paid """
+invoices id >=5000;<=5050;status paid;_;;
+
+""" Invoices for customer_id 300 to 350 with status open """
+invoices customer_id >=300;<=350;status open;_;;
+
+""" Invoice items with id 90000 to 90100 where description contains HDMI """
+invoice_items id >=90000;<=90100;description ~"HDMI";_;;
+
+""" Invoice items tied to invoice_id 7000..7025 with description like 'USB-C' """
+invoice_items invoice_id >=7000;<=7025;description ~"USB-C";_;;
+
+""" Invoice items for product_id 2100 to 2150 with unit price at least 25 """
+invoice_items product_id >=2100;<=2150;unit_price >=25;_;;
+
+""" Invoice items where quantity is 2 through 5 and description includes Adapter """
+invoice_items quantity >=2;<=5;description ~"Adapter";_;;
+
+""" customers sorted by name A-Z """
+customers name :asc;_;;
+
+""" order customers by name Z-A """
+customers name :des;_;;
+
+""" customers by signup date newest first """
+customers created :des;_;;
+
+""" customers by signup date oldest first """
+customers created :asc;_;;
+
+""" rank customers by id high to low """
+customers id :des;_;;
+
+""" products sorted by price low to high """
+products unit_price :asc;_;;
+
+""" products sorted by price high to low """
+products unit_price :des;_;;
+
+""" alphabetize products by name """
+products name :asc;_;;
+
+""" products by creation date newest first """
+products created :des;_;;
+
+""" products ordered by id ascending """
+products id :asc;_;;
+
+""" invoices sorted by issue date newest first """
+invoices invoice_date :des;_;;
+
+""" invoices sorted by due date earliest first """
+invoices due_date :asc;_;;
+
+""" rank invoices by total amount descending """
+invoices total :des;_;;
+
+""" invoices by subtotal ascending """
+invoices subtotal :asc;_;;
+
+""" order invoices by id ascending """
+invoices id :asc;_;;
+
+""" invoice items sorted by quantity descending """
+invoice_items quantity :des;_;;
+
+""" invoice items ordered by unit price ascending """
+invoice_items unit_price :asc;_;;
+

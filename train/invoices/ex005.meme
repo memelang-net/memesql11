@@ -1,0 +1,300 @@
+""" Issue dates where total tax is zero or less """
+invoices tax :sum<=0;invoice_date :grp;;
+
+""" Due dates where average invoice total is at least 250 """
+invoices total :avg>=250;due_date :grp;;
+
+""" Customers whose maximum invoice total is at least 500 """
+invoices total :max>=500;customer_id :grp;;
+
+""" Statuses where minimum invoice total is at least 50 """
+invoices total :min>=50;status :grp;;
+
+""" Products with quantity sold at least 25 """
+invoice_items quantity :sum>=25;product_id :grp;;
+
+""" Invoices having at least 5 line items """
+invoice_items id :cnt>=5;invoice_id :grp;;
+
+""" Invoices where sum of line totals is at least 1000 """
+invoice_items line_total :sum>=1000;invoice_id :grp;;
+
+""" Products with average unit price at least 30 """
+invoice_items unit_price :avg>=30;product_id :grp;;
+
+""" Products where maximum unit price is at least 200 """
+invoice_items unit_price :max>=200;product_id :grp;;
+
+""" Invoices where average quantity per item is 2 or less """
+invoice_items quantity :avg<=2;invoice_id :grp;;
+
+""" Products with minimum line total no more than 1 """
+invoice_items line_total :min<=1;product_id :grp;;
+
+""" Invoices with total quantity of items at least 50 """
+invoice_items quantity :sum>=50;invoice_id :grp;;
+
+""" Invoice dates with at least 40 invoices """
+invoices id :cnt>=40;invoice_date :grp;;
+
+""" Customers whose tax sum reaches 75 or more """
+invoices tax :sum>=75;customer_id :grp;;
+
+""" Due dates where invoice count is 3 or fewer """
+invoices id :cnt<=3;due_date :grp;;
+
+""" Active-status groups with product count at least 10 """
+products id :cnt>=10;active :grp;;
+
+""" Creation dates where max unit price is at least 150 """
+products unit_price :max>=150;created :grp;;
+
+""" Creation dates where min unit price is 5 or less """
+products unit_price :min<=5;created :grp;;
+
+""" Signup days with average customer id at least 500 """
+customers id :avg>=500;created :grp;;
+
+""" Products with item count of 100 or more """
+invoice_items id :cnt>=100;product_id :grp;;
+
+""" Statuses where subtotal sum reaches 5000+ """
+invoices subtotal :sum>=5000;status :grp;;
+
+""" Invoices where maximum unit price is at least 300 """
+invoice_items unit_price :max>=300;invoice_id :grp;;
+
+""" Statuses where minimum invoice total is at least 50 ascending """
+invoices total :min:asc>=50;status :grp;;
+
+""" Invoices with ascending maximum item unit price of 200 or more """
+invoice_items unit_price :max:asc>=200;invoice_id :grp;;
+
+""" Active flags with at least 10 products (ascending) """
+products id :cnt:asc>=10;active :grp;;
+
+""" Customers whose invoice totals sum to 1000+, ascending """
+invoices total :sum:asc>=1000;customer_id :grp;;
+
+""" Creation dates where minimum product unit price is below 5 (sorted by min desc) """
+products unit_price :min:des<5;created :grp;;
+
+""" Customers whose maximum invoice total is under 800 descending """
+invoices total :max:des<800;customer_id :grp;;
+
+""" Invoice dates with fewer than 3 invoices, descending """
+invoices id :cnt:des<3;invoice_date :grp;;
+
+""" Products with total quantity sold under 50 (descending) """
+invoice_items quantity :sum:des<50;product_id :grp;;
+
+""" Customer signup days in 2024-05 (count per day) """
+customers id :cnt;created :grp>=2024-05-01;<=2024-05-31;;
+
+""" Customer creations from 2023-11-01 through 2023-11-30 (daily counts) """
+customers id :cnt;created :grp>=2023-11-01;<=2023-11-30;;
+
+""" Customer signups during 2025-02 (count by date) """
+customers id :cnt;created :grp>=2025-02-01;<=2025-02-28;;
+
+""" Products added between 2024-07-01 and 2024-07-31 (count by day) """
+products id :cnt;created :grp>=2024-07-01;<=2024-07-31;;
+
+""" Product creation window 2025-03-01..2025-03-31 (average unit price per day) """
+products unit_price :avg;created :grp>=2025-03-01;<=2025-03-31;;
+
+""" Products with ids 2000..2050 (max unit price per id) """
+products unit_price :max;id :grp>=2000;<=2050;;
+
+""" Invoices issued in September 2025 (sum of totals by date) """
+invoices total :sum;invoice_date :grp>=2025-09-01;<=2025-09-30;;
+
+""" Invoice due dates from 2025-10-01 to 2025-10-15 (invoice count per due date) """
+invoices id :cnt;due_date :grp>=2025-10-01;<=2025-10-15;;
+
+""" Invoices created during 2024-12 (average subtotal per created date) """
+invoices subtotal :avg;created :grp>=2024-12-01;<=2024-12-31;;
+
+""" Invoices by customer ids 100..150 (sum of tax per customer) """
+invoices tax :sum;customer_id :grp>=100;<=150;;
+
+""" Invoice items for invoice ids 7000..7050 (sum of line totals per invoice) """
+invoice_items line_total :sum;invoice_id :grp>=7000;<=7050;;
+
+""" Line items by product ids 50..75 (quantity summed per product) """
+invoice_items quantity :sum;product_id :grp>=50;<=75;;
+
+""" Item quantities 2..5 (count of lines per quantity) """
+invoice_items id :cnt;quantity :grp>=2;<=5;;
+
+""" Invoice items tied to product ids 500..520 (avg unit price per product) """
+invoice_items unit_price :avg;product_id :grp>=500;<=520;;
+
+""" Customer signup dates in Q3 2024 (daily max customer id) """
+customers id :max;created :grp>=2024-07-01;<=2024-09-30;;
+
+""" Products added in 2025-06 (max unit price per day) """
+products unit_price :max;created :grp>=2025-06-01;<=2025-06-30;;
+
+""" Invoices on 2025-08-01..2025-08-31 (sum of tax per issue date) """
+invoices tax :sum;invoice_date :grp>=2025-08-01;<=2025-08-31;;
+
+""" Invoices due across 2025-12 (sum of totals per due date) """
+invoices total :sum;due_date :grp>=2025-12-01;<=2025-12-31;;
+
+""" Invoice items for invoice ids 90000..90100 (avg quantity per invoice) """
+invoice_items quantity :avg;invoice_id :grp>=90000;<=90100;;
+
+""" Invoice items for product ids 2000..2050 (sum of line totals per product) """
+invoice_items line_total :sum;product_id :grp>=2000;<=2050;;
+
+""" Invoices for customers named like 'Lee' """
+customers name ~"Lee";id _;invoices customer_id @;_;;
+
+""" Open invoices on 2025-04-10 for customer email 'billing@globex.com' """
+customers email "billing@globex.com";id _;invoices customer_id @;status open;invoice_date 2025-04-10;_;;
+
+""" Invoices that include product with SKU 'AAA-999' """
+products sku "AAA-999";id _;invoice_items product_id @;invoice_id _;invoices id @;_;;
+
+""" Products on invoices issued 2025-10-01 """
+invoices invoice_date 2025-10-01;id _;invoice_items invoice_id @;product_id _;products id @;_;;
+
+""" Invoice items with quantity at least 3 for customers with phone like '+1-212' """
+customers phone ~"+1-212";id _;invoices customer_id @;id _;invoice_items invoice_id @;quantity >=3;_;;
+
+""" Customers for invoices due on 2025-09-30 """
+invoices due_date 2025-09-30;customer_id _;customers id @;_;;
+
+""" Paid invoices that contain items described like 'HDMI' """
+invoice_items description ~"HDMI";invoice_id _;invoices id @;status paid;_;;
+
+""" Overdue invoices in 2025 that include inactive products """
+products active 0;id _;invoice_items product_id @;invoice_id _;invoices id @;status overdue;invoice_date >=2025-01-01;<=2025-12-31;_;;
+
+""" Products listed on invoice number 'INV-2042' """
+invoices invoice_no "INV-2042";id _;invoice_items invoice_id @;product_id _;products id @;_;;
+
+""" Open invoices for customers named 'Apex LLC' """
+customers name "Apex LLC";id _;invoices customer_id @;status open;_;;
+
+""" Products on open invoices for customer id 404 """
+invoices customer_id 404;status open;id _;invoice_items invoice_id @;product_id _;products id @;_;;
+
+""" Invoice items for invoices of customer email 'finance@orion.com' on 2025-09-09 """
+customers email "finance@orion.com";id _;invoices customer_id @;invoice_date 2025-09-09;id _;invoice_items invoice_id @;_;;
+
+""" Invoice numbers for customer named 'Northwind' on 2025-06-30 """
+customers name "Northwind";id _;invoices customer_id @;invoice_date 2025-06-30;invoice_no :asc;_;;
+
+""" Open invoices that include product SKU 'LM-500' on 2025-08-08 """
+products sku "LM-500";id _;invoice_items product_id @;invoice_id _;invoices id @;status open;invoice_date 2025-08-08;_;;
+
+""" Products on invoices due 2025-12-31 with item quantity at least 4 """
+invoices due_date 2025-12-31;id _;invoice_items invoice_id @;quantity >=4;product_id _;products id @;_;;
+
+""" Invoice items for customers with phone like '+44' on 2025-10-01 """
+customers phone ~"+44";id _;invoices customer_id @;invoice_date 2025-10-01;id _;invoice_items invoice_id @;_;;
+
+""" Customers who bought active products priced at least 120 on 2025-01-15 """
+products active 1;id _;invoice_items product_id @;unit_price >=120;invoice_id _;invoices id @;invoice_date 2025-01-15;customer_id _;customers id @;_;;
+
+""" Products purchased by '.de' customers on 2025-07-20 """
+customers email ~".de";id _;invoices customer_id @;invoice_date 2025-07-20;id _;invoice_items invoice_id @;product_id _;products id @;_;;
+
+""" Overdue invoices in 2025 that include SKUs like 'GAMMA' """
+products sku ~"GAMMA";id _;invoice_items product_id @;invoice_id _;invoices id @;status overdue;invoice_date >=2025-01-01;<=2025-12-31;_;;
+
+""" Customers with open invoices on 2025-10-05 that contain items described like 'setup' """
+invoice_items description ~"setup";invoice_id _;invoices id @;status open;invoice_date 2025-10-05;customer_id _;customers id @;_;;
+
+""" Invoice items on 2025-02-10 with unit price at least 50 """
+invoice_items unit_price >=50;_;product_id :$x;invoice_id _;invoices id @;invoice_date 2025-02-10;products id $x;_;;
+
+""" Items described like 'HDMI' on paid invoices dated 2025-03-05 """
+invoice_items description ~"HDMI";_;product_id :$x;invoice_id _;invoices id @;status paid;invoice_date 2025-03-05;products id $x;_;;
+
+""" Line items with quantity 3 or more on invoices due 2025-04-30 """
+invoice_items quantity >=3;_;product_id :$x;invoice_id _;invoices id @;due_date 2025-04-30;products id $x;_;;
+
+""" Invoice items with line total at least 500 on open invoices for 2025-05-01 """
+invoice_items line_total >=500;_;product_id :$x;invoice_id _;invoices id @;status open;invoice_date 2025-05-01;products id $x;_;;
+
+""" Items priced between 20 and 40 on invoices created 2025-06-15 """
+invoice_items unit_price >=20;<=40;_;product_id :$x;invoice_id _;invoices id @;created 2025-06-15;products id $x;_;;
+
+""" Items for products with SKU 'ZX-42' on invoices issued 2025-07-07 """
+invoice_items invoice_id :$x;_;product_id _;products id @;sku "ZX-42";invoices id $x;invoice_date 2025-07-07;_;;
+
+""" Invoice items for inactive products on overdue invoices due 2025-08-01 """
+invoice_items invoice_id :$x;_;product_id _;products id @;active 0;invoices id $x;status overdue;due_date 2025-08-01;_;;
+
+""" Items for products named like 'Cable' on invoices in September 2025 """
+invoice_items invoice_id :$x;_;product_id _;products id @;name ~"Cable";invoices id $x;invoice_date >=2025-09-01;<=2025-09-30;_;;
+
+""" Invoice items for products priced at least 150 on invoices totaling 1000+ on 2025-10-10 """
+invoice_items invoice_id :$x;_;product_id _;products id @;unit_price >=150;invoices id $x;total >=1000;invoice_date 2025-10-10;_;;
+
+""" Items for products created on 2025-11-11 on paid invoices """
+invoice_items invoice_id :$x;_;product_id _;products id @;created 2025-11-11;invoices id $x;status paid;_;;
+
+""" Products purchased by customers named like 'Lee' on 2025-08-01 """
+customers name ~"Lee";id _;invoices customer_id @;invoice_date 2025-08-01;id _;invoice_items invoice_id @;product_id _;products id @;_;;
+
+""" Open invoices including SKU 'ALPHA-9' for customers with '.org' emails """
+customers email ~".org";id _;invoices customer_id @;status open;id _;invoice_items invoice_id @;product_id _;products id @;sku "ALPHA-9";_;;
+
+""" Invoice items with quantity at least 3 on invoices due before 2025-10-01 for active products and phone '+1-212' customers """
+customers phone ~"+1-212";id _;invoices customer_id @;due_date <2025-10-01;id _;invoice_items invoice_id @;quantity >=3;product_id _;products id @;active 1;_;;
+
+""" Customers who bought products named like 'Cable' on 2025-07-04 with line totals at least 100 """
+products name ~"Cable";id _;invoice_items product_id @;line_total >=100;invoice_id _;invoices id @;invoice_date 2025-07-04;customer_id _;customers id @;_;;
+
+""" 'Apex LLC' purchases on 2025-05-05 with item unit price at least 50 """
+customers name "Apex LLC";id _;invoices customer_id @;invoice_date 2025-05-05;id _;invoice_items invoice_id @;unit_price >=50;product_id _;products id @;_;;
+
+""" Overdue invoices on 2025-09-30 containing inactive products for '.edu' customers """
+customers email ~".edu";id _;invoices customer_id @;status overdue;due_date 2025-09-30;id _;invoice_items invoice_id @;product_id _;products id @;active 0;_;;
+
+""" Invoice numbers for '.co.uk' customers on 2025-03-10 that include items described like 'license' """
+customers email ~".co.uk";id _;invoices customer_id @;invoice_date 2025-03-10;invoice_no _;id _;invoice_items invoice_id @;description ~"license";;
+
+""" Customers with open invoices on 2025-10-05 that include SKUs like 'QX' """
+products sku ~"QX";id _;invoice_items product_id @;invoice_id _;invoices id @;status open;invoice_date 2025-10-05;customer_id _;customers id @;_;;
+
+""" Invoice items for phone '+81' customers on 2025-12-24 for products named 'Adapter' with quantity up to 2 """
+customers phone ~"+81";id _;invoices customer_id @;invoice_date 2025-12-24;id _;invoice_items invoice_id @;quantity <=2;product_id _;products id @;name ~"Adapter";_;;
+
+""" Products appearing on paid invoices in 2025-08 for customers created after 2025-01-01 (product name A-Z) """
+customers created >2025-01-01;id _;invoices customer_id @;status paid;invoice_date >=2025-08-01;<=2025-08-31;id _;invoice_items invoice_id @;product_id _;products id @;name :asc;_;;
+
+""" Open invoices in 2025-09 with totals at least 500, ordered by total desc (first 10) """
+invoices status open;invoice_date >=2025-09-01;<=2025-09-30;total :des>=500;_;% lim 10;;
+
+""" Products with SKU like 'PRO' created 2024-01-01..2024-06-30, active only, name A-Z """
+products sku ~"PRO";created >=2024-01-01;<=2024-06-30;active 1;name :asc;_;;
+
+""" Customers with '.net' emails created before 2024-05-01, newest first (page 2 of 20) """
+customers email ~".net";created :des<2024-05-01;_;% lim 20;% beg 20;;
+
+""" Paid invoices on 2025-08-15 that include items qty >= 2 for products named like 'Cable' """
+products name ~"Cable";id _;invoice_items product_id @;quantity >=2;invoice_id _;invoices id @;status paid;invoice_date 2025-08-15;_;;
+
+""" Top 5 customers by sum of totals for open invoices in 2025-10 """
+invoices status open;invoice_date >=2025-10-01;<=2025-10-31;total :sum:des;customer_id :grp;customers id @;name _;% lim 5;;
+
+""" Average unit price per product for items on invoices 2025-07-01..2025-07-31 (desc) with product name A-Z """
+invoices invoice_date >=2025-07-01;<=2025-07-31;id _;invoice_items invoice_id @;unit_price :avg:des;product_id :grp;products id @;name :asc;;
+
+""" Invoice items with line_total >= 250 on overdue invoices due 2025-09-30 for '.org' customers """
+customers email ~".org";id _;invoices customer_id @;status overdue;due_date 2025-09-30;id _;invoice_items invoice_id @;_;line_total >=250;;
+
+""" Products purchased on 2025-10-10 with item unit_price >= 100 (capture product ids) """
+invoice_items unit_price >=100;product_id :$x;invoice_id _;invoices id @;invoice_date 2025-10-10;products id $x;_;;
+
+""" Customers with at least 3 invoices between 2025-06-01 and 2025-06-30 (by count desc) """
+invoices invoice_date >=2025-06-01;<=2025-06-30;id :cnt:des>=3;customer_id :grp;customers id @;name _;;
+
+""" Invoices including inactive products in 2024, totals low-to-high (first 15) """
+products active 0;id _;invoice_items product_id @;invoice_id _;invoices id @;invoice_date >=2024-01-01;<=2024-12-31;total :asc;_;% lim 15;;
+
