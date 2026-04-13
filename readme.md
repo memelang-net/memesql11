@@ -1,4 +1,4 @@
-## Memelang v10
+## Memelang v11
 
 Memelang is an AI-optimized query language that significantly reduces token count for LLM RAG pipelines:
 1. LLM emits low-token Memelang queries
