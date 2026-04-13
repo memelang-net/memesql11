@@ -6,7 +6,84 @@ Whitespaces are syntactic and trigger "new Cell"
 Never space between operator/comparator/comma/flag and values
 '''
 
-MEMELANG_VER = 11.02
+MEMELANG_VER = 11.03
+
+syntax = '[table WS] [column WS] [":" "$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp"|"asc"|"des")] ["<=>" "\"" string "\""] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
+
+examples = '''
+%mode=tab;
+roles id :int>0; rating :DESC="Decimal 0-5 star rating of performance";:dec>0.0;<=5; actor :DESC="Actor's full name";:str; movie :DESC="Movie's full name";:str; character :DESC="Character's full name";:str;;
+actors id :int>0; name :DESC="Actor's full name";:str; age :DESC="Actor's age in years";:int>=0;<200;;
+movies id :int>0; description :DESC="Brief description of movie plot";:str; year :DESC="Year of production AD";:int>1800;<2100; genre scifi,drama,comedy,documentary;:str; title :DESC="Full movie title";:str;;
+actors name _; roles actor @;;
+movies title _; roles movie @;;
+roles id :gct=1;;
+roles movie :grp; actor :grp; character :gct=1;;
+actors id :gct=1;;
+movies id :gct=1;;
+
+%mode=qry;
+""" All movies """
+movies _ _;;
+
+""" Every role """
+roles _ _;;
+
+""" Titles and descriptions for movies """
+movies title _; description _;;
+
+""" Actor name and ages """
+actors name _; age _;;
+
+""" Actors age 41 years or older """
+actors age >=41; _;;
+
+""" Role 567 and 8901 """
+roles id 567,8901; _;;
+
+""" Films with dystopian society narratives sim>.33 """
+movies description <=>"dystopian"<0.33; _;;
+
+""" Movies titled with Star released in 1977 or 1980 """
+movies title ~"Star"; year 1977,1980; _;;
+
+""" Actors named like Ana aged 20 to 35 inclusive """
+actors name ~"Ana"; age >=20;<=35; _;;
+
+""" Roles rated below 1.5 for movies before 1980 """
+movies year <1980; title _; roles movie @; rating <1.5; _;;
+
+""" Roles sort rating descending, movie descending """
+roles rating :des; movie :des;;
+
+""" All movies before 1970 ordered by year ascending """
+movies year :asc<1970; _;;
+
+""" Average performer rating at least 4.2 """
+roles rating :avg>=4.2; actor :grp;;
+
+""" Minimum role rating by actor, low to high """
+roles rating :min:asc; actor :grp;;
+
+""" Roles in movies mentioning robot rated 3+ """
+movies description <=>"robot"<=$sim; title _; roles movie @; rating >=3;;
+
+""" Costars seen with Bruce Willis or Uma Thurman """
+roles actor :$a~"Bruce Willis","Uma Thurman"; movie _;@ @ @; actor !$a;;
+
+""" War stories before 1980: top 12 movies by minimum role rating """
+movies year <1980; description <=>"war"<=$sim; title :grp; roles movie @; rating :min:des;%beg=0;%lim=12;;
+
+""" Roles for movies Hero or House of Flying Daggers where actor name includes Li, actor A-Z """
+movies title "Hero","House of Flying Daggers"; roles movie @; actor :asc~"Li";;
+
+""" Titles containing Here about robots between 1900 and 2000 """
+movies title ~"Hero"; description <=>"robot"; year >=1900; <=2000;;
+%tab=movies;  #%val; %col=title; ~"Hero"; %col=description; <=>"robot"; %col=year; >=1900; <=2000;;
+%tab=movies; #title #description #year; ~"Hero" <=>"robot" >=1900; <=2000;;
+%tab=movies; #title; ~"Hero"; #description; <=>"robot"; #year; >=1900; <=2000;;
+'''
+
 
 import re, sys, json
 from typing import Optional, Union, List, Iterator, Pattern, Any
@@ -30,7 +107,6 @@ CELL_PATTERN = (
 	('SIM',		r'~'),
 	('BIND',	r':\$\w+'),
 	('FLAG',	r':[a-zA-Z]+'),
-	('TYPE',	r'&[a-z]+'),
 	('VAR',		r'\$\w+'),
 	('REL0',  	r'@0'),
 	('REL1',  	r'@1'),
@@ -41,6 +117,8 @@ CELL_PATTERN = (
 	('SAM1',	r'\^'),
 	('WLD', 	r'_'),
 	('META', 	r'%[a-zA-Z0-9_]+'),
+	('SLOT', 	r'#%?[a-zA-Z0-9_]+'),
+	('ASSN', 	r':#%?[a-zA-Z0-9_]+'),
 	('TIM',		r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'),
 	('DEC',		r'-?\d*\.\d+'),
 	('INT',		r'-?\d+'),
@@ -54,10 +132,10 @@ CELL_REGEX=re.compile("|".join(f"(?P<{k}>{p})" for k, p in CELL_PATTERN))
 
 PAD_MODES = {'qry','tab'}
 MOD_KINDS = {'L2','COS', 'IP'}
-FLAG_KINDS = {'FLAG','BIND','TYPE','META'}
+FLAG_KINDS = {'FLAG','BIND','META','ASSN'}
 CMP_KINDS = {'EQL','GE','LE','DSIM','NOT','EQL','GT','LT','SIM'}
 LIT_KINDS = {'TIM','DEC','INT','ALN','QUO','EMB'}
-VAR_KINDS = {'VAR','WLD','SAM0','SAM1','REL0','REL1','REL2','REL3','REL4','META'}
+VAR_KINDS = {'VAR','WLD','SAM0','SAM1','REL0','REL1','REL2','REL3','REL4','META','SLOT'}
 DAT_KINDS = LIT_KINDS | VAR_KINDS
 RELKINDS = {
 	'REL0': ['-1','-1'],
@@ -72,25 +150,20 @@ RELKINDS = {
 
 # Atomic token
 class Tok:
-	def __init__(self, kind: str, lex: str):
+	def __init__(self, kind: str, lex: str, canon: Optional[str] = None):
 		self.kind = kind
 		self.lex = lex
-		if   kind == 'QUO': self.dat = json.loads(lex)
-		elif kind == 'EMB': self.dat = json.loads(lex)
-		elif kind == 'DEC': self.dat = float(lex)
-		elif kind == 'INT': self.dat = int(lex)
-		else: self.dat = lex
+		self.canon = lex if canon is None else canon
+		parser = {'QUO': json.loads, 'EMB': json.loads, 'DEC': float, 'INT': int}.get(kind)
+		self.dat = parser(lex) if parser else lex
 	def __str__(self): return self.lex
-	def __repr__(self): return self.lex
-	def __eq__(self, other): return str(self) == str(other)
+	def __repr__(self): return self.canon
+	def __eq__(self, other): return repr(self) == repr(other)
 	def __hash__(self): return hash(self.lex)
 	def __bool__(self): return bool(self.lex)
 
 
 TOK_NULL = Tok('NULL', '')
-TOK_EQL = Tok('EQL', '=')
-TOK_EQL_ELIDE = Tok('EQL', '')  # default, elided '='
-
 
 # Sequence of tokens
 class Seq(list[Tok]):
@@ -98,24 +171,23 @@ class Seq(list[Tok]):
 	def __init__(self, *items):
 		super().__init__(items)
 		self.opr = TOK_NULL
-	def __str__(self): return self.opr.lex.join(map(str, self))
+	def __str__(self): return self.opr.lex.join([str(t) for t in self if len(str(t)) or t.kind=='HOLD'])
+	def __repr__(self): return self.opr.lex.join([repr(t) for t in self])
 
 
 # Predicate expression
 class Cell:
-	left: Seq
 	flag: Seq
+	left: Seq
 	comp: Tok
 	right: Seq
-	env: dict[str,Any]
 	padded = False
 
 	def __init__(self, src: str):
 		self.left = Seq()
 		self.flag = Seq()
-		self.comp = TOK_EQL_ELIDE
-		self.right = Seq()
-		self.env = {}
+		self.comp = Tok('EQL', '', '=')
+		self.right = Seq(Tok('WLD', '', '_'))
 
 		toks = []
 		for m in CELL_REGEX.finditer(src):
@@ -136,17 +208,17 @@ class Cell:
 			i += 1
 			return t
 
-		# LEFT (prefix MOD)
-		if peek() in MOD_KINDS:
-			self.left.opr = take()
-			self.left.append(TOK_NULL)
-			t = take()
-			if not t.kind in DAT_KINDS: raise Err('E_TERM_DAT')
-			self.left.append(t)
-
 		# FLAGS
 		while peek() in FLAG_KINDS:
 			self.flag.append(take())
+
+		# LEFT (prefix MOD)
+		if peek() in MOD_KINDS:
+			self.left.opr = take()
+			self.left.append(Tok('HOLD', ''))
+			t = take()
+			if not t.kind in DAT_KINDS: raise Err('E_TERM_DAT')
+			self.left.append(t)
 
 		# COMPARATOR
 		if peek() in CMP_KINDS:
@@ -154,11 +226,13 @@ class Cell:
 			if not peek() in DAT_KINDS: raise Err('E_DAT')
 
 		# RIGHT (values, OR-joined)
-		while peek() in DAT_KINDS:
-			self.right.append(take())
-			if peek() == 'OR':
-				self.right.opr = take()
-				if not peek() in DAT_KINDS: raise Err('E_OR_TRAIL')
+		if peek() in DAT_KINDS:
+			self.right.clear()
+			while peek() in DAT_KINDS:
+				self.right.append(take())
+				if peek() == 'OR':
+					self.right.opr = take()
+					if not peek() in DAT_KINDS: raise Err('E_OR_TRAIL')
 
 		if i != n: raise Err(f'E_EXPR_TRAIL {toks[i:]}')
 
@@ -170,41 +244,25 @@ class Cell:
 
 	@property
 	def single(self) -> Tok:
-		return (
-			self.right[0]
-			if self.comp.kind == 'EQL' and len(self.right) == 1
-			else TOK_NULL
-		)
+		return self.right[0] if self.comp.kind == 'EQL' and len(self.right) == 1 else TOK_NULL
 
 	@property
 	def literal(self) -> Tok:
 		tok = self.single
 		return tok if tok.kind in LIT_KINDS else TOK_NULL
 
-	@property
-	def type(self) -> Tok:
-		for flag in self.flag:
-			if flag.kind=='TYPE': return flag
-		return TOK_NULL
+	def find(self, kind:str) -> Tok:
+		return next((flag for flag in self.flag if flag.kind == kind), TOK_NULL)
 
-	@property
-	def meta(self) -> Tok:
-		for flag in self.flag:
-			if flag.kind=='META': return flag
-		return TOK_NULL
 
-	def bind(self, name: str):
-		lex = f':${name}'
-		if any(flag.kind == 'BIND' and flag.lex == lex for flag in self.flag): return
-		self.flag.append(Tok('BIND', lex))
-		if self.comp.kind == 'EQL' and self.right: self.comp = TOK_EQL
+	def bind(self, tok: Tok):
+		if tok not in self.flag: self.flag.append(tok)
 
-	def __str__(self) -> str: return f"{self.left}{self.flag}{self.comp.lex}{self.right}"
+	def __str__(self) -> str: return f"{self.flag}{self.left}{self.comp}{self.right}"
 
-	def __repr__(self) -> str: return str(self)
+	def __repr__(self) -> str: return f"{self.flag!r}{self.left!r}{self.comp!r}{self.right!r}"
 
-	def __bool__(self):
-		return bool(self.left or self.flag or self.right or self.comp.lex)
+	def __bool__(self) -> bool: return bool(self.flag or self.left or self.right)
 
 
 ### GRAMMAR ###
@@ -238,12 +296,11 @@ class Axis(list):
 		exprs: List[str] = []
 
 		for m in self.regex.finditer(src):
-			# build expression
-			if m.lastgroup in {"EXPQ", "EXPM", "EXPS"}: exprs.append(m.group())
-			# append sub-axis
-			elif m.lastgroup == "SEP" and (exprs or self.empt):
-				self.append(self.sub("".join(exprs)))
-				exprs.clear()
+			if m.lastgroup == 'SEP':
+				if exprs or self.empt:
+					self.append(self.sub("".join(exprs)))
+					exprs.clear()
+			elif m.lastgroup != 'COMM': exprs.append(m.group())
 
 		# debuffer expression
 		if exprs: self.append(self.sub("".join(exprs)))
@@ -274,7 +331,6 @@ class Axis1(Axis):
 class Axis2(Axis):
 	sep = ';;'
 	sub = Axis1
-	slot = ['%tab','%col','%val']
 
 	@staticmethod
 	def coordrel(coords, rel):
@@ -294,7 +350,8 @@ class Axis2(Axis):
 	# Left-pad Axis0
 	# Replace relatives `@` with coordinate vars `$x_y_z`
 	def rect(self):
-		env = {'mode':'qry','slots':self.slot}
+		env = {'mode':'qry'}
+		slots = ['#%tab',  '#%col', '#%val']
 
 		for i, axis1 in enumerate(self):
 			idx = [i, None, None]
@@ -305,18 +362,24 @@ class Axis2(Axis):
 
 				# Meta axis
 				# %KEY=VAL %KEY=VAL
-				if bool(axis0[0].meta):
+				if bool(axis0[0].find('META')):
 					for i, cell in enumerate(axis0):
-						if not bool(cell.meta): raise Err('E_MET_AXIS')
-						k=cell.meta.lex[1:]
-						if k=='slots': env[k] = [t.dat for t in cell.right]
-						else: env[k] = cell.single.dat
+						if not bool(cell.find('META')): raise Err('E_AXIS_MET')
+						env[cell.find('META').canon[1:]] = cell.single.dat
+					continue
+
+				# Slots
+				if axis0[0].single.kind=='SLOT':
+					slots=[]
+					for cell in axis0:
+						if cell.single.kind!='SLOT': raise Err('E_AXIS_SLOT')
+						slots.append(cell.single.canon)
 					continue
 	
 				if env['mode'] not in PAD_MODES: continue
 
 				# Pad Axis0
-				axis0len=len(env['slots'])
+				axis0len=len(slots)
 				if len(axis0) > axis0len: raise Err('E_AXIS0_LONG')
 				for _ in range(axis0len - len(axis0)):
 					cell = axis0.sub('@')
@@ -327,7 +390,7 @@ class Axis2(Axis):
 					idx[2] = i
 
 					# Assign slot
-					cell.env['slot'] = str(env['slots'][i])
+					cell.bind(Tok('ASSN', '', ':'+slots[i]))
 
 					# Replace relative tokens with coordinate vars
 					for seq in (cell.left, cell.right):
@@ -336,14 +399,14 @@ class Axis2(Axis):
 
 							coords=self.coordrel(idx, RELKINDS[tok.kind])
 							src=self.pull(coords)
-							name = '_'.join(map(str, coords)).replace('-1','E')
 
 							if src.literal.kind != 'NULL':
 								seq[n] = src.literal
 								continue
 
-							seq[n] = Tok('VAR', f'${name}')
-							src.bind(name)
+							name = '$'+'_'.join(map(str, coords)).replace('-1','E')
+							seq[n] = Tok('VAR', '', name)
+							src.bind(Tok('BIND', '', ':'+name))
 
 ### PG SQL ###
 
@@ -386,7 +449,7 @@ class CellSQL(Cell):
 		super().__init__(src)
 		self.base = self.alias = ''
 		self.param = []
-		flags = {t.lex for t in self.flag if t.kind == 'FLAG'}
+		flags = {t.canon for t in self.flag if t.kind == 'FLAG'}
 		self.agg = next((sql for flag, sql in self.flag2agg.items() if flag in flags), '')
 		self.grouped = ':grp' in flags
 		self.sort = 'ASC' if ':asc' in flags else 'DESC' if ':des' in flags else ''
@@ -394,7 +457,7 @@ class CellSQL(Cell):
 	def deref(self, bind: dict[str, SQL], with_agg: bool = True) -> Iterator[SQL]:
 		for t in self.right:
 			if t.kind == 'VAR':
-				key = t.lex[1:]
+				key = t.canon[1:]
 				if key not in bind: raise Err(f'E_VAR_BIND {key}')
 				ref = bind[key]
 			else:
@@ -414,7 +477,7 @@ class CellSQL(Cell):
 		sql, param = self.base, list(self.param)
 		if self.left.opr.kind in self.mod2sql:
 			sql = f'({sql}{self.mod2sql[self.left.opr.kind]}{PH}::VECTOR)'
-			param.append(self.vectorize(self.left[1]).lex)
+			param.append(self.vectorize(self.left[1]).canon)
 		agg = self.agg or ('MAX' if grouped and not self.grouped else '') if with_agg else ''
 		if agg: sql = f'{agg}({sql})'
 		if alias and self.alias: sql = f'{sql} AS {self.alias}'
@@ -422,7 +485,7 @@ class CellSQL(Cell):
 		return SQL(sql, param)
 
 	def sql_clause(self, bind: dict[str, SQL]) -> Optional[tuple[str, SQL]]:
-		if not self.right or self.single.lex == '_': return None
+		if not self.right or self.single.canon == '_': return None
 
 		left = self.sql_value()
 		rights = list(self.deref(bind, with_agg=bool(self.agg)))
@@ -443,82 +506,7 @@ class CellSQL(Cell):
 		return ('having' if self.agg else 'where'), SQL(f"{left.sql}{self.cmp2sql[comp]}{beg}{','.join(items)}{end}", left.param + params)
 
 
-# Axis0 is sparse-dict `TAB COL VAL;`
 class Grid(Axis2):
-	syntax = '[table WS] [column WS] ["<=>" "\"" string "\""] [":" "$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")][":" ("asc"|"des")] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
-
-	examples = '''
-	%mode=tab;
-	roles id &int>0;rating :DESC="Decimal 0-5 star rating of performance";&dec>0;<=5;actor :DESC="Actor's full name";&str;movie :DESC="Movie's full name";&str;character :DESC="Character's full name";&str;;
-	actors id &int>0;name :DESC="Actor's full name";&str;age :DESC="Actor's age in years";&int>=0;<200;;
-	movies id &int>0;description :DESC="Brief description of movie plot";&str;year :DESC="Year of production AD";&int>1800;<2100;genre scifi,drama,comedy,documentary;&str;title :DESC="Full movie title";&str;;
-	actors name _;roles actor @;;
-	movies title _;roles movie @;;
-	roles id :gct=1;;
-	roles movie :grp;actor :grp;character :gct=1;;
-	actors id :gct=1;;
-	movies id :gct=1;;
-
-	%mode=qry;
-	""" All movies """
-	movies _ _;;
-
-	""" Every role """
-	roles _ _;;
-
-	""" Titles and descriptions for movies """
-	movies title _;description _;;
-
-	""" Actor name and ages """
-	actors name _;age _;;
-
-	""" Actors age 41 years or older """
-	actors age >=41;_;;
-
-	""" Role 567 and 8901 """
-	roles id 567,8901;_;;
-
-	""" Films with dystopian society narratives sim>.33 """
-	movies description <=>"dystopian"<0.33;_;;
-
-	""" Movies titled with Star released in 1977 or 1980 """
-	movies title ~"Star";year 1977,1980;_;;
-
-	""" Actors named like Ana aged 20 to 35 inclusive """
-	actors name ~"Ana";age >=20;<=35;_;;
-
-	""" Roles rated below 1.5 for movies before 1980 """
-	movies year <1980;title _;roles movie @;rating <1.5;_;;
-
-	""" Roles sort rating descending, movie descending """
-	roles rating :des;movie :des;;
-
-	""" All movies before 1970 ordered by year ascending """
-	movies year :asc<1970;_;;
-
-	""" Average performer rating at least 4.2 """
-	roles rating :avg>=4.2;actor :grp;;
-
-	""" Minimum role rating by actor, low to high """
-	roles rating :min:asc;actor :grp;;
-
-	""" Roles in movies mentioning robot rated 3+ """
-	movies description <=>"robot"<=$sim;title _;roles movie @;rating >=3;;
-
-	""" Costars seen with Bruce Willis or Uma Thurman """
-	roles actor :$a~"Bruce Willis","Uma Thurman";movie _;@ @ @;actor !$a;;
-
-	""" War stories before 1980: top 12 movies by minimum role rating """
-	movies year <1980;description <=>"war"<=$sim;title :grp;roles movie @;rating :min:des;%beg=0;%lim=12;;
-
-	""" Roles for movies Hero or House of Flying Daggers where actor name includes Li, actor A-Z """
-	movies title "Hero","House of Flying Daggers";roles movie @;actor :asc~"Li";;
-
-	""" Titles containing Here about robots between 1900 and 2000 """
-	movies title ~"Hero";description <=>"robot";year >=1900;<=2000;;
-	%tab=movies %slots=title,description,year; ~"Hero" <=>"robot" >=1900;<=2000;;
-	%tab=movies %col=title %slots=%val;~"Hero";%col=description;<=>"robot";%col=year;>=1900;<=2000;;
-	'''
 
 	def select(self) -> List[SQL]:
 		self.rect()
@@ -542,39 +530,36 @@ class Grid(Axis2):
 					continue
 	
 				for idx0, cell in enumerate(axis0):
-					if cell.padded: continue
+					#print(repr(cell))
 					single = cell.single.dat
+					if cell.padded or cell.single.kind=='SLOT': continue
 
-					if cell.meta=='%tab' or cell.env.get('slot')=='%tab':
+					# SLOT/META for TAB/COL
+					boundval = cell.find('META').canon or cell.find('ASSN').canon[2:]
+					if boundval=='%tab':
 						if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', single): raise Err('E_TAB_NAME')
 						tab_cnt += 1
 						env['tab']=single
 						env['taba']=f"t{tab_cnt}"
 						qry['from'].append(SQL(f"{env['tab']} AS {env['taba']}"))
 						qry['fromall'].append(env['taba'])
-						continue
 					
-					elif cell.meta=='%col' or cell.env.get('slot')=='%col':
+					elif boundval=='%col':
 						if single == '_': allselected = True
-						else:
-							if not re.fullmatch(r'[A-Za-z_]+[A-Za-z0-9_$]{0,62}', single): raise Err('E_COL_NAME')
-							env['cola'] = single
-						continue
+						elif not re.fullmatch(r'[A-Za-z_]+[A-Za-z0-9_$]{0,62}', single): raise Err('E_COL_NAME')
+						env['cola'] = single
 
-					# %KEY=VAL
-					elif bool(cell.meta) and cell.meta.lex!='%val':
-						k=cell.meta.lex[1:]
-						if bool(cell.single):
+					if boundval!='%val':
+						if boundval.startswith('%'):
+							k=boundval[1:]
 							env[k] = cell.single.dat
 							bind[k]=SQL(PH, [env[k]])
-						continue
-
-					elif cell.env.get('slot'):
-						if not cell.env['slot'].startswith('%'): env['cola'] = cell.env['slot']
+							continue
+						else: env['cola'] = boundval
 
 					if not env['taba']: raise Err('E_TAB_REQ')
 					
-					valcell = CellSQL(str(cell))
+					valcell = CellSQL(repr(cell))
 					valcell.base = f"{env['taba']}.{env['cola']}"
 
 					qry['select'].append(valcell)
@@ -592,10 +577,9 @@ class Grid(Axis2):
 
 					for flag in valcell.flag:
 						if flag.kind != 'BIND': continue
-						if flag.lex[2:] in env: raise Err('E_ENV_BIND')
-						bind[flag.lex[2:]] = valcell
+						if flag.canon[2:] in env: raise Err('E_ENV_BIND')
+						bind[flag.canon[2:]] = valcell
 
-		
 			if not qry['from']:
 				out.append(SQL())
 				continue
@@ -627,7 +611,7 @@ class Grid(Axis2):
 
 if __name__ == "__main__":
 	if len(sys.argv)>1: lines=[' '.join(sys.argv[1:])]
-	else: lines = Grid.examples.splitlines()
+	else: lines = examples.splitlines()
 	if not lines: exit()
 	for i in range(len(lines)):
 		line=lines[i].strip()

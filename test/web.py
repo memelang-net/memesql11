@@ -9,7 +9,7 @@ models = {
 
 OPENAI_API_KEY=open('../../../openai.key',encoding="utf-8").read()
 system_prompt = f'Convert user prompt into MEMELANG query. Output only MEMELANG query.\nMEMELANG Syntax: {syntax}\nTable schema:'
-def_schema = '% mode tab;roles id :ROL=ID;:TYP=INT;>0;rating :DESC="Numeric 0-5 star rating of performance";:TYP=DEC;>0;<=5;actor :DESC="Actor\'s full name";:TYP=STR;movie :DESC="Movie\'s full name";:TYP=STR;;actors id :ROL=ID;:TYP=INT;>0;name :DESC="Actor\'s full name";:TYP=STR;age :DESC="Actor\'s age in years";:TYP=INT;>=0;<200;;movies id :ROL=ID;:TYP=INT;>0;description :DESC="Brief description of movie plot";:TYP=STR;year;:DESC="Year of production AD";>1800;<2100;genre scifi,drama,comedy,documentary;title;:DESC="Full movie title";:TYP=STR;;actors name _;roles actor @;;movies title _;roles movie @;;'
+def_schema = '% mode tab;roles id :ROL=ID;:int>0;rating :DESC="Numeric 0-5 star rating of performance";:dec>0.0;<=5;actor :DESC="Actor\'s full name";:str;movie :DESC="Movie\'s full name";:str;;actors id :ROL=ID;:int>0;name :DESC="Actor\'s full name";:str;age :DESC="Actor\'s age in years";:int>=0;<200;;movies id :ROL=ID;:int>0;description :DESC="Brief description of movie plot";:str;year;:DESC="Year of production AD";>1800;<2100;genre scifi,drama,comedy,documentary;title;:DESC="Full movie title";:str;;actors name _;roles actor @;;movies title _;roles movie @;;'
 def_prompt = "Second page of movies ordered by title (25 per page)"
 
 app = Flask(__name__)
