@@ -1,6 +1,6 @@
 ## Memelang v11
 
-Memelang is an AI-optimized query language that significantly reduces token count for LLM RAG pipelines:
+Memelang is an AI-optimized query language that significantly reduces token count for LLM text-to-SQL pipelines:
 1. LLM emits low-token Memelang queries
 2. **memelang.py** expands Memelang to SQL queries
 3. Database executes SQL queries

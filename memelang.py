@@ -1,14 +1,12 @@
-'''
-info@memelang.net | (c)2026 HOLTWORK LLC | Patented
-This script parses MEMELANG, a terse query DSL with grid grammar
-Grid(Axis2) -> Axis1 -> Axis0 -> Cell
-Whitespaces are syntactic and trigger "new Cell"
-Never space between operator/comparator/comma/flag and values
-'''
+# info@memelang.net | (c)2026 HOLTWORK LLC | Patented
+# MEMELANG is a terse query DSL IR for LLM text-to-SQL
+# Axial grammar: Axis2 -> Axis1 -> Axis0 -> Cell
+# Whitespaces are syntactic and trigger "new Cell"
+# Never space between operator/comparator/comma/flag and values
 
-MEMELANG_VER = 11.03
+MEMELANG_VER = 11.04
 
-syntax = '[table WS] [column WS] [":" "$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp"|"asc"|"des")] ["<=>" "\"" string "\""] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
+basic_syntax = '[table WS] [column WS] [":$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")] [":" ("asc"|"des")] ["<=>" "\"" string "\""] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
 
 examples = '''
 %mode=tab;
@@ -82,8 +80,8 @@ movies title ~"Hero"; description <=>"robot"; year >=1900; <=2000;;
 %tab=movies;  #%val; %col=title; ~"Hero"; %col=description; <=>"robot"; %col=year; >=1900; <=2000;;
 %tab=movies; #title #description #year; ~"Hero" <=>"robot" >=1900; <=2000;;
 %tab=movies; #title; ~"Hero"; #description; <=>"robot"; #year; >=1900; <=2000;;
+#%tab #%val; movies :#title~"Hero"; :#description<=>"robot"; :#year>=1900; <=2000;;
 '''
-
 
 import re, sys, json
 from typing import Optional, Union, List, Iterator, Pattern, Any
@@ -94,31 +92,16 @@ Err = SyntaxError
 CELL_PATTERN = (
 	('QUO',   	r'"(?:[^"\\\n\r]|\\.)*"'),
 	('EMB',		r'\[(?:-?\d+(?:\.\d+)?)(?:\s*,\s*-?\d+(?:\.\d+)?)*\]'),
-	('L2',		r'<->'),
-	('COS',		r'<=>'),
-	('IP',		r'<#>'),
-	('GE',	 	r'>='),
-	('LE',	 	r'<='),
-	('DSIM', 	r'!~'),
-	('NOT',	 	r'!=?'), # a!=b or a!b
-	('EQL',		r'='),
-	('GT',		r'>'),
-	('LT',		r'<'),
-	('SIM',		r'~'),
+	('MOD',		r'<->|<=>|<#>'),
+	('CMP', 	r'>=|<=|!~|!=|=|>|<|~|!'),
 	('BIND',	r':\$\w+'),
 	('FLAG',	r':[a-zA-Z]+'),
 	('VAR',		r'\$\w+'),
-	('REL0',  	r'@0'),
-	('REL1',  	r'@1'),
-	('REL2',  	r'@2'),
-	('REL3',  	r'@3'),
-	('REL4',  	r'@4'),
-	('SAM0',	r'@'),
-	('SAM1',	r'\^'),
+	('REL',  	r'@\d?|\^'),
 	('WLD', 	r'_'),
-	('META', 	r'%[a-zA-Z0-9_]+'),
+	('EVAR', 	r'%[a-zA-Z0-9_]+'),
 	('SLOT', 	r'#%?[a-zA-Z0-9_]+'),
-	('ASSN', 	r':#%?[a-zA-Z0-9_]+'),
+	('ASSN', 	r':#[a-zA-Z0-9_]+'),
 	('TIM',		r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'),
 	('DEC',		r'-?\d*\.\d+'),
 	('INT',		r'-?\d+'),
@@ -128,39 +111,40 @@ CELL_PATTERN = (
 	('MISMATCH', r'.'),
 )
 
+CANON = {'!':'!='}
+
 CELL_REGEX=re.compile("|".join(f"(?P<{k}>{p})" for k, p in CELL_PATTERN))
 
 PAD_MODES = {'qry','tab'}
-MOD_KINDS = {'L2','COS', 'IP'}
-FLAG_KINDS = {'FLAG','BIND','META','ASSN'}
-CMP_KINDS = {'EQL','GE','LE','DSIM','NOT','EQL','GT','LT','SIM'}
+FLAG_KINDS = {'FLAG','BIND','EVAR','ASSN'}
 LIT_KINDS = {'TIM','DEC','INT','ALN','QUO','EMB'}
-VAR_KINDS = {'VAR','WLD','SAM0','SAM1','REL0','REL1','REL2','REL3','REL4','META','SLOT'}
+VAR_KINDS = {'VAR','WLD','REL','EVAR','SLOT'}
 DAT_KINDS = LIT_KINDS | VAR_KINDS
-RELKINDS = {
-	'REL0': ['-1','-1'],
-	'REL1': ['-1','-2'],
-	'REL2': ['-1','-3'],
-	'REL3': ['-1','-4'],
-	'REL4': ['-1','-5'],
-	'SAM0'  : ['-1','+0'],
-	'SAM1'  : ['-1','end','+0'],
+RELCOORD = {
+	'@0': ['-1','-1'],
+	'@1': ['-1','-2'],
+	'@2': ['-1','-3'],
+	'@3': ['-1','-4'],
+	'@4': ['-1','-5'],
+	'@'  : ['-1','+0'],
+	'^'  : ['-1','end','+0'],
 }
 
 
 # Atomic token
 class Tok:
-	def __init__(self, kind: str, lex: str, canon: Optional[str] = None):
+	def __init__(self, kind: str, src: str, canon: Optional[str] = None):
 		self.kind = kind
-		self.lex = lex
-		self.canon = lex if canon is None else canon
+		self.src = src
+		canon = src if canon is None else canon
+		self.canon = CANON.get(canon) or canon
 		parser = {'QUO': json.loads, 'EMB': json.loads, 'DEC': float, 'INT': int}.get(kind)
-		self.dat = parser(lex) if parser else lex
-	def __str__(self): return self.lex
+		self.dat = parser(src) if parser else src
+	def __str__(self): return self.src
 	def __repr__(self): return self.canon
 	def __eq__(self, other): return repr(self) == repr(other)
-	def __hash__(self): return hash(self.lex)
-	def __bool__(self): return bool(self.lex)
+	def __hash__(self): return hash(self.src)
+	def __bool__(self): return bool(self.src)
 
 
 TOK_NULL = Tok('NULL', '')
@@ -171,8 +155,8 @@ class Seq(list[Tok]):
 	def __init__(self, *items):
 		super().__init__(items)
 		self.opr = TOK_NULL
-	def __str__(self): return self.opr.lex.join([str(t) for t in self if len(str(t)) or t.kind=='HOLD'])
-	def __repr__(self): return self.opr.lex.join([repr(t) for t in self])
+	def __str__(self): return self.opr.src.join([str(t) for t in self if len(str(t)) or t.kind=='HOLD'])
+	def __repr__(self): return self.opr.src.join([repr(t) for t in self])
 
 
 # Predicate expression
@@ -213,7 +197,7 @@ class Cell:
 			self.flag.append(take())
 
 		# LEFT (prefix MOD)
-		if peek() in MOD_KINDS:
+		if peek() == 'MOD':
 			self.left.opr = take()
 			self.left.append(Tok('HOLD', ''))
 			t = take()
@@ -221,7 +205,7 @@ class Cell:
 			self.left.append(t)
 
 		# COMPARATOR
-		if peek() in CMP_KINDS:
+		if peek() == 'CMP':
 			self.comp = take()
 			if not peek() in DAT_KINDS: raise Err('E_DAT')
 
@@ -244,7 +228,7 @@ class Cell:
 
 	@property
 	def single(self) -> Tok:
-		return self.right[0] if self.comp.kind == 'EQL' and len(self.right) == 1 else TOK_NULL
+		return self.right[0] if self.comp.canon == '=' and len(self.right) == 1 else TOK_NULL
 
 	@property
 	def literal(self) -> Tok:
@@ -338,42 +322,41 @@ class Axis2(Axis):
 		out = []
 
 		for coord, op in zip(coords, rel):
-			if op == "end": out.append(-1)
-			else:
-				if op[0] in "+-": out.append(coord + int(op))
-				elif op[0].isdigit(): out.append(int(op))
-				else: raise ValueError(f"E_RELOPR")
-				if out[-1]<0: raise ValueError('E_RELBIND')
+			if op == "end": v=-1
+			elif (v:=(coord + int(op)))<0: raise ValueError('E_REL_BIND')
+			out.append(v)
 
 		return out
 
+	# Rectangularize
 	# Left-pad Axis0
 	# Replace relatives `@` with coordinate vars `$x_y_z`
+	# Assign slots
 	def rect(self):
 		env = {'mode':'qry'}
-		slots = ['#%tab',  '#%col', '#%val']
+		slots = [Tok('EVAR','','%tab'),  Tok('EVAR','','%col'), Tok('EVAR','','%val')]
 
-		for i, axis1 in enumerate(self):
-			idx = [i, None, None]
+		for idx2, axis1 in enumerate(self):
+			idx = [idx2, None, None]
 
-			for i, axis0 in enumerate(axis1):
+			for idx1, axis0 in enumerate(axis1):
 				if not axis0: continue
-				idx[1:] = [i, None]
+				idx[1:] = [idx1, None]
 
-				# Meta axis
 				# %KEY=VAL %KEY=VAL
-				if bool(axis0[0].find('META')):
-					for i, cell in enumerate(axis0):
-						if not bool(cell.find('META')): raise Err('E_AXIS_MET')
-						env[cell.find('META').canon[1:]] = cell.single.dat
+				if bool(axis0[0].find('EVAR')):
+					for cell in axis0:
+						if not bool(cell.find('EVAR')): raise Err('E_AXIS_MET')
+						env[cell.find('EVAR').canon[1:]] = cell.single.dat
 					continue
 
-				# Slots
+				#SLOT #SLOT #SLOT
 				if axis0[0].single.kind=='SLOT':
 					slots=[]
 					for cell in axis0:
 						if cell.single.kind!='SLOT': raise Err('E_AXIS_SLOT')
-						slots.append(cell.single.canon)
+						if cell.single.canon[1]=='%': slots.append(Tok('EVAR', '', cell.single.canon[1:]))
+						else: slots.append(Tok('ASSN','',':'+cell.single.canon))
 					continue
 	
 				if env['mode'] not in PAD_MODES: continue
@@ -386,18 +369,18 @@ class Axis2(Axis):
 					cell.padded=True
 					axis0.insert(0, cell)
 
-				for i, cell in enumerate(axis0):
-					idx[2] = i
+				for idx0, cell in enumerate(axis0):
+					idx[2] = idx0
 
 					# Assign slot
-					cell.bind(Tok('ASSN', '', ':'+slots[i]))
+					cell.bind(slots[idx0])
 
 					# Replace relative tokens with coordinate vars
 					for seq in (cell.left, cell.right):
 						for n, tok in enumerate(seq):
-							if tok.kind not in RELKINDS: continue
+							if tok.kind!='REL': continue
 
-							coords=self.coordrel(idx, RELKINDS[tok.kind])
+							coords=self.coordrel(idx, RELCOORD[tok.canon])
 							src=self.pull(coords)
 
 							if src.literal.kind != 'NULL':
@@ -442,8 +425,8 @@ class SQL:
 
 class CellSQL(Cell):
 	flag2agg = {':cnt':'COUNT', ':sum':'SUM', ':avg':'AVG', ':min':'MIN', ':max':'MAX', ':last':'MAX'}
-	cmp2sql = {'EQL':'=', 'NOT':'!=', 'GT':'>', 'GE':'>=', 'LT':'<', 'LE':'<=', 'SIM':' ILIKE ', 'DSIM':' NOT ILIKE '}
-	mod2sql = {'COS':'<=>', 'L2':'<->', 'IP':'<#>'}
+	cmp2sql  = {'~':' ILIKE ', '!~':' NOT ILIKE '}
+	mod2sql  = {}
 
 	def __init__(self, src: str):
 		super().__init__(src)
@@ -475,8 +458,8 @@ class CellSQL(Cell):
 
 	def sql_value(self, grouped: bool = False, alias: bool = False, order: bool = False, with_agg: bool = True) -> SQL:
 		sql, param = self.base, list(self.param)
-		if self.left.opr.kind in self.mod2sql:
-			sql = f'({sql}{self.mod2sql[self.left.opr.kind]}{PH}::VECTOR)'
+		if self.left.opr.kind == 'MOD':
+			sql = f'({sql}{self.left.opr.canon}{PH}::VECTOR)'
 			param.append(self.vectorize(self.left[1]).canon)
 		agg = self.agg or ('MAX' if grouped and not self.grouped else '') if with_agg else ''
 		if agg: sql = f'{agg}({sql})'
@@ -489,21 +472,22 @@ class CellSQL(Cell):
 
 		left = self.sql_value()
 		rights = list(self.deref(bind, with_agg=bool(self.agg)))
-		comp = self.comp.kind
+		comp = self.comp.canon
+		sqlcomp = self.cmp2sql.get(self.comp.canon) or self.comp.canon
 
-		if comp in {'GT', 'GE', 'LT', 'LE'} and len(rights) != 1: raise Err('E_COMP_OR')
+		if comp in {'>', '<', '>=', '<='} and len(rights) != 1: raise Err('E_COMP_OR')
 
 		items, params = [], []
 		for right in rights:
-			items.append(f"CONCAT('%', {right.sql}, '%')" if comp in {'SIM', 'DSIM'} else right.sql)
+			items.append(f"CONCAT('%', {right.sql}, '%')" if comp in {'~', '!~'} else right.sql)
 			params.extend(right.param)
 
 		if len(items) == 1: beg, end = '', ''
-		elif comp in {'EQL', 'SIM'}: beg, end = 'ANY(ARRAY[', '])'
-		elif comp in {'NOT', 'DSIM'}: beg, end = 'ALL(ARRAY[', '])'
-		else: raise Err('E_COMP_OR')
+		elif comp in {'=', '~'}: beg, end = 'ANY(ARRAY[', '])'
+		elif comp in {'!=', '!~'}: beg, end = 'ALL(ARRAY[', '])'
+		else: raise Err('E_COMP_OR2')
 
-		return ('having' if self.agg else 'where'), SQL(f"{left.sql}{self.cmp2sql[comp]}{beg}{','.join(items)}{end}", left.param + params)
+		return ('having' if self.agg else 'where'), SQL(f"{left.sql}{sqlcomp}{beg}{','.join(items)}{end}", left.param + params)
 
 
 class Grid(Axis2):
@@ -534,28 +518,31 @@ class Grid(Axis2):
 					single = cell.single.dat
 					if cell.padded or cell.single.kind=='SLOT': continue
 
-					# SLOT/META for TAB/COL
-					boundval = cell.find('META').canon or cell.find('ASSN').canon[2:]
-					if boundval=='%tab':
-						if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', single): raise Err('E_TAB_NAME')
-						tab_cnt += 1
-						env['tab']=single
-						env['taba']=f"t{tab_cnt}"
-						qry['from'].append(SQL(f"{env['tab']} AS {env['taba']}"))
-						qry['fromall'].append(env['taba'])
-					
-					elif boundval=='%col':
-						if single == '_': allselected = True
-						elif not re.fullmatch(r'[A-Za-z_]+[A-Za-z0-9_$]{0,62}', single): raise Err('E_COL_NAME')
-						env['cola'] = single
+					# EVAR for TAB/COL
+					evarval = cell.find('EVAR').canon
+					if evarval=='%val': pass
+					elif evarval:
+						env[evarval[1:]] = cell.single.dat
+						bind[evarval[1:]]=SQL(PH, [cell.single.dat])
 
-					if boundval!='%val':
-						if boundval.startswith('%'):
-							k=boundval[1:]
-							env[k] = cell.single.dat
-							bind[k]=SQL(PH, [env[k]])
-							continue
-						else: env['cola'] = boundval
+						if evarval=='%tab':
+							if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', single): raise Err('E_TAB_NAME')
+							tab_cnt += 1
+							env['tab']=single
+							env['taba']=f"t{tab_cnt}"
+							qry['from'].append(SQL(f"{env['tab']} AS {env['taba']}"))
+							qry['fromall'].append(env['taba'])
+
+						elif evarval=='%col':
+							if single == '_': allselected = True
+							elif not re.fullmatch(r'[A-Za-z_]+[A-Za-z0-9_$]{0,62}', single): raise Err('E_COL_NAME')
+							env['cola'] = single
+
+						continue
+
+					# SLOT for COL
+					assnval = cell.find('ASSN').canon
+					if assnval: env['cola'] = assnval[2:]
 
 					if not env['taba']: raise Err('E_TAB_REQ')
 					
