@@ -14,7 +14,7 @@ invoices invoice_date 2024-12-01;id _;invoice_items invoice_id @;description ~"C
 invoices invoice_date 2025-12-31;id :cnt:asc>=10;status :grp;;
 
 """ Top 5 customers by total invoiced amount in January 2025, include customer name """
-invoices invoice_date >=2025-01-01;<=2025-01-31;total :sum:des;customer_id :grp;customers id @;name _;% lim 5;% beg 0;;
+invoices invoice_date >=2025-01-01;<=2025-01-31;total :sum:des;customer_id :grp;customers id @;name _;%lim=5;%beg=0;;
 
 """ Overdue invoices with total >= 500 created on 2024-07-04, newest due dates first """
 invoices status overdue;total >=500;created 2024-07-04;due_date :des;_;;
@@ -38,7 +38,7 @@ invoices invoice_date >=2025-11-01;<=2025-11-30;total :max:des;due_date :grp;;
 invoices invoice_date 2025-10-20;id _;invoice_items invoice_id @;unit_price >=15;<=40;description ~"USB";_;;
 
 """ December 2024 invoice dates ranked by count where count is at least 30, top 20 """
-invoices id :cnt:des>=30;invoice_date :grp>=2024-12-01;<=2024-12-31;% lim 20;;
+invoices id :cnt:des>=30;invoice_date :grp>=2024-12-01;<=2024-12-31;%lim=20;;
 
 """ Customers created 2025-02-14 with emails ending .io and name including Dev, A-Z by name """
 customers created 2025-02-14;email ~".io";name :asc~"Dev";_;;
@@ -68,7 +68,7 @@ products created 2024-11-11;unit_price :des>75;name ~"Cable";_;;
 customers name <=>"Global Tech Partners"<=$sim;created 2024-04-10;_;;
 
 """ Top 15 customers by total invoiced in 2025-06, include customer name """
-invoices invoice_date >=2025-06-01;<=2025-06-30;total :sum:des;customer_id :grp;customers id @;name _;% lim 15;;
+invoices invoice_date >=2025-06-01;<=2025-06-30;total :sum:des;customer_id :grp;customers id @;name _;%lim=15;;
 
 """ Days in 2024-11 with invoice counts at least 10, sorted descending """
 invoices id :cnt:des>=10;invoice_date :grp>=2024-11-01;<=2024-11-30;;
@@ -86,7 +86,7 @@ invoices due_date 2025-12-31;total :avg:asc;status :grp;;
 invoices invoice_date >=2025-03-01;<=2025-03-31;id :cnt:des>3;customer_id :grp;customers id @;name ~"Chen";;
 
 """ Top 5 product SKUs by sum of item quantities on 2025-07-04 """
-invoices invoice_date 2025-07-04;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;sku _;% lim 5;;
+invoices invoice_date 2025-07-04;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;sku _;%lim=5;;
 
 """ Open invoices with totals between 300 and 800 created on 2024-10-10, newest due dates first """
 invoices status open;total >=300;<=800;created 2024-10-10;due_date :des;_;;
@@ -98,7 +98,7 @@ invoices status overdue;invoice_date >2025-02-01;id :cnt:des;customer_id :grp;cu
 invoice_items line_total :avg:des;product_id :grp;products id @;active 1;name ~"Cable";;
 
 """ First 20 invoices for customers with email ending @acme.com issued on 2025-09-01 """
-customers email ~"@acme.com";id _;invoices customer_id @;invoice_date 2025-09-01;_;% lim 20;;
+customers email ~"@acme.com";id _;invoices customer_id @;invoice_date 2025-09-01;_;%lim=20;;
 
 """ Invoice dates in 2023-12 where total sums reach 5000 or more, latest first """
 invoices total :sum:des>=5000;invoice_date :grp>=2023-12-01;<=2023-12-31;;
@@ -125,13 +125,13 @@ invoices invoice_date 2024-11-20;status paid;total :sum:asc;customer_id :grp;cus
 invoices invoice_date >=2025-06-01;id _;invoice_items invoice_id @;unit_price >=50;quantity :avg:des;invoice_id :grp;;
 
 """ Top 10 invoice numbers by summed tax in May 2024 """
-invoices invoice_date >=2024-05-01;<=2024-05-31;tax :sum:des;invoice_no :grp;% lim 10;;
+invoices invoice_date >=2024-05-01;<=2024-05-31;tax :sum:des;invoice_no :grp;%lim=10;;
 
 """ Customers with overdue invoices due on 2025-10-15, totals per customer high to low including names """
 invoices status overdue;due_date 2025-10-15;total :sum:des;customer_id :grp;customers id @;name _;;
 
 """ In 2024-12, daily tax totals at least 500, highest totals first, limit 5 """
-invoices tax :sum:des>=500;invoice_date :grp>=2024-12-01;<=2024-12-31;% lim 5;;
+invoices tax :sum:des>=500;invoice_date :grp>=2024-12-01;<=2024-12-31;%lim=5;;
 
 """ Customers created during 2025-03 with emails containing io, names Z-A, all fields """
 customers created >=2025-03-01;<=2025-03-31;email ~"io";name :des;_;;
@@ -188,7 +188,7 @@ customers name ~"Garcia";created >=2024-01-01;<=2024-12-31;_;;
 invoices status overdue;total :sum;due_date :grp:asc>=2025-01-01;<=2025-03-31;;
 
 """ Top 20 customers by average invoice total during 2024, include customer name """
-invoices invoice_date >=2024-01-01;<=2024-12-31;total :avg:des;customer_id :grp;customers id @;name _;% lim 20;;
+invoices invoice_date >=2024-01-01;<=2024-12-31;total :avg:des;customer_id :grp;customers id @;name _;%lim=20;;
 
 """ Invoice_no similar to 'INV-2025-09-01' with similarity at least 0.8, newest created first, all fields """
 invoices invoice_no <=>"INV-2025-09-01"<=0.8;created :des;_;;

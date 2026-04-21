@@ -20,7 +20,7 @@ skills category "Data";id _;employee_skills skill_id @;id :cnt:des>=2;employee_i
 departments created 2025-01-01;id _;employees department_id @;hire_date 2025-01-15;first_name _;last_name _;;
 
 """ Top 20 employees by sum of net_pay in USD or GBP for 2025-02 runs, include names """
-payroll_runs pay_date >=2025-02-01;<=2025-02-28;id _;payroll_entries payroll_run_id @;currency "USD","GBP";net_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 20;;
+payroll_runs pay_date >=2025-02-01;<=2025-02-28;id _;payroll_entries payroll_run_id @;currency "USD","GBP";net_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=20;;
 
 """ Employees with life plans active on 2024-12-01, emails and plan name """
 benefit_plans type life;active 1;name _;id _;employee_benefits benefit_plan_id @;start_date <=2024-12-01;end_date >=2024-12-01;employee_id _;employees id @;email _;;
@@ -53,7 +53,7 @@ time_off_requests type sick;start_date >=2025-03-01;<=2025-03-31;hours :sum:des;
 benefit_plans type medical;active 1;name :asc;id _;employee_benefits benefit_plan_id @;start_date <=2025-01-15;end_date >=2025-01-15;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Off-cycle payroll runs similar to off cycle, processed only, newest first limit 20 """
-payroll_runs status processed;notes <=>"off cycle"<=$sim;pay_date :des;_;% lim 20;;
+payroll_runs status processed;notes <=>"off cycle"<=$sim;pay_date :des;_;%lim=20;;
 
 """ Currencies used in payroll entries during 2025-11, list A-Z """
 payroll_entries created >=2025-11-01;<=2025-11-30;currency :grp:asc;;
@@ -89,7 +89,7 @@ departments id :cnt>=2;location_id :grp;locations id @;country "CA";name _;;
 timesheets week_start >=2025-10-01;<=2025-10-31;hours_worked :max;employee_id :grp;employees id @;first_name _;last_name _;;
 
 """ Skill names similar to Kubernetes (sim>=0.88), newest created first limit 30 """
-skills name <=>"Kubernetes"<=0.88;created :des;_;% lim 30;;
+skills name <=>"Kubernetes"<=0.88;created :des;_;%lim=30;;
 
 """ Active life plans as of 2025-09-01 with enrolled counts desc """
 benefit_plans type life;active 1;id _;employee_benefits benefit_plan_id @;start_date <=2025-09-01;end_date >=2025-09-01;id :cnt:des;benefit_plan_id :grp;;
@@ -170,7 +170,7 @@ time_off_requests start_date 2025-03-15;hours :sum:des;type :grp=sick,personal;;
 jobs grade ~"M";id _;employees job_id @;bonus_target 0;salary :des>=150000;first_name _;last_name _;;
 
 """ Top 10 employees by total overtime in 2025-02 with names """
-timesheets week_start >=2025-02-01;<=2025-02-28;overtime_hours :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 10;;
+timesheets week_start >=2025-02-01;<=2025-02-28;overtime_hours :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=10;;
 
 """ Retirement enrollments starting in 2025 with family or employee_spouse coverage, plan and employee names """
 benefit_plans type retirement;name _;id _;employee_benefits benefit_plan_id @;start_date >=2025-01-01;coverage_level family,employee_spouse;employee_id _;employees id @;first_name _;last_name _;;
@@ -185,7 +185,7 @@ payroll_runs status paid;pay_date 2025-09-15;id _;payroll_entries payroll_run_id
 employee_skills skill_id _;skills id @;employee_id :cnt>=5;category :grp:asc;;
 
 """ Top 15 employees by total gross pay in paid runs during 2025-03, show names """
-payroll_runs status paid;pay_date >=2025-03-01;<=2025-03-31;id _;payroll_entries payroll_run_id @;gross_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 15;;
+payroll_runs status paid;pay_date >=2025-03-01;<=2025-03-31;id _;payroll_entries payroll_run_id @;gross_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=15;;
 
 """ Employees with approved vacation between 2025-07-01 and 2025-07-15, list names once """
 time_off_requests type vacation;status approved;start_date >=2025-07-01;<=2025-07-15;id :cnt;employee_id :grp;employees id @;last_name :asc;first_name _;;
@@ -215,7 +215,7 @@ performance_reviews comments ~"growth";review_date 2025-02-14;reviewer_id :grp;e
 benefit_plans type dental;name _;id _;employee_benefits benefit_plan_id @;start_date <=2025-03-01;end_date >=2025-03-01;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Top 5 approvers by total overtime in 2025-01 with names """
-timesheets week_start >=2025-01-01;<=2025-01-31;overtime_hours :sum:des;approver_id :grp;employees id @;first_name _;last_name _;% lim 5;;
+timesheets week_start >=2025-01-01;<=2025-01-31;overtime_hours :sum:des;approver_id :grp;employees id @;first_name _;last_name _;%lim=5;;
 
 """ Jobs where average salary of employees >= 110000, show title and grade, sorted by avg desc """
 employees salary :avg:des>=110000;job_id :grp;jobs id @;title _;grade _;;
@@ -266,7 +266,7 @@ time_off_requests employee_id 12;request_date >=2025-01-01;<=2025-12-31;hours :s
 employee_benefits coverage_level family;end_date 2025-09-30;benefit_plan_id _;benefit_plans id @;name :asc;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Top 10 currencies by net_pay sum for entries created on 2025-04-15 """
-payroll_entries created 2025-04-15;net_pay :sum:des;currency :grp;% lim 10;;
+payroll_entries created 2025-04-15;net_pay :sum:des;currency :grp;%lim=10;;
 
 """ Active employees with email containing corp.io, order by last then first """
 employees email ~"corp.io";status active;last_name :asc;first_name :asc;_;;

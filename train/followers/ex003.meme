@@ -68,22 +68,22 @@ users username ~"dev";created_at >=2024-01-15;id :asc;_;;
 users email ~".com";updated_at <=2025-10-01;created_at :des;_;;
 
 """ users username contains dev, created_at at least 2024-01-15, sort by id des with limit 5 """
-users username ~"dev";created_at >=2024-01-15;id :des;_;% lim 5;;
+users username ~"dev";created_at >=2024-01-15;id :des;_;%lim=5;;
 
 """ users email contains .com, updated_at at most 2025-10-01, sort by created_at asc with limit 10 """
-users email ~".com";updated_at <=2025-10-01;created_at :asc;_;% lim 10;;
+users email ~".com";updated_at <=2025-10-01;created_at :asc;_;%lim=10;;
 
 """ users username contains ana, id at least 100, sort by updated_at des with limit 5 """
-users username ~"ana";id >=100;updated_at :des;_;% lim 5;;
+users username ~"ana";id >=100;updated_at :des;_;%lim=5;;
 
 """ users username contains dev, created_at at least 2024-01-15, sort by id asc with limit 10 offset 20 """
-users username ~"dev";created_at >=2024-01-15;id :asc;_;% lim 10;% beg 20;;
+users username ~"dev";created_at >=2024-01-15;id :asc;_;%lim=10;%beg=20;;
 
 """ users email contains .org, updated_at at most 2025-10-01, sort by created_at des with limit 10 offset 30 """
-users email ~".org";updated_at <=2025-10-01;created_at :des;_;% lim 10;% beg 30;;
+users email ~".org";updated_at <=2025-10-01;created_at :des;_;%lim=10;%beg=30;;
 
 """ users id at least 42, username contains ana, sort by updated_at asc with limit 5 offset 15 """
-users id >=42;username ~"ana";updated_at :asc;_;% lim 5;% beg 15;;
+users id >=42;username ~"ana";updated_at :asc;_;%lim=5;%beg=15;;
 
 """ profiles by id ascending """
 profiles id :asc;_;;
@@ -185,22 +185,22 @@ profiles location ~"Austin";created_at >=2024-01-15;full_name :asc;_;;
 profiles website ~".com";updated_at <=2025-10-01;created_at :des;_;;
 
 """ profiles bio contains engineer, location contains York, sort by updated_at des with limit 5 """
-profiles bio ~"engineer";location ~"York";updated_at :des;_;% lim 5;;
+profiles bio ~"engineer";location ~"York";updated_at :des;_;%lim=5;;
 
 """ profiles full_name contains Jane, website contains .io, sort by created_at asc with limit 10 """
-profiles full_name ~"Jane";website ~".io";created_at :asc;_;% lim 10;;
+profiles full_name ~"Jane";website ~".io";created_at :asc;_;%lim=10;;
 
 """ profiles id at least 42, birthday at most 2005-12-31, sort by updated_at des with limit 5 """
-profiles id >=42;birthday <=2005-12-31;updated_at :des;_;% lim 5;;
+profiles id >=42;birthday <=2005-12-31;updated_at :des;_;%lim=5;;
 
 """ profiles location contains San, created_at at least 2024-01-15, sort by full_name asc with limit 10 offset 20 """
-profiles location ~"San";created_at >=2024-01-15;full_name :asc;_;% lim 10;% beg 20;;
+profiles location ~"San";created_at >=2024-01-15;full_name :asc;_;%lim=10;%beg=20;;
 
 """ profiles website contains .org, updated_at at most 2025-10-01, sort by created_at des with limit 10 offset 30 """
-profiles website ~".org";updated_at <=2025-10-01;created_at :des;_;% lim 10;% beg 30;;
+profiles website ~".org";updated_at <=2025-10-01;created_at :des;_;%lim=10;%beg=30;;
 
 """ profiles id at least 100, location contains Austin, sort by updated_at asc with limit 5 offset 15 """
-profiles id >=100;location ~"Austin";updated_at :asc;_;% lim 5;% beg 15;;
+profiles id >=100;location ~"Austin";updated_at :asc;_;%lim=5;%beg=15;;
 
 """ follows by id ascending """
 follows id :asc;_;;
@@ -260,22 +260,22 @@ follows follower_id >=100;created_at >=2024-01-15;id :asc;_;;
 follows followee_id <=1000;id >=10;created_at :des;_;;
 
 """ follows follower_id at least 100, sort by created_at des with limit 5 """
-follows follower_id >=100;created_at :des;_;% lim 5;;
+follows follower_id >=100;created_at :des;_;%lim=5;;
 
 """ follows followee_id at most 1000, sort by id asc with limit 10 """
-follows followee_id :asc<=1000;_;% lim 10;;
+follows followee_id :asc<=1000;_;%lim=10;;
 
 """ follows id at least 42, sort by created_at asc with limit 5 """
-follows id >=42;created_at :asc;_;% lim 5;;
+follows id >=42;created_at :asc;_;%lim=5;;
 
 """ follows follower_id at least 100, sort by created_at des with limit 10 offset 20 """
-follows follower_id >=100;created_at :des;_;% lim 10;% beg 20;;
+follows follower_id >=100;created_at :des;_;%lim=10;%beg=20;;
 
 """ follows followee_id at most 1000, sort by id asc with limit 10 offset 30 """
-follows followee_id :asc<=1000;_;% lim 10;% beg 30;;
+follows followee_id :asc<=1000;_;%lim=10;%beg=30;;
 
 """ follows id at least 10, sort by created_at asc with limit 5 offset 15 """
-follows id >=10;created_at :asc;_;% lim 5;% beg 15;;
+follows id >=10;created_at :asc;_;%lim=5;%beg=15;;
 
 """ posts by id ascending """
 posts id :asc;_;;

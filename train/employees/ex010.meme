@@ -53,7 +53,7 @@ payroll_runs id 1000;status _;@ @ @;payroll_runs id !=1000;pay_date :asc;_;;
 performance_reviews id 5555;reviewer_id _;@ @ @;performance_reviews review_date :des>=2025-01-01;<=2025-12-31;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Timesheets approved by the same approver as employee 123 on week 2025-07-07, show employee names A-Z, first 20 """
-timesheets employee_id 123;week_start 2025-07-07;approver_id _;@ @ @;timesheets approved 1;employee_id _;employees id @;last_name :asc;first_name _;% lim 20;;
+timesheets employee_id 123;week_start 2025-07-07;approver_id _;@ @ @;timesheets approved 1;employee_id _;employees id @;last_name :asc;first_name _;%lim=20;;
 
 """ Co-workers in the same department as employee 4321 with department name, last names A-Z """
 employees id 4321;department_id _;@ @ @;employees id !=4321;department_id _;departments id @;name _;last_name :asc;first_name _;;
@@ -131,13 +131,13 @@ locations name "San Francisco";country _;@ @ @;locations id _;departments locati
 employees first_name "Ava";last_name "Lee";id :$x;manager_id _;@ @ @;employees first_name _;last_name _;id :grp!=$x;performance_reviews employee_id @;comments <=>"leadership"<=0.90;;
 
 """ Entries in the same currency as payroll entry 9001 during 2025-11, top 10 by net_pay with names """
-payroll_entries id 9001;currency _;@ @ @;payroll_entries id !=9001;created >=2025-11-01;<=2025-11-30;net_pay :des;employee_id _;employees id @;first_name _;last_name _;% lim 10;;
+payroll_entries id 9001;currency _;@ @ @;payroll_entries id !=9001;created >=2025-11-01;<=2025-11-30;net_pay :des;employee_id _;employees id @;first_name _;last_name _;%lim=10;;
 
 """ Departments in the same region as Austin with average salary >= 100000, list department names """
 locations name "Austin";region _;@ @ @;locations id _;departments location_id @;id _;employees department_id @;salary :avg>=100000;department_id :grp;departments id @;name _;;
 
 """ Jobs in the same grade as a title similar to Software Architect (>=0.77), titles A-Z, first 20 """
-jobs title <=>"Software Architect"<=0.77;id :$x;grade _;@ @ @;jobs id !=$x;title :asc;% lim 20;;
+jobs title <=>"Software Architect"<=0.77;id :$x;grade _;@ @ @;jobs id !=$x;title :asc;%lim=20;;
 
 """ Employees reviewed by the same reviewer as employee 77 during 2025 with rating 4+ sorted by rating desc """
 performance_reviews employee_id 77;review_date >=2025-01-01;<=2025-12-31;reviewer_id _;@ @ @;performance_reviews rating :des>=4;employee_id _;employees id @;first_name _;last_name _;;

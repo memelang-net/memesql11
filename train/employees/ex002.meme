@@ -281,23 +281,23 @@ benefit_plans active 1;type :asc;_;;
 payroll_entries employee_id 700;net_pay :des;_;;
 
 """ First 10 employees """
-employees _ _;% lim 10;;
+employees _ _;%lim=10;;
 
 """ first 10 departments """
-departments _ _;% lim 10;;
+departments _ _;%lim=10;;
 
 """ job records 100-110 """
-jobs _ _;% lim 10;% beg 100;;
+jobs _ _;%lim=10;%beg=100;;
 
 """ locations starting at 55 """
-locations _ _;% beg 55;;
+locations _ _;%beg=55;;
 
 """ starting at 200, show benefit_plans """
-benefit_plans _ _;% beg 200;;
+benefit_plans _ _;%beg=200;;
 
 """ benefit plans page 3 (100 per page) """
-benefit_plans _ _;% lim 100;% beg 200;;
+benefit_plans _ _;%lim=100;%beg=200;;
 
 """ active employees limit 10 """
-employees status active;_;% lim 10;;
+employees status active;_;%lim=10;;
 

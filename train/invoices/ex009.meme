@@ -14,13 +14,13 @@ customers id 990;created _;@ @ @;id !=990;name <=>"Bright Labs LLC":des;_;;
 products id :$x;name ~"Adapter";unit_price _;@ @ @;id !=$x;created 2024-03-03;_;;
 
 """ invoice numbers for invoices sharing the invoice_date with customer 250 that day, top 10 by tax sum """
-invoices customer_id :$x;invoice_date 2025-12-12;invoice_date _;@ @ @;customer_id !=$x;tax :sum:des;invoice_no :grp;% lim 10;;
+invoices customer_id :$x;invoice_date 2025-12-12;invoice_date _;@ @ @;customer_id !=$x;tax :sum:des;invoice_no :grp;%lim=10;;
 
 """ Customers created on 2024-08-08 who share a phone number with any customer whose email contains @north.com, names A-Z """
 customers email ~"@north.com";phone _;@ @ @;created 2024-08-08;name :asc;_;;
 
 """ On 2025-07-01, items on the same invoices as items mentioning HDMI, sum quantities by product, include product names, top 15 """
-invoices invoice_date 2025-07-01;id :$x;invoice_items id :$y;description ~"HDMI";invoice_id $x;@ @ @;id !=$y;quantity :sum:des;product_id :grp;products id @;name _;% lim 15;;
+invoices invoice_date 2025-07-01;id :$x;invoice_items id :$y;description ~"HDMI";invoice_id $x;@ @ @;id !=$y;quantity :sum:des;product_id :grp;products id @;name _;%lim=15;;
 
 """ Overdue invoices for the same customers who had invoices on 2025-10-10, due_date newest first """
 invoices invoice_date 2025-10-10;customer_id _;@ @ @;status overdue;due_date :des;_;;
@@ -44,7 +44,7 @@ invoices id 5050;customer_id _;@ @ @;id !=5050;total >=100;<=400;due_date :asc;_
 products sku ~"QX";created _;@ @ @;name ~"Cable";unit_price :avg:des;active :grp;;
 
 """ Customers sharing the signup day with Apex LLC whose overdue invoice counts are highest, include names, top 10 """
-customers name "Apex LLC";created _;@ @ @;id _;invoices customer_id @;status overdue;id :cnt:des;customer_id :grp;customers id @;name _;% lim 10;;
+customers name "Apex LLC";created _;@ @ @;id _;invoices customer_id @;status overdue;id :cnt:des;customer_id :grp;customers id @;name _;%lim=10;;
 
 """ Active products created the same day as product SKU ZX-100, names most similar to 'usb c dock' with threshold 0.7, ranked by similarity """
 products sku "ZX-100";created _;@ @ @;active 1;name <=>"usb c dock":des>=0.7;_;;

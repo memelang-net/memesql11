@@ -11,7 +11,7 @@ users username "mira";id :$x;profiles user_id @;location _;@ @ @;user_id !=$x;fu
 messages id 6600;recipient_id _;@ @ @;created_at :des>=2025-03-01;<=2025-03-31;id !=6600;body _;;
 
 """ Other public .png posts by the same author as post 101, newest first, limit 10 """
-posts id 101;user_id _;@ @ @;id !=101;visibility =public;image_url ~".png";created_at :des;_;% lim 10;;
+posts id 101;user_id _;@ @ @;id !=101;visibility =public;image_url ~".png";created_at :des;_;%lim=10;;
 
 """ Other repliers in the same thread as comment 9300, author usernames A-Z """
 comments id 9300;user_id :$x;parent_comment_id _;@ @ @;user_id !=$x;users id @;username :asc;_;;
@@ -23,7 +23,7 @@ users username "mia";id :$x;follows followee_id @;follower_id _;@ @ @;followee_i
 users username "emily";id _;messages recipient_id @;created_at =2025-03-10;recipient_id _;@ @ @;body _;id :cnt:des;sender_id :grp;;
 
 """ Co-likers on the same post as like 5555 after 2024-12-01, liker usernames ascending, limit 20 """
-likes id 5555;user_id :$x;post_id _;@ @ @;created_at >=2024-12-01;user_id !=$x;users id @;username :asc;_;% lim 20;;
+likes id 5555;user_id :$x;post_id _;@ @ @;created_at >=2024-12-01;user_id !=$x;users id @;username :asc;_;%lim=20;;
 
 """ People in the same city as user chris with .org websites, names A-Z """
 users username "chris";id _;profiles user_id @;location _;@ @ @;website ~".org";full_name :asc;_;;
@@ -35,7 +35,7 @@ likes user_id 77;created_at =2024-06-01;post_id _;@ @ @;user_id !=77;users id @;
 comments id 12345;post_id _;@ @ @;created_at >=2025-02-01;<=2025-02-28;user_id :grp;id :cnt:des;;
 
 """ Messages from the same sender as message 4242 after 2025-05-01, newest first, include bodies, limit 10 """
-messages id 4242;sender_id _;@ @ @;created_at :des>2025-05-01;body _;_;% lim 10;;
+messages id 4242;sender_id _;@ @ @;created_at :des>2025-05-01;body _;_;%lim=10;;
 
 """ Profiles sharing the same birthday as profile 900 with .com sites, names ascending """
 profiles id 900;birthday _;@ @ @;website ~".com";full_name :asc;_;;
@@ -59,7 +59,7 @@ posts id 600;visibility _;@ @ @;created_at >=2024-01-01;<=2024-12-31;image_url ~
 users username "emily";id :$x;messages recipient_id @;created_at =2025-03-10;sender_id _;@ @ @;created_at =2025-03-10;recipient_id !=$x;recipient_id _;users id @;username :asc;;
 
 """ Other posts by the same author as post 321, public only, newest first, limit 5 """
-posts id 321;user_id _;@ @ @;id !=321;visibility =public;created_at :des;_;% lim 5;;
+posts id 321;user_id _;@ @ @;id !=321;visibility =public;created_at :des;_;%lim=5;;
 
 """ Comments on the same post as comment 9900 on 2025-02-01, bodies in chronological order """
 comments id 9900;post_id _;@ @ @;created_at =2025-02-01;body _;created_at :asc;;
@@ -95,10 +95,10 @@ users id 42;profiles user_id @;location _;@ @ @;user_id !=42;website ~".org";ful
 comments user_id 888;created_at =2025-07-01;post_id _;@ @ @;user_id !=888;user_id :grp;id :cnt:des;;
 
 """ Sibling replies under comment 9100 excluding that comment, oldest first, limit 10 """
-comments id 9100;parent_comment_id _;@ @ @;id !=9100;created_at :asc;body _;_;% lim 10;;
+comments id 9100;parent_comment_id _;@ @ @;id !=9100;created_at :asc;body _;_;%lim=10;;
 
 """ Other public posts by the author of post 42 with .png images after 2024-01-01, newest first, top 5 """
-posts id 42;user_id _;@ @ @;id !=42;visibility =public;image_url ~".png";created_at :des>=2024-01-01;_;% lim 5;;
+posts id 42;user_id _;@ @ @;id !=42;visibility =public;image_url ~".png";created_at :des>=2024-01-01;_;%lim=5;;
 
 """ Profiles in the same city as user 42 with .org websites, names A-Z, excluding that user """
 profiles user_id 42;location _;@ @ @;user_id !=42;website ~".org";full_name :asc;_;;
@@ -149,13 +149,13 @@ users username "alex";id :$x;profiles user_id @;location _;@ @ @;user_id !=$x;fu
 messages id 7000;sender_id _;@ @ @;created_at =2025-03-01;recipient_id _;users id @;username :asc;_;;
 
 """ Messages to the same recipient as message 2222 after 2025-01-01, newest first, limit 10 """
-messages id 2222;recipient_id _;@ @ @;created_at :des>=2025-01-01;body _;_;% lim 10;;
+messages id 2222;recipient_id _;@ @ @;created_at :des>=2025-01-01;body _;_;%lim=10;;
 
 """ Reply authors in the same thread as comment 6000, profile full names A-Z """
 comments id 6000;parent_comment_id _;@ @ @;user_id _;profiles user_id @;full_name :asc;_;;
 
 """ Co-likers on the same post as user 77, exclude 77, usernames A-Z, limit 15 """
-likes user_id 77;post_id _;@ @ @;user_id !=77;users id @;username :asc;_;% lim 15;;
+likes user_id 77;post_id _;@ @ @;user_id !=77;users id @;username :asc;_;%lim=15;;
 
 """ Other commenters on the same post as comment 8020, excluding that author, usernames Z-A """
 comments id 8020;user_id :$x;post_id _;@ @ @;user_id !=$x;users id @;username :des;_;;
@@ -176,7 +176,7 @@ posts id 321;user_id :$x;visibility _;@ @ @;user_id !=$x;users id @;username :as
 profiles user_id 77;birthday _;@ @ @;user_id !=77;full_name :asc;_;;
 
 """ Replies under the same parent as comment 9100 since 2025-01-01, newest first, include author names and texts, show 12 """
-comments id 9100;parent_comment_id _;@ @ @;id !=9100;created_at :des>=2025-01-01;body _;user_id _;users id @;username _;_;% lim 12;;
+comments id 9100;parent_comment_id _;@ @ @;id !=9100;created_at :des>=2025-01-01;body _;user_id _;users id @;username _;_;%lim=12;;
 
 """ Usernames who signed up at the exact same time as user 42, A-Z """
 users id 42;created_at _;@ @ @;id !=42;username :asc;_;;
@@ -191,7 +191,7 @@ users username "emily";id _;messages recipient_id @;created_at =2025-03-10;recip
 users username "alice";id :$x;profiles user_id @;location _;@ @ @;user_id !=$x;updated_at >2025-01-01;full_name :asc;_;;
 
 """ Public posts made on the same date as post 500 by other authors, newest first, limit 10 """
-posts id 500;user_id :$a;created_at _;@ @ @;user_id !=$a;visibility =public;created_at :des;_;% lim 10;;
+posts id 500;user_id :$a;created_at _;@ @ @;user_id !=$a;visibility =public;created_at :des;_;%lim=10;;
 
 """ Senders who also messaged the same recipient as message 700 on 2025-09-01, ranked by message count """
 messages id 700;sender_id :$s;recipient_id _;@ @ @;sender_id !=$s;created_at =2025-09-01;sender_id :grp;id :cnt:des;;
@@ -239,7 +239,7 @@ follows followee_id 450;follower_id :$x;followee_id _;@ @ @;follower_id !=$x;use
 messages sender_id 600;created_at =2025-04-02;recipient_id _;@ @ @;sender_id !=600;sender_id :grp;id :cnt:des;;
 
 """ People who liked the same posts as "oliver" during 2025-05-01..2025-05-31, usernames Z-A, limit 20 """
-users username "oliver";id :$x;likes user_id @;created_at >=2025-05-01;<=2025-05-31;post_id _;@ @ @;user_id !=$x;users id @;username :des;_;% lim 20;;
+users username "oliver";id :$x;likes user_id @;created_at >=2025-05-01;<=2025-05-31;post_id _;@ @ @;user_id !=$x;users id @;username :des;_;%lim=20;;
 
 """ Posts with the same visibility as post 123, order by id ascending """
 posts id 123;visibility _;@ @ @;id :asc!=123;_;;

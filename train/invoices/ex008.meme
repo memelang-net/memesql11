@@ -14,7 +14,7 @@ customers name ~"Martinez";id _;invoices customer_id @;status open;invoice_date 
 invoices invoice_date 2024-10-15;id _;invoice_items invoice_id @;description ~"Cable";line_total :max:des;invoice_id :grp;;
 
 """ Top 10 product names by sum of item quantities on 2025-12-12 """
-invoices invoice_date 2025-12-12;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;name _;% lim 10;;
+invoices invoice_date 2025-12-12;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;name _;%lim=10;;
 
 """ Customers created in 2024-11 with paid invoice totals highest first, include names """
 invoices status paid;invoice_date >=2024-11-01;<=2024-11-30;total :sum:des;customer_id :grp;customers id @;created >=2024-11-01;<=2024-11-30;;
@@ -35,7 +35,7 @@ invoices customer_id 515;status open;invoice_date 2024-09-09;due_date :asc;_;;
 customers name <=>"Northwind Holdings"<=0.65;created 2025-04-01;_;;
 
 """ Top 20 invoice numbers by total sum in May 2025 """
-invoices invoice_date >=2025-05-01;<=2025-05-31;total :sum:des;invoice_no :grp;% lim 20;;
+invoices invoice_date >=2025-05-01;<=2025-05-31;total :sum:des;invoice_no :grp;%lim=20;;
 
 """ On 2025-02-02, minimum subtotal per invoice status, smallest first """
 invoices invoice_date 2025-02-02;subtotal :min:asc;status :grp;;
@@ -65,7 +65,7 @@ invoices invoice_date 2024-02-29;total :max:des;customer_id :grp;customers id @;
 invoices status open;invoice_date >=2024-12-01;<=2024-12-31;total >=100;<=500;due_date :des;_;;
 
 """ First 25 HDMI items on invoices dated 2025-03-10, sorted by unit price descending """
-invoices invoice_date 2025-03-10;id _;invoice_items invoice_id @;description ~"HDMI";unit_price :des;_;% lim 25;;
+invoices invoice_date 2025-03-10;id _;invoice_items invoice_id @;description ~"HDMI";unit_price :des;_;%lim=25;;
 
 """ On 2024-05-05, average quantity per product for line items, include product name, ascending """
 invoices invoice_date 2024-05-05;id _;invoice_items invoice_id @;quantity :avg:asc;product_id :grp;products id @;name _;;
@@ -80,7 +80,7 @@ invoices invoice_date >=2025-06-01;<=2025-06-30;id :cnt:asc>=20;status :grp;;
 customers name ~"Nova";id _;invoices customer_id @;status open;due_date 2025-08-31;invoice_no :asc;_;;
 
 """ On 2025-02-14, sum of item line totals by product for descriptions including Adapter, top 8 with SKU """
-invoices invoice_date 2025-02-14;id _;invoice_items invoice_id @;description ~"Adapter";line_total :sum:des;product_id :grp;products id @;sku _;% lim 8;;
+invoices invoice_date 2025-02-14;id _;invoice_items invoice_id @;description ~"Adapter";line_total :sum:des;product_id :grp;products id @;sku _;%lim=8;;
 
 """ Active products similar to wireless mouse nano from 2024-05-01 to 2024-12-31, similarity at least 7/10, sort by similarity """
 products name <=>"wireless mouse nano":des>=0.7;active 1;created >=2024-05-01;<=2024-12-31;_;;
@@ -95,7 +95,7 @@ invoices tax :avg:asc;invoice_date :grp>=2024-08-01;<=2024-08-31;;;
 customers created 2024-12-12;id _;invoices customer_id @;total :des>=200;<=900;_;;
 
 """ Top 12 invoice numbers by average item unit price for invoices on 2025-04-30 """
-invoice_items unit_price :avg:des;invoice_id :grp;invoices id @;invoice_no _;invoice_date 2025-04-30;% lim 12;;
+invoice_items unit_price :avg:des;invoice_id :grp;invoices id @;invoice_no _;invoice_date 2025-04-30;%lim=12;;
 
 """ Invoice items for product ids 300 to 350 with description containing Kit, counts per invoice sorted descending """
 invoice_items product_id >=300;<=350;description ~"Kit";id :cnt:des;invoice_id :grp;;
@@ -113,7 +113,7 @@ customers created <2023-09-01;email ~"@north.com";phone ~"212-";name :asc;_;;
 customers id 880;invoices customer_id @;invoice_date >=2025-05-01;<=2025-05-31;id _;invoice_items invoice_id @;quantity >=2;_;;
 
 """ On 2025-09-09, item counts per product with product names, highest first, top 10 """
-invoices invoice_date 2025-09-09;id _;invoice_items invoice_id @;id :cnt:des;product_id :grp;products id @;name _;% lim 10;;
+invoices invoice_date 2025-09-09;id _;invoice_items invoice_id @;id :cnt:des;product_id :grp;products id @;name _;%lim=10;;
 
 """ For items with line total at least 250, maximum unit price per invoice, sorted high to low """
 invoice_items line_total >=250;unit_price :max:des;invoice_id :grp;;
@@ -131,7 +131,7 @@ invoices invoice_date 2024-08-15;total :min:asc;customer_id :grp;customers id @;
 invoices invoice_date 2025-07-07;id _;invoice_items invoice_id @;unit_price >=5;<=15;description ~"Cable";line_total :des;_;;
 
 """ First 25 paid invoices created on 2025-12-05 ordered by invoice number ascending """
-invoices status paid;created 2025-12-05;invoice_no :asc;_;% lim 25;% beg 0;;
+invoices status paid;created 2025-12-05;invoice_no :asc;_;%lim=25;%beg=0;;
 
 """ Invoices issued on 2024-10-21 with summed item line totals per invoice, highest first """
 invoices invoice_date 2024-10-21;id _;invoice_items invoice_id @;line_total :sum:des;invoice_id :grp;;
@@ -173,7 +173,7 @@ customers name ~"Shaw";id _;invoices customer_id @;status paid;invoice_date 2025
 invoice_items line_total :avg:des;product_id :grp;products id @;active 1;name ~"Cable";created 2023-11-11;;
 
 """ First 25 paid invoices for customer emails ending @zen.co on 2025-02-02, ordered by invoice number ascending """
-customers email ~"@zen.co";id _;invoices customer_id @;status paid;invoice_date 2025-02-02;invoice_no :asc;_;% lim 25;;
+customers email ~"@zen.co";id _;invoices customer_id @;status paid;invoice_date 2025-02-02;invoice_no :asc;_;%lim=25;;
 
 """ Products similar to 'hdmi splitter 4k' made on 2024-06-06 with similarity >= 0.65, sort by similarity """
 products name <=>"hdmi splitter 4k":des>=0.65;created 2024-06-06;_;;
@@ -185,7 +185,7 @@ invoices invoice_date 2025-08-08;id _;invoice_items invoice_id @;description ~"D
 invoices status open;created 2024-12-12;total >=150;<=450;due_date :des;_;;
 
 """ Top 5 customers by number of invoices on 2024-05-10, include names """
-invoices invoice_date 2024-05-10;id :cnt:des;customer_id :grp;customers id @;name _;% lim 5;;
+invoices invoice_date 2024-05-10;id :cnt:des;customer_id :grp;customers id @;name _;%lim=5;;
 
 """ Items for customer 555 on 2025-06-06 with quantities 2 to 6 and unit price at least 20 """
 invoices customer_id 555;invoice_date 2025-06-06;id _;invoice_items invoice_id @;quantity >=2;<=6;unit_price >=20;_;;
@@ -200,7 +200,7 @@ customers created 2025-01-21;phone ~"415";name :des;_;;
 invoices invoice_date 2024-03-03;status overdue;id _;invoice_items invoice_id @;id :cnt:des;product_id :grp;products id @;name _;;
 
 """ Top 10 invoice numbers by summed subtotal during 2025-10 """
-invoices invoice_date >=2025-10-01;<=2025-10-31;subtotal :sum:des;invoice_no :grp;% lim 10;;
+invoices invoice_date >=2025-10-01;<=2025-10-31;subtotal :sum:des;invoice_no :grp;%lim=10;;
 
 """ Customers created 2024-05-01 to 2024-05-31 resembling Northwind Trading Co with similarity at least 0.70, closest first """
 customers name <=>"Northwind Trading Co":des>=0.7;created >=2024-05-01;<=2024-05-31;_;;
@@ -212,7 +212,7 @@ customers phone ~"212-";id _;invoices customer_id @;invoice_date 2025-03-10;stat
 invoices invoice_date 2025-10-01;id _;invoice_items invoice_id @;description ~"Pro";quantity :sum:des;invoice_id :grp;;
 
 """ Top 10 product SKUs by summed line totals in 2025-09 """
-invoices invoice_date >=2025-09-01;<=2025-09-30;id _;invoice_items invoice_id @;line_total :sum:des;product_id :grp;products id @;sku _;% lim 10;;
+invoices invoice_date >=2025-09-01;<=2025-09-30;id _;invoice_items invoice_id @;line_total :sum:des;product_id :grp;products id @;sku _;%lim=10;;
 
 """ Active products named like Charger with item counts where quantity at least 2, sort count descending and include product name """
 invoice_items quantity >=2;id :cnt:des;product_id :grp;products id @;active 1;name ~"Charger";;
@@ -227,7 +227,7 @@ products created >=2025-01-01;<=2025-01-31;unit_price :avg:asc;active :grp;;
 customers email ~".org";created 2025-04-22;name :asc;_;;
 
 """ Invoice numbers on 2024-07-15 with tax sums at least 200, top 5 by sum """
-invoices invoice_date 2024-07-15;tax :sum:des>=200;invoice_no :grp;% lim 5;;
+invoices invoice_date 2024-07-15;tax :sum:des>=200;invoice_no :grp;%lim=5;;
 
 """ On 2025-03-03, subtotal sums per customer, highest first including customer name """
 invoices invoice_date 2025-03-03;subtotal :sum:des;customer_id :grp;customers id @;name _;;
@@ -248,7 +248,7 @@ invoices invoice_date 2024-09-09;id _;invoice_items invoice_id @;line_total :max
 invoices due_date 2025-05-05;total :avg:des;status :grp;;
 
 """ Top 20 customers by invoice counts in May 2024 with names """
-invoices invoice_date >=2024-05-01;<=2024-05-31;id :cnt:des;customer_id :grp;customers id @;name _;% lim 20;;
+invoices invoice_date >=2024-05-01;<=2024-05-31;id :cnt:des;customer_id :grp;customers id @;name _;%lim=20;;
 
 """ Open invoices on 2025-12-01 for customers with name including Nova, invoice numbers A-Z """
 customers name ~"Nova";id _;invoices customer_id @;status open;invoice_date 2025-12-01;invoice_no :asc;_;;
@@ -275,7 +275,7 @@ products id :cnt:des>=20;created :grp>=2025-05-01;<=2025-05-31;;
 products active 1;created 2024-03-03;unit_price >=50;<=125;name :asc;_;;
 
 """ First 10 invoices issued on 2025-01-15 for customers with email ending @beta.io sorted by invoice number """
-customers email ~"@beta.io";id _;invoices customer_id @;invoice_date 2025-01-15;invoice_no :asc;_;% lim 10;;
+customers email ~"@beta.io";id _;invoices customer_id @;invoice_date 2025-01-15;invoice_no :asc;_;%lim=10;;
 
 """ Active products with Dock in the name, price 50 to 150, created on 2025-04-10, sort by price high to low """
 products active 1;name ~"Dock";unit_price :des>=50;<=150;created 2025-04-10;_;;
@@ -293,7 +293,7 @@ invoices invoice_date >=2024-11-01;<=2024-11-30;id :cnt:asc>=20;status :grp;;
 products name <=>"usb c cable 2m":des>=0.8;active 1;created >=2024-01-01;<=2024-12-31;_;;
 
 """ For customer 300 on 2025-07-15, summed quantities per product on their invoices, top 10 with product names """
-invoices customer_id 300;invoice_date 2025-07-15;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;name _;% lim 10;;
+invoices customer_id 300;invoice_date 2025-07-15;id _;invoice_items invoice_id @;quantity :sum:des;product_id :grp;products id @;name _;%lim=10;;
 
 """ Open invoices on 2024-12-31 with subtotal between 100 and 400, order by due date earliest first """
 invoices status open;invoice_date 2024-12-31;subtotal >=100;<=400;due_date :asc;_;;
@@ -308,7 +308,7 @@ invoices due_date 2025-02-28;total :avg:des;status :grp;;
 invoices invoice_date 2024-10-05;id _;invoice_items invoice_id @;description ~"Promo";line_total :max:des;invoice_id :grp;;
 
 """ First 25 active products created on 2025-01-01 with HDMI in the name, sort names A-Z """
-products active 1;created 2025-01-01;name :asc~"HDMI";_;% lim 25;;
+products active 1;created 2025-01-01;name :asc~"HDMI";_;%lim=25;;
 
 """ Customers with emails containing .net and phone including 415 created on 2025-06-06, list all fields """
 customers email ~".net";phone ~"415";created 2025-06-06;_;;
@@ -329,13 +329,13 @@ customers name <=>"Bright Labs LLC"<=0.7;created 2024-06-01;_;;
 invoices status overdue;invoice_date >=2025-02-01;<=2025-02-28;total >=200;<=900;due_date :des;_;;
 
 """ On 2025-12-15, sum of tax by invoice number, top 12 """
-invoices invoice_date 2025-12-15;tax :sum:des;invoice_no :grp;% lim 12;;
+invoices invoice_date 2025-12-15;tax :sum:des;invoice_no :grp;%lim=12;;
 
 """ Invoices on 2024-09-09 with items mentioning SATA: average unit price per product, include product names, sort high to low """
 invoices invoice_date 2024-09-09;id _;invoice_items invoice_id @;description ~"SATA";unit_price :avg:des;product_id :grp;products id @;name _;;
 
 """ Top 5 customers by counts of overdue invoices on 2024-08-01, include customer names """
-invoices status overdue;invoice_date 2024-08-01;id :cnt:des;customer_id :grp;customers id @;name _;% lim 5;;
+invoices status overdue;invoice_date 2024-08-01;id :cnt:des;customer_id :grp;customers id @;name _;%lim=5;;
 
 """ Products created on the same date as product 56789 """
 products id 56789;created _;@ @ @;id !=56789;_;;

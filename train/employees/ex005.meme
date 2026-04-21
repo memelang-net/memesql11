@@ -14,7 +14,7 @@ benefit_plans active 1;id :cnt;type :grp:asc;;
 time_off_requests type vacation,sick;start_date <=2025-12-25;end_date >=2025-12-25;employee_id _;employees id @;email _;;
 
 """ Paid payroll runs mentioning bonus, by pay_date desc first 10 """
-payroll_runs status paid;notes ~"bonus";pay_date :des;_;% lim 10;;
+payroll_runs status paid;notes ~"bonus";pay_date :des;_;%lim=10;;
 
 """ Employees hired on 2023-03-01 with department name and location country """
 employees hire_date 2023-03-01;department_id _;departments id @;name _;location_id _;locations id @;country _;;
@@ -44,7 +44,7 @@ employees status terminated;first_name _;last_name _;id _;payroll_entries employ
 payroll_entries tax_withheld :sum:des>=10000;payroll_run_id :grp;;
 
 """ Top 25 employees by average rating (avg >= 4.2) with names """
-performance_reviews rating :avg:des>=4.2;employee_id :grp;employees id @;first_name _;last_name _;% lim 25;;
+performance_reviews rating :avg:des>=4.2;employee_id :grp;employees id @;first_name _;last_name _;%lim=25;;
 
 """ Reviews during 2025-01 for department 40 employees, ratings high to low with employee names """
 departments id 40;employees department_id @;first_name _;last_name _;id _;performance_reviews employee_id @;review_date >=2025-01-01;<=2025-01-31;rating :des;;
@@ -71,10 +71,10 @@ performance_reviews review_date >=2025-02-01;<=2025-02-28;id :cnt:des;reviewer_i
 locations country "US";region :grp:asc;;
 
 """ Payroll runs with notes similar >0.90 to retro pay, newest first limit 15 """
-payroll_runs notes <=>"retro pay"<0.90;pay_date :des;_;% lim 15;;
+payroll_runs notes <=>"retro pay"<0.90;pay_date :des;_;%lim=15;;
 
 """ Employees in grades P3 or P4 earning 85000..150000, hire_date asc first 30 """
-jobs grade "P3","P4";id _;employees job_id @;salary >=85000;<=150000;hire_date :asc;_;% lim 30;;
+jobs grade "P3","P4";id _;employees job_id @;salary >=85000;<=150000;hire_date :asc;_;%lim=30;;
 
 """ Approved timesheets in May 2025 with approver names, by week_start asc """
 timesheets approved 1;week_start :asc>=2025-05-01;<=2025-05-31;approver_id _;employees id @;last_name _;first_name _;;
@@ -110,7 +110,7 @@ employees hire_date 2022-05-15;salary :sum;department_id :grp;;
 jobs exempt 0;grade :grp:asc;;
 
 """ Processed payroll runs in 2025-02 mentioning offcycle, pay_date asc limit 5 """
-payroll_runs status processed;pay_date :asc>=2025-02-01;<=2025-02-28;notes ~"offcycle";_;% lim 5;;
+payroll_runs status processed;pay_date :asc>=2025-02-01;<=2025-02-28;notes ~"offcycle";_;%lim=5;;
 
 """ Skill popularity counts where count >= 10, skill names A-Z """
 employee_skills id :cnt>=10;skill_id :grp;skills id @;name :asc;;
@@ -119,7 +119,7 @@ employee_skills id :cnt>=10;skill_id :grp;skills id @;name :asc;;
 departments id :cnt>=3;location_id :grp;locations id @;country "US";name _;;
 
 """ Top 20 employees by total net_pay in 2024 with names """
-payroll_entries created >=2024-01-01;<=2024-12-31;net_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 20;;
+payroll_entries created >=2024-01-01;<=2024-12-31;net_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=20;;
 
 """ EUR or GBP payroll entries with gross_pay 2000..5000, sort net_pay desc """
 payroll_entries currency "EUR","GBP";gross_pay >=2000;<=5000;net_pay :des;_;;
@@ -179,7 +179,7 @@ skills category "Data";id _;employee_skills skill_id @;id :cnt>=3;employee_id :g
 timesheets week_start >=2025-07-01;<=2025-07-31;id :cnt:des;approver_id :grp;employees id @;last_name _;first_name _;;
 
 """ Top 10 departments by bonus_target sum in 2025 with department names """
-employees hire_date >=2025-01-01;<=2025-12-31;bonus_target :sum:des;department_id :grp;departments id @;name _;% lim 10;;
+employees hire_date >=2025-01-01;<=2025-12-31;bonus_target :sum:des;department_id :grp;departments id @;name _;%lim=10;;
 
 """ Employee emails containing acme sorted by last name then first name """
 employees email ~"acme";last_name :asc;first_name :asc;_;;
@@ -197,7 +197,7 @@ departments location_id 5;id _;employees department_id @;salary :avg>=90000;job_
 benefit_plans type medical,dental;name :asc;id _;employee_benefits benefit_plan_id @;start_date <=2025-01-15;end_date >=2025-01-15;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Top 10 currencies by total net_pay in July 2025 with totals desc """
-payroll_runs pay_date >=2025-07-01;<=2025-07-31;id _;payroll_entries payroll_run_id @;net_pay :sum:des;currency :grp;% lim 10;;
+payroll_runs pay_date >=2025-07-01;<=2025-07-31;id _;payroll_entries payroll_run_id @;net_pay :sum:des;currency :grp;%lim=10;;
 
 """ Employees hired on 2022-05-01 with managers names """
 employees hire_date 2022-05-01;first_name _;last_name _;manager_id _;employees id @;first_name _;last_name _;;
@@ -257,7 +257,7 @@ performance_reviews review_date 2024-12-15;rating >=4.8;<=5.0;reviewer_id _;empl
 employees status terminated;first_name _;last_name _;id _;payroll_entries employee_id @;created >=2025-02-01;<=2025-02-28;net_pay :des;;
 
 """ Top 20 approvers by total overtime_hours in 2025-07 with approver names """
-timesheets week_start >=2025-07-01;<=2025-07-31;overtime_hours :sum:des;approver_id :grp;employees id @;last_name _;% lim 20;;
+timesheets week_start >=2025-07-01;<=2025-07-31;overtime_hours :sum:des;approver_id :grp;employees id @;last_name _;%lim=20;;
 
 """ Jobs with average max_salary by grade where grade includes M, avg desc """
 jobs max_salary :avg:des;grade :grp~"M";;
@@ -281,7 +281,7 @@ payroll_runs pay_date :asc>=2025-05-01;<=2025-05-31;id _;payroll_entries payroll
 departments name ~"Ops";id _;employees department_id @;status active;full_time 1;salary :des;;
 
 """ Employees with reviews containing initiative ordered by similarity then latest date, first 30 """
-performance_reviews comments <=>"initiative":des;review_date :des;_;% lim 30;;
+performance_reviews comments <=>"initiative":des;review_date :des;_;%lim=30;;
 
 """ Employees with average review rating >= 4.0 and at least 3 reviews, list names """
 performance_reviews rating :avg>=4.0;id :cnt>=3;employee_id :grp;employees id @;first_name _;last_name _;;

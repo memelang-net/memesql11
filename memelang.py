@@ -4,9 +4,9 @@
 # Whitespaces are syntactic and trigger "new Cell"
 # Never space between operator/comparator/comma/flag and values
 
-MEMELANG_VER = 11.04
+MEMELANG_VER = 11.05
 
-basic_syntax = '[table WS] [column WS] [":$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")] [":" ("asc"|"des")] ["<=>" "\"" string "\""] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
+basic_syntax = '[table WS] [column WS]  ["<=>" "\"" string "\""] [":$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")] [":" ("asc"|"des")] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
 
 examples = '''
 %mode=tab;
@@ -80,7 +80,7 @@ movies title ~"Hero"; description <=>"robot"; year >=1900; <=2000;;
 %tab=movies;  #%val; %col=title; ~"Hero"; %col=description; <=>"robot"; %col=year; >=1900; <=2000;;
 %tab=movies; #title #description #year; ~"Hero" <=>"robot" >=1900; <=2000;;
 %tab=movies; #title; ~"Hero"; #description; <=>"robot"; #year; >=1900; <=2000;;
-#%tab #%val; movies :#title~"Hero"; :#description<=>"robot"; :#year>=1900; <=2000;;
+#%tab #%val; movies :#title~"Hero"; <=>"robot":#description; :#year>=1900; <=2000;;
 '''
 
 import re, sys, json
@@ -102,7 +102,7 @@ CELL_PATTERN = (
 	('EVAR', 	r'%[a-zA-Z0-9_]+'),
 	('SLOT', 	r'#%?[a-zA-Z0-9_]+'),
 	('ASSN', 	r':#[a-zA-Z0-9_]+'),
-	('TIM',		r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'),
+	('TIM',		r'\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2})?'),
 	('DEC',		r'-?\d*\.\d+'),
 	('INT',		r'-?\d+'),
 	('ALN',		r'[A-Za-z][A-Za-z0-9_]*'),
@@ -192,10 +192,6 @@ class Cell:
 			i += 1
 			return t
 
-		# FLAGS
-		while peek() in FLAG_KINDS:
-			self.flag.append(take())
-
 		# LEFT (prefix MOD)
 		if peek() == 'MOD':
 			self.left.opr = take()
@@ -203,6 +199,10 @@ class Cell:
 			t = take()
 			if not t.kind in DAT_KINDS: raise Err('E_TERM_DAT')
 			self.left.append(t)
+
+		# FLAGS
+		while peek() in FLAG_KINDS:
+			self.flag.append(take())
 
 		# COMPARATOR
 		if peek() == 'CMP':
@@ -242,9 +242,9 @@ class Cell:
 	def bind(self, tok: Tok):
 		if tok not in self.flag: self.flag.append(tok)
 
-	def __str__(self) -> str: return f"{self.flag}{self.left}{self.comp}{self.right}"
+	def __str__(self) -> str: return f"{self.left}{self.flag}{self.comp}{self.right}"
 
-	def __repr__(self) -> str: return f"{self.flag!r}{self.left!r}{self.comp!r}{self.right!r}"
+	def __repr__(self) -> str: return f"{self.left!r}{self.flag!r}{self.comp!r}{self.right!r}"
 
 	def __bool__(self) -> bool: return bool(self.flag or self.left or self.right)
 
@@ -495,17 +495,18 @@ class Grid(Axis2):
 	def select(self) -> List[SQL]:
 		self.rect()
 		out = []
-		env = {'mode':'qry', 'sim':0.5,'tab':'','taba':'','cola':''}
+		env = {'mode':'qry', 'sim':0.5, 'joint':2, 'tab':'', 'taba':'t0', 'cola':''}
 
 		for axis1 in self:
 			env['lim'], env['beg'] = 0, 0
 			bind = {k: SQL(PH, [v]) for k, v in env.items()}
-			tab_cnt = 0
 			qry = {'select':[], 'from':[], 'fromall':[], 'groupby':[], 'where':[], 'having':[], 'orderby':[]}
 			grouped = False
 			allselected = False
 
 			for axis0 in axis1:
+				joint = False
+				axis0len=len(axis0)
 
 				if env['mode']!='qry': continue
 
@@ -527,11 +528,9 @@ class Grid(Axis2):
 
 						if evarval=='%tab':
 							if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', single): raise Err('E_TAB_NAME')
-							tab_cnt += 1
 							env['tab']=single
-							env['taba']=f"t{tab_cnt}"
-							qry['from'].append(SQL(f"{env['tab']} AS {env['taba']}"))
-							qry['fromall'].append(env['taba'])
+							env['taba']='t'+str(int(env['taba'][1:])+1)
+							joint=True
 
 						elif evarval=='%col':
 							if single == '_': allselected = True
@@ -539,6 +538,8 @@ class Grid(Axis2):
 							env['cola'] = single
 
 						continue
+
+					if idx0<=(axis0len-env['joint']): joint=True
 
 					# SLOT for COL
 					assnval = cell.find('ASSN').canon
@@ -566,6 +567,11 @@ class Grid(Axis2):
 						if flag.kind != 'BIND': continue
 						if flag.canon[2:] in env: raise Err('E_ENV_BIND')
 						bind[flag.canon[2:]] = valcell
+
+				if joint:
+					qry['from'].append(SQL(f"{env['tab']} AS {env['taba']}"))
+					qry['fromall'].append(env['taba'])
+
 
 			if not qry['from']:
 				out.append(SQL())

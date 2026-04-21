@@ -39,22 +39,22 @@ posts visibility =public;created_at >=2024-01-15;id :asc;_;;
 posts image_url ~".jpg";updated_at <=2025-10-01;created_at :des;_;;
 
 """ posts visibility equals friends, body contains update, sort by updated_at des with limit 5 """
-posts visibility =friends;body ~"update";updated_at :des;_;% lim 5;;
+posts visibility =friends;body ~"update";updated_at :des;_;%lim=5;;
 
 """ posts image_url contains .png, created_at at least 2024-01-15, sort by id asc with limit 10 """
-posts image_url ~".png";created_at >=2024-01-15;id :asc;_;% lim 10;;
+posts image_url ~".png";created_at >=2024-01-15;id :asc;_;%lim=10;;
 
 """ posts user_id at least 42, visibility equals public, sort by created_at asc with limit 5 """
-posts user_id >=42;visibility =public;created_at :asc;_;% lim 5;;
+posts user_id >=42;visibility =public;created_at :asc;_;%lim=5;;
 
 """ posts visibility equals public, body contains release, sort by created_at asc with limit 10 offset 20 """
-posts visibility =public;body ~"release";created_at :asc;_;% lim 10;% beg 20;;
+posts visibility =public;body ~"release";created_at :asc;_;%lim=10;%beg=20;;
 
 """ posts image_url contains .jpg, updated_at at most 2025-10-01, sort by id des with limit 10 offset 30 """
-posts image_url ~".jpg";updated_at <=2025-10-01;id :des;_;% lim 10;% beg 30;;
+posts image_url ~".jpg";updated_at <=2025-10-01;id :des;_;%lim=10;%beg=30;;
 
 """ posts user_id at least 100, visibility equals friends, sort by updated_at asc with limit 5 offset 15 """
-posts user_id >=100;visibility =friends;updated_at :asc;_;% lim 5;% beg 15;;
+posts user_id >=100;visibility =friends;updated_at :asc;_;%lim=5;%beg=15;;
 
 """ comments by id ascending """
 comments id :asc;_;;
@@ -141,22 +141,22 @@ comments body ~"fix";created_at >=2024-01-15;id :asc;_;;
 comments body ~"update";updated_at <=2025-10-01;created_at :des;_;;
 
 """ comments body contains thanks, post_id at least 42, sort by updated_at des with limit 5 """
-comments body ~"thanks";post_id >=42;updated_at :des;_;% lim 5;;
+comments body ~"thanks";post_id >=42;updated_at :des;_;%lim=5;;
 
 """ comments user_id at least 100, created_at at least 2024-01-15, sort by id asc with limit 10 """
-comments user_id >=100;created_at >=2024-01-15;id :asc;_;% lim 10;;
+comments user_id >=100;created_at >=2024-01-15;id :asc;_;%lim=10;;
 
 """ comments post_id at least 42, body contains reply, sort by created_at asc with limit 5 """
-comments post_id >=42;body ~"reply";created_at :asc;_;% lim 5;;
+comments post_id >=42;body ~"reply";created_at :asc;_;%lim=5;;
 
 """ comments body contains fix, created_at at least 2024-01-15, sort by id asc with limit 10 offset 20 """
-comments body ~"fix";created_at >=2024-01-15;id :asc;_;% lim 10;% beg 20;;
+comments body ~"fix";created_at >=2024-01-15;id :asc;_;%lim=10;%beg=20;;
 
 """ comments user_id at least 100, updated_at at most 2025-10-01, sort by created_at des with limit 10 offset 30 """
-comments user_id >=100;updated_at <=2025-10-01;created_at :des;_;% lim 10;% beg 30;;
+comments user_id >=100;updated_at <=2025-10-01;created_at :des;_;%lim=10;%beg=30;;
 
 """ comments post_id at least 10, body contains reply, sort by updated_at asc with limit 5 offset 15 """
-comments post_id >=10;body ~"reply";updated_at :asc;_;% lim 5;% beg 15;;
+comments post_id >=10;body ~"reply";updated_at :asc;_;%lim=5;%beg=15;;
 
 """ likes by id ascending """
 likes id :asc;_;;
@@ -216,22 +216,22 @@ likes user_id >=100;created_at >=2024-01-15;id :asc;_;;
 likes post_id <=1000;id >=10;created_at :des;_;;
 
 """ likes user_id at least 100, sort by created_at des with limit 5 """
-likes user_id >=100;created_at :des;_;% lim 5;;
+likes user_id >=100;created_at :des;_;%lim=5;;
 
 """ likes post_id at most 1000, sort by id asc with limit 10 """
-likes post_id :asc<=1000;_;% lim 10;;
+likes post_id :asc<=1000;_;%lim=10;;
 
 """ likes id at least 42, sort by created_at asc with limit 5 """
-likes id >=42;created_at :asc;_;% lim 5;;
+likes id >=42;created_at :asc;_;%lim=5;;
 
 """ likes user_id at least 100, sort by created_at des with limit 10 offset 20 """
-likes user_id >=100;created_at :des;_;% lim 10;% beg 20;;
+likes user_id >=100;created_at :des;_;%lim=10;%beg=20;;
 
 """ likes post_id at most 1000, sort by id asc with limit 10 offset 30 """
-likes post_id :asc<=1000;_;% lim 10;% beg 30;;
+likes post_id :asc<=1000;_;%lim=10;%beg=30;;
 
 """ likes id at least 10, sort by created_at asc with limit 5 offset 15 """
-likes id >=10;created_at :asc;_;% lim 5;% beg 15;;
+likes id >=10;created_at :asc;_;%lim=5;%beg=15;;
 
 """ messages by id ascending """
 messages id :asc;_;;
@@ -306,19 +306,19 @@ messages body ~"hello";created_at >=2024-01-15;id :asc;_;;
 messages body ~"meeting";read_flag =true;created_at :des;_;;
 
 """ messages body contains hello, sender_id at least 42, sort by created_at des with limit 5 """
-messages body ~"hello";sender_id >=42;created_at :des;_;% lim 5;;
+messages body ~"hello";sender_id >=42;created_at :des;_;%lim=5;;
 
 """ messages read_flag not true, created_at at least 2024-01-15, sort by id asc with limit 10 """
-messages read_flag !=true;created_at >=2024-01-15;id :asc;_;% lim 10;;
+messages read_flag !=true;created_at >=2024-01-15;id :asc;_;%lim=10;;
 
 """ messages recipient_id at least 100, body contains update, sort by created_at asc with limit 5 """
-messages recipient_id >=100;body ~"update";created_at :asc;_;% lim 5;;
+messages recipient_id >=100;body ~"update";created_at :asc;_;%lim=5;;
 
 """ messages body contains hello, created_at at least 2024-01-15, sort by id asc with limit 10 offset 20 """
-messages body ~"hello";created_at >=2024-01-15;id :asc;_;% lim 10;% beg 20;;
+messages body ~"hello";created_at >=2024-01-15;id :asc;_;%lim=10;%beg=20;;
 
 """ messages read_flag not true, sender_id at least 42, sort by created_at des with limit 10 offset 30 """
-messages read_flag !=true;sender_id >=42;created_at :des;_;% lim 10;% beg 30;;
+messages read_flag !=true;sender_id >=42;created_at :des;_;%lim=10;%beg=30;;
 
 """ messages recipient_id at least 10, body contains meeting, sort by created_at asc with limit 5 offset 15 """
-messages recipient_id >=10;body ~"meeting";created_at :asc;_;% lim 5;% beg 15;;
+messages recipient_id >=10;body ~"meeting";created_at :asc;_;%lim=5;%beg=15;;

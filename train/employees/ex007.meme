@@ -1,5 +1,5 @@
 """ Top 5 locations by number of departments with location names """
-departments id :cnt:des;location_id :grp;locations id @;name _;% lim 5;;
+departments id :cnt:des;location_id :grp;locations id @;name _;%lim=5;;
 
 """ Active full-time hires on 2020-05-01, all columns """
 employees hire_date 2020-05-01;status active;full_time 1;_;;
@@ -14,7 +14,7 @@ performance_reviews comments <=>"leadership":des;_;;
 time_off_requests type sick;status denied;start_date :asc>=2024-11-01;<=2024-11-30;hours >=2;<=8;_;;
 
 """ Headcount per manager with names, top 20 by count """
-employees id :cnt;manager_id :grp;employees id @;first_name _;last_name _;% lim 20;;
+employees id :cnt;manager_id :grp;employees id @;first_name _;last_name _;%lim=20;;
 
 """ Net pay totals per currency for runs on 2025-07-31 """
 payroll_runs pay_date 2025-07-31;id _;payroll_entries payroll_run_id @;net_pay :sum;currency :grp;;
@@ -41,7 +41,7 @@ performance_reviews period_start <=2025-06-01;period_end >=2025-06-01;reviewer_i
 benefit_plans type vision;id _;employee_benefits benefit_plan_id @;start_date <=2025-06-30;end_date >=2025-01-01;id :cnt:des;coverage_level :grp;;
 
 """ Top 20 job titles by number of active employees """
-employees status active;id :cnt:des;job_id :grp;jobs id @;title _;% lim 20;;
+employees status active;id :cnt:des;job_id :grp;jobs id @;title _;%lim=20;;
 
 """ Cloud skills used after 2024-07-01 with skill names and employee emails """
 skills category "Cloud";name _;id _;employee_skills skill_id @;last_used >2024-07-01;employee_id _;employees id @;email _;;
@@ -74,7 +74,7 @@ time_off_requests type vacation;status approved;start_date >=2025-02-01;<=2025-0
 skills created 2024-08-01;category "Security","Cloud";name :asc;_;;
 
 """ Job grades like M with min_salary >= 100000, titles A-Z limit 20 """
-jobs grade ~"M";min_salary >=100000;title :asc;_;% lim 20;;
+jobs grade ~"M";min_salary >=100000;title :asc;_;%lim=20;;
 
 """ UK locations with departments having 10+ employees, list location and department names """
 locations country "UK";name _;id _;departments location_id @;name _;id :grp;employees department_id @;id :cnt>=10;;
@@ -83,7 +83,7 @@ locations country "UK";name _;id _;departments location_id @;name _;id :grp;empl
 timesheets week_start :asc>=2025-03-01;<=2025-03-31;submitted 1;approved 1;approver_id _;employees id @;first_name _;last_name _;;
 
 """ Top 5 employees by total overtime in June 2025 with names """
-timesheets week_start >=2025-06-01;<=2025-06-30;overtime_hours :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 5;;
+timesheets week_start >=2025-06-01;<=2025-06-30;overtime_hours :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=5;;
 
 """ USD payroll entries in runs paid on 2025-01-31, net_pay descending """
 payroll_runs status paid;pay_date 2025-01-31;id _;payroll_entries payroll_run_id @;currency "USD";net_pay :des;_;;
@@ -107,7 +107,7 @@ performance_reviews comments <=>"project management"<=0.85;review_date :des;empl
 skills name "SQL";id _;employee_skills skill_id @;id :cnt;level :grp:asc;;
 
 """ Top 10 employees by total net pay in Dec 2025 with names """
-payroll_runs pay_date >=2025-12-01;<=2025-12-31;id _;payroll_entries payroll_run_id @;net_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 10;;
+payroll_runs pay_date >=2025-12-01;<=2025-12-31;id _;payroll_entries payroll_run_id @;net_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=10;;
 
 """ Reviews covering 2024-06-30 with rating >= 4.5, list names A-Z """
 performance_reviews period_start <=2024-06-30;period_end >=2024-06-30;rating >=4.5;employee_id _;employees id @;last_name :asc;first_name _;;
@@ -134,7 +134,7 @@ time_off_requests request_date >=2025-10-01;<=2025-10-31;id :cnt>=2;employee_id 
 timesheets week_start >=2024-12-01;<=2024-12-31;hours_worked :avg:des>=36;employee_id :grp;employees id @;first_name _;last_name _;;
 
 """ Top 5 reviewers by average rating in 2025 with at least 5 reviews """
-performance_reviews review_date >=2025-01-01;<=2025-12-31;rating :avg:des;id :cnt>=5;reviewer_id :grp;employees id @;first_name _;last_name _;% lim 5;;
+performance_reviews review_date >=2025-01-01;<=2025-12-31;rating :avg:des;id :cnt>=5;reviewer_id :grp;employees id @;first_name _;last_name _;%lim=5;;
 
 """ Payroll runs with notes similar to correction (sim>=0.92), status processed or paid by pay_date asc """
 payroll_runs notes <=>"correction"<=0.92;status processed,paid;pay_date :asc;_;;
@@ -167,7 +167,7 @@ performance_reviews review_date 2024-11-15;comments ~"goal";rating :des;reviewer
 timesheets week_start 2025-02-10;submitted 1;approved 1;overtime_hours :des>0;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Top 10 locations by department count with name, country, region """
-departments id :cnt:des;location_id :grp;locations id @;name _;country _;region _;% lim 10;;
+departments id :cnt:des;location_id :grp;locations id @;name _;country _;region _;%lim=10;;
 
 """ Average min_salary per job title containing Analyst, titles A-Z """
 jobs min_salary :avg;title :grp:asc~"Analyst";;
@@ -188,7 +188,7 @@ timesheets week_start >=2024-11-01;<=2024-11-30;overtime_hours :avg>=2;approver_
 employees id :cnt>=3;last_name :grp:asc;;
 
 """ Top 5 payroll runs by total gross pay in Oct 2024, show pay_date and id """
-payroll_entries gross_pay :sum:des;payroll_run_id :grp;payroll_runs id @;pay_date >=2024-10-01;<=2024-10-31;;% lim 5;;
+payroll_entries gross_pay :sum:des;payroll_run_id :grp;payroll_runs id @;pay_date >=2024-10-01;<=2024-10-31;;%lim=5;;
 
 """ Employees in departments created after 2024-06-01, show names by hire_date asc """
 departments created >2024-06-01;id _;employees department_id @;first_name _;last_name _;hire_date :asc;;
@@ -209,7 +209,7 @@ locations region "CA";name _;id _;departments location_id @;name :asc;id :grp;em
 skills name "Python";id _;employee_skills skill_id @;last_used :des>=2024-01-01;level _;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Top 5 reviewers by average rating in 2025 with reviewer names """
-performance_reviews review_date >=2025-01-01;<=2025-12-31;rating :avg:des;reviewer_id :grp;employees id @;first_name _;last_name _;% lim 5;;
+performance_reviews review_date >=2025-01-01;<=2025-12-31;rating :avg:des;reviewer_id :grp;employees id @;first_name _;last_name _;%lim=5;;
 
 """ Departments with more than 30 active employees, counts desc with department names """
 employees status active;id :cnt:des>=31;department_id :grp;departments id @;name _;;
@@ -245,7 +245,7 @@ employees salary :avg>=110000;job_id :grp;jobs id @;title :des;;
 performance_reviews review_date 2025-03-01;rating >=3.5;<=5.0;reviewer_id :$x;employee_id _;employees id @;job_id _;jobs id @;title _;employees id $x;last_name _;;
 
 """ Top 10 locations by department count with country and region """
-departments id :cnt:des;location_id :grp;locations id @;country _;region _;% lim 10;;
+departments id :cnt:des;location_id :grp;locations id @;country _;region _;%lim=10;;
 
 """ Family coverage ending 2025-06-30, plan type and employee names by last name A-Z """
 employee_benefits coverage_level family;end_date 2025-06-30;employee_id _;employees id @;last_name :asc;first_name _;benefit_plan_id _;benefit_plans id @;type _;;
@@ -287,7 +287,7 @@ time_off_requests request_date 2025-02-14;status pending,approved;type :grp:des;
 performance_reviews review_date <=2024-12-31;id :cnt>=3;rating :avg>=4.2;employee_id :grp;employees id @;first_name _;last_name _;;
 
 """ Top 15 currencies by sum gross_pay in 2025-10 payroll runs """
-payroll_runs pay_date >=2025-10-01;<=2025-10-31;id _;payroll_entries payroll_run_id @;gross_pay :sum:des;currency :grp;% lim 15;;
+payroll_runs pay_date >=2025-10-01;<=2025-10-31;id _;payroll_entries payroll_run_id @;gross_pay :sum:des;currency :grp;%lim=15;;
 
 """ Employees created on 2024-01-15 with active vision or dental coverage on that date, plan names """
 employees created 2024-01-15;id _;employee_benefits employee_id @;start_date <=2024-01-15;end_date >=2024-01-15;benefit_plan_id _;benefit_plans id @;type vision,dental;name _;;

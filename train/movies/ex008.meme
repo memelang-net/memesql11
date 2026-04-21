@@ -203,7 +203,7 @@ roles rating :avg>=3;:avg<=4;actor :grp:asc;;
 roles rating :max:des;movie :grp;;
 
 """ Top 10 movies by minimum role rating """
-roles rating :min:des;movie :grp;% lim 10;;
+roles rating :min:des;movie :grp;%lim=10;;
 
 """ Actors appearing in movies released in 2015 (A-Z) """
 movies year 2015;title _;roles movie @;actor :grp:asc;;
@@ -212,10 +212,10 @@ movies year 2015;title _;roles movie @;actor :grp:asc;;
 movies year >2018;title :asc;_;;
 
 """ Oldest movie with 'star' in title """
-movies title ~"star";year :asc;% lim 1;;
+movies title ~"star";year :asc;%lim=1;;
 
 """ Newest movie with 'star' in title """
-movies title ~"star";year :des;% lim 1;;
+movies title ~"star";year :des;%lim=1;;
 
 """ Documentaries related to climate change, newest first """
 movies genre documentary;year :des;description <=>"climate change"<=$sim;_;;
@@ -251,10 +251,10 @@ roles rating :avg:des;:max:des;actor :grp;;
 roles rating :sum:des;actor :grp:asc;;
 
 """ Top 5 actors by average rating with name as tiebreak (A-Z) """
-roles rating :avg:des;actor :grp:asc;% lim 5;;
+roles rating :avg:des;actor :grp:asc;%lim=5;;
 
 """ Top 3 actors by role count, breaking ties by average rating desc """
-roles id :cnt:des;rating :avg:des;actor :grp;% lim 3;;
+roles id :cnt:des;rating :avg:des;actor :grp;%lim=3;;
 
 """ Actors whose name equals a movie title and are at least 30 """
 actors age >=30;name :$x;movies title $x;;
@@ -287,19 +287,19 @@ movies year 2005;title _;roles movie @;rating >4;_;;
 roles rating :min:asc;id :cnt:des;movie :grp;;
 
 """ Top 20 movies by count of roles, then by title """
-roles id :cnt:des;movie :grp:asc;% lim 20;;
+roles id :cnt:des;movie :grp:asc;%lim=20;;
 
 """ Second page of movies by count of roles, 25 per page """
-roles id :cnt:des;movie :grp;% lim 25;% beg 25;;
+roles id :cnt:des;movie :grp;%lim=25;%beg=25;;
 
 """ movies made per year about the titanic, order by movie year """
 movies description ~"Titanic";id :cnt;year :grp:asc;;
 
 """ Drama movies about clowns newest to oldest, page 3 (40 per page) """
-movies year :des;genre drama;description <=>"clowns"<=$sim;% lim 40;% beg 80;;
+movies year :des;genre drama;description <=>"clowns"<=$sim;%lim=40;%beg=80;;
 
 """ Top 15 sci-fi movies about time travel """
-movies genre scifi;description <=>"time travel":des;_;% lim 15;;
+movies genre scifi;description <=>"time travel":des;_;%lim=15;;
 
 """ Space exploration films, newest first """
 movies description <=>"space exploration":des;year :des;_;;

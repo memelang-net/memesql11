@@ -23,7 +23,7 @@ comments id 7000;user_id :$x;post_id _;@ @ @;user_id !=$x;follows follower_id @;
 users username "olivia";id :$x;likes user_id @;created_at =2025-06-01;post_id _;@ @ @;user_id !=$x;users id @;username :asc;_;;
 
 """ Profiles in the same city as profile 123 with bios like photography at 0.65+, names A-Z, limit 15 """
-profiles id 123;user_id :$x;location _;@ @ @;bio <=>"photography"<=0.65;user_id !=$x;full_name :asc;_;% lim 15;;
+profiles id 123;user_id :$x;location _;@ @ @;bio <=>"photography"<=0.65;user_id !=$x;full_name :asc;_;%lim=15;;
 
 """ Co-followers of the same followee as lucas on 2025-01-15, excluding lucas, usernames A-Z """
 users username "lucas";id :$x;follows follower_id @;created_at =2025-01-15;followee_id _;@ @ @;created_at =2025-01-15;follower_id !=$x;users id @;username :asc;;
@@ -38,7 +38,7 @@ comments id 6600;user_id :$x;post_id _;@ @ @;created_at >=2025-02-01;user_id !=$
 users username "oliver";id _;messages sender_id @;created_at =2025-04-01;sender_id _;@ @ @;created_at =2025-04-01;recipient_id _;users id @;username :des;;
 
 """ Public posts by the same authors who posted a .png on 2024-06-30, newest first, limit 10 """
-posts image_url ~".png";created_at =2024-06-30;user_id _;@ @ @;visibility =public;created_at :des;body _;% lim 10;;
+posts image_url ~".png";created_at =2024-06-30;user_id _;@ @ @;visibility =public;created_at :des;body _;%lim=10;;
 
 """ Profiles in the same city as hana, .org websites only, exclude hana, names ascending """
 users username "hana";id :$x;profiles user_id @;location _;@ @ @;website ~".org";user_id !=$x;full_name :asc;;
@@ -50,7 +50,7 @@ posts id 5050;created_at _;@ @ @;visibility =public;image_url ~".jpg";user_id _;
 users username "mason";id _;follows follower_id @;created_at =2024-12-01;follower_id _;@ @ @;created_at =2024-12-01;followee_id _;users id @;username :asc;;
 
 """ Co-repliers under the same parent as reply 8800, excluding that author, oldest first, show 15 usernames """
-comments id 8800;user_id :$x;parent_comment_id _;@ @ @;created_at :asc;user_id !=$x;user_id _;users id @;username _;% lim 15;;
+comments id 8800;user_id :$x;parent_comment_id _;@ @ @;created_at :asc;user_id !=$x;user_id _;users id @;username _;%lim=15;;
 
 """ Other senders who messaged the same recipients as mia on 2025-03-10, excluding mia, usernames A-Z """
 users username "mia";id :$s;messages sender_id @;created_at =2025-03-10;recipient_id _;@ @ @;created_at =2025-03-10;sender_id !=$s;users id @;username :asc;;
@@ -98,7 +98,7 @@ messages sender_id 200;created_at =2024-09-01;recipient_id _;@ @ @;sender_id !=2
 posts id 777;user_id _;@ @ @;id !=777;body ~"update";created_at :des;_;;
 
 """ People in the same city as user 101 with travel-like bios (0.60+), order by similarity desc, show 15 """
-users id 101;profiles user_id @;location _;@ @ @;bio <=>"travel":des>=0.60;full_name _;% lim 15;;
+users id 101;profiles user_id @;location _;@ @ @;bio <=>"travel":des>=0.60;full_name _;%lim=15;;
 
 """ Sibling replies under the same parent as comment 6001, excluding that comment, oldest first """
 comments id 6001;parent_comment_id _;@ @ @;id !=6001;created_at :asc;body _;;
@@ -131,13 +131,13 @@ users username "john";id _;profiles user_id @;location _;@ @ @;updated_at >2025-
 follows id 600;follower_id _;@ @ @;followee_id _;users id @;username :asc;;
 
 """ Messages from the same sender as message 990 on 2024-10-01, newest first, limit 10 """
-messages id 990;sender_id _;@ @ @;created_at :des=2024-10-01;body _;_;% lim 10;;
+messages id 990;sender_id _;@ @ @;created_at :des=2024-10-01;body _;_;%lim=10;;
 
 """ Other people who liked the same post as like 12345 on 2024-12-25, usernames A-Z """
 likes id 12345;user_id :$x;post_id _;@ @ @;created_at =2024-12-25;user_id !=$x;users id @;username :asc;_;;
 
 """ Commenters besides the original author on the same post as comment 8001 during 2025-06, show profile names A-Z, limit 20 """
-comments id 8001;user_id :$x;post_id _;@ @ @;created_at >=2025-06-01;<=2025-06-30;user_id !=$x;users id @;profiles user_id @;full_name :asc;_;% lim 20;;
+comments id 8001;user_id :$x;post_id _;@ @ @;created_at >=2025-06-01;<=2025-06-30;user_id !=$x;users id @;profiles user_id @;full_name :asc;_;%lim=20;;
 
 """ Other likers on posts liked by mira on 2025-01-01, excluding mira, usernames A-Z """
 users username "mira";id :$x;likes user_id @;created_at =2025-01-01;post_id _;@ @ @;user_id !=$x;users id @;username :asc;_;;

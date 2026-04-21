@@ -5,7 +5,7 @@ movies genre scifi;year 1984;description ~"android";title _;roles movie @;rating
 movies genre comedy;year 2011,2012;description ~"school";title _;roles movie @;rating >=3;<=5;actor _;;
 
 """ 1999 releases featuring Keanu Reeves;highest role ratings first;take 5 after 10 """
-movies year 1999;title _;roles movie @;actor "Keanu Reeves";rating :des;% lim 5;% beg 10;;
+movies year 1999;title _;roles movie @;actor "Keanu Reeves";rating :des;%lim=5;%beg=10;;
 
 """ Documentaries between 1975 and 1990 mentioning music;count roles per movie for those films """
 movies genre documentary;year >=1975;<=1990;description ~"music";title _;roles movie @;id :cnt;movie :grp;;
@@ -17,34 +17,34 @@ movies genre comedy;year 2003;title _;roles movie @;rating :avg;actor :grp;;
 movies genre scifi;year >2010;description ~"galaxy";title _;roles movie @;rating :sum;actor :grp;;
 
 """ Robot-themed movies from 1990 through 2010;titles A-Z;first 12 starting at 36 """
-movies description ~"robot";year >=1990;<=2010;title :asc;% lim 12;% beg 36;;
+movies description ~"robot";year >=1990;<=2010;title :asc;%lim=12;%beg=36;;
 
 """ Actors aged at most 70 sorted by age high to low;show 6 """
-actors age :des<=70;% lim 6;;
+actors age :des<=70;%lim=6;;
 
-""" Roles in Star Wars: A New Hope or The Empire Strikes Back with ratings 4+ sorted high to low;% limit 15 """
-roles movie "Star Wars: A New Hope","The Empire Strikes Back";rating :des>=4;% lim 15;;
+""" Roles in Star Wars: A New Hope or The Empire Strikes Back with ratings 4+ sorted high to low;%limit=15 """
+roles movie "Star Wars: A New Hope","The Empire Strikes Back";rating :des>=4;%lim=15;;
 
 """ Films before 1965, not documentary or scifi, that mention ocean;titles A-Z;take 5 from offset 10 """
-movies year <1965;genre !=documentary,scifi;description ~"ocean";title :asc;% lim 5;% beg 10;;
+movies year <1965;genre !=documentary,scifi;description ~"ocean";title :asc;%lim=5;%beg=10;;
 
 """ Average rating by movie for Robert De Niro roles """
 roles actor "Robert De Niro";rating :avg;movie :grp;;
 
 """ Cases where actor equals the movie title and rating at least 4;order by rating high to low;20 from 40 """
-roles actor _;movie @;rating :des>=4;% lim 20;% beg 40;;
+roles actor _;movie @;rating :des>=4;%lim=20;%beg=40;;
 
 """ Sci-fi films from 1990 to 2005 about galaxy;list actors and role ratings between 3 and 5 """
 movies genre scifi;year >=1990;<=2005;description ~"galaxy";title _;roles movie @;rating >=3;<=5;actor _;;
 
 """ Movies from 1990 about robot;titles Z-A;pick 7 starting at 14 """
-movies year 1990;description ~"robot";title :des;% lim 7;% beg 14;;
+movies year 1990;description ~"robot";title :des;%lim=7;%beg=14;;
 
 """ Descriptions most similar to 'space battle';highest similarity first;top 10 """
-movies description <=>"space battle":des;% lim 10;;
+movies description <=>"space battle":des;%lim=10;;
 
 """ Titles similar to 'Star Trek' at similarity 0.6 or higher;newest years first;show 5 """
-movies title <=>"Star Trek"<=0.6;year :des;% lim 5;;
+movies title <=>"Star Trek"<=0.6;year :des;%lim=5;;
 
 """ Keanu Reeves roles with ratings between 3.5 and 5 in 2003 movies """
 movies year 2003;title _;roles movie @;actor "Keanu Reeves";rating >=3.5;<=5;_;;
@@ -65,19 +65,19 @@ movies genre comedy;year 2001,2002;title _;roles movie @;rating :sum;actor :grp;
 roles actor "Scarlett Johansson";movie "Lucy","Her";rating >3.8;_;;
 
 """ Actors named like John aged 60 to 80, sort by age high to low, first 5 """
-actors name ~"John";age :des>=60;<=80;% lim 5;;
+actors name ~"John";age :des>=60;<=80;%lim=5;;
 
 """ Science fiction movies mentioning alien made between 1975 and 1985, titles A-Z, page 3 of 20 """
-movies genre scifi;description ~"alien";year >=1975;<=1985;title :asc;% lim 20;% beg 40;;
+movies genre scifi;description ~"alien";year >=1975;<=1985;title :asc;%lim=20;%beg=40;;
 
 """ Descriptions most similar to "space exploration", top 12 """
-movies description <=>"space exploration":des;year >=1900;% lim 12;;
+movies description <=>"space exploration":des;year >=1900;%lim=12;;
 
 """ Comedies from 1998 with title similar to "office" (min similarity 0.25) """
 movies title <=>"office"<=0.25;genre comedy;year 1998;_;;
 
 """ Actors whose names include Ana or Ann between ages 20 and 35, sorted A-Z, 15 starting at 10 """
-actors name :asc~"Ana","Ann";age >=20;<=35;% lim 15;% beg 10;;
+actors name :asc~"Ana","Ann";age >=20;<=35;%lim=15;%beg=10;;
 
 """ Roles in The Matrix with ratings not equal to 5 and at least 3, show actor and rating """
 roles movie "The Matrix";rating !=5;>=3;actor _;;
@@ -86,22 +86,22 @@ roles movie "The Matrix";rating !=5;>=3;actor _;;
 movies year <1990;description ~"war";title _;roles movie @;rating :avg;movie :grp;;
 
 """ Titles in 2003 or 2005 containing ring, reverse alphabetical, 7 items after 14 """
-movies year 2003,2005;title :des~"ring";% lim 7;% beg 14;;
+movies year 2003,2005;title :des~"ring";%lim=7;%beg=14;;
 
 """ Actors other than Tom Cruise aged at least 30, youngest first, show 9 """
-actors name !="Tom Cruise";age :asc>=30;% lim 9;;
+actors name !="Tom Cruise";age :asc>=30;%lim=9;;
 
 """ Latest five drama films without the word crime in description """
-movies genre drama;description !~"crime";year :des;% lim 5;;
+movies genre drama;description !~"crime";year :des;%lim=5;;
 
 """ Roles where actor equals the movie title and rating between 2.0 and 4.0 """
 roles actor _;movie @;rating >=2.0;<=4.0;_;;
 
 """ People 21+ with Lee in the name, Z-A, show 12 starting at 24 """
-actors age >=21;name :des~"Lee";% lim 12;% beg 24;;
+actors age >=21;name :des~"Lee";%lim=12;%beg=24;;
 
 """ Documentaries from 2008 to 2012 mentioning climate, year ascending, first 10 """
-movies genre documentary;year :asc>=2008;<=2012;description ~"climate";% lim 10;;
+movies genre documentary;year :asc>=2008;<=2012;description ~"climate";%lim=10;;
 
 """ Sci-fi or drama movies from 1990 with moon in the title, include all columns """
 movies genre scifi,drama;year 1990;title ~"moon";_;;
@@ -113,13 +113,13 @@ actors name "Samuel L. Jackson";age >=50;<=70;_;;
 movies year >2015;description ~"robot";title _;roles movie @;rating >=4.5;actor _;movie _;;
 
 """ Film titles most similar to "dream world", 6 results starting at 12 """
-movies title <=>"dream world":des;year >=1900;% lim 6;% beg 12;;
+movies title <=>"dream world":des;year >=1900;%lim=6;%beg=12;;
 
 """ Keanu Reeves roles in 1999 rated above 4, sort by rating high to low, first 5 """
-movies year 1999;title _;roles movie @;actor "Keanu Reeves";rating :des>4;% lim 5;;
+movies year 1999;title _;roles movie @;actor "Keanu Reeves";rating :des>4;%lim=5;;
 
 """ Actors aged 30 to 45 whose names contain Ann or Ana, youngest first, top 12 """
-actors name ~"Ann","Ana";age :asc>=30;<=45;% lim 12;;
+actors name ~"Ann","Ana";age :asc>=30;<=45;%lim=12;;
 
 """ Role counts per movie for films released in 1997 """
 movies year 1997;title _;roles movie @;id :cnt;movie :grp;;
@@ -131,13 +131,13 @@ movies genre drama;year >=2010;<=2015;title _;roles movie @;rating :avg;actor :g
 movies genre scifi;description ~"robot";year >1990;title _;roles movie @;rating :sum;movie :grp;;
 
 """ Roles in Titanic with ratings between 2 and 4.9, order actors A-Z, show 10 """
-roles movie "Titanic";rating >=2;<=4.9;actor :asc;% lim 10;;
+roles movie "Titanic";rating >=2;<=4.9;actor :asc;%lim=10;;
 
 """ Top 7 roles rated 4 or higher for the movies Dune or Dune: Part Two """
-roles movie "Dune","Dune: Part Two";rating :des>=4;% lim 7;;
+roles movie "Dune","Dune: Part Two";rating :des>=4;%lim=7;;
 
 """ Actors 65+ with names containing Lee or Li, sort by age high to low, take 6 """
-actors age :des>=65;name ~"Lee","Li";% lim 6;;
+actors age :des>=65;name ~"Lee","Li";%lim=6;;
 
 """ Natalie Portman roles from movies released in 2016 with rating at least 3, sorted low to high """
 movies year 2016;title _;roles movie @;actor "Natalie Portman";rating :asc>=3;;
@@ -152,22 +152,22 @@ roles rating >=4.5;id :cnt;actor :grp;;
 roles actor _;movie @;rating >=4;actor :des;;
 
 """ Movies with Vietnam in the description from 1970 to 1979, newest first, show 10 """
-movies description ~"Vietnam";year :des>=1970;<=1979;% lim 10;;
+movies description ~"Vietnam";year :des>=1970;<=1979;%lim=10;;
 
 """ Roles for Alien or Aliens rated at least 4, sorted by rating high to low, top 5 """
-roles movie "Alien","Aliens";rating :des>=4;% lim 5;;
+roles movie "Alien","Aliens";rating :des>=4;%lim=5;;
 
 """ Titles and descriptions for comedies after 2010 with wedding in the storyline, newest to oldest, first 7 """
-movies genre comedy;year :des>2010;description ~"wedding";title _;% lim 7;;
+movies genre comedy;year :des>2010;description ~"wedding";title _;%lim=7;;
 
 """ Distinct movie years ascending for drama films that mention war """
 movies genre drama;description ~"war";year :grp:asc;;
 
 """ Top 9 roles with ratings up to and including 3.5 for films released before 1980 """
-movies year <1980;title _;roles movie @;rating :des<=3.5;% lim 9;;
+movies year <1980;title _;roles movie @;rating :des<=3.5;%lim=9;;
 
 """ Earliest 6 releases from 2010 and onward with star in the title """
-movies title ~"star";year :asc>=2010;% lim 6;;
+movies title ~"star";year :asc>=2010;%lim=6;;
 
 """ Comedy films from 2005 where an actor named like Chris had roles rated at least 3.5 """
 movies genre comedy;year 2005;title _;roles movie @;actor ~"Chris";rating >=3.5;_;;
@@ -182,7 +182,7 @@ roles rating >=4;id :cnt;actor :grp;;
 movies year >=1970;<=1985;title :grp~"Star";roles movie @;rating :avg;;
 
 """ Distinct years of drama films, ascending, top 5 """
-movies genre drama;year :grp:asc;% lim 5;;
+movies genre drama;year :grp:asc;%lim=5;;
 
 """ Sum of role ratings per actor for sci-fi releases after 2018 """
 movies year >2018;genre scifi;title _;roles movie @;rating :sum;actor :grp;;
@@ -191,7 +191,7 @@ movies year >2018;genre scifi;title _;roles movie @;rating :sum;actor :grp;;
 actors age >=30;<=45;name _;roles actor @;movie _;movies title @;title ~"King";year >=2000;<=2005;_;;
 
 """ Cases where the actor name equals the movie title with ratings 4.5+ sorted high to low, top 12 """
-roles actor _;movie @;rating :des>=4.5;% lim 12;;
+roles actor _;movie @;rating :des>=4.5;%lim=12;;
 
 """ Role counts by movie for Tom Hanks or Meg Ryan """
 roles actor "Tom Hanks","Meg Ryan";id :cnt;movie :grp;;
@@ -206,10 +206,10 @@ movies year >2010;description ~"dream";title _;roles movie @;actor ~"Ana";rating
 actors age >=65;<=80;name _;roles actor @;rating <2.5;movie _;movies title @;genre drama;year >=1980;<=1990;_;;
 
 """ Sci-fi movies that mention robot, list distinct years ascending, limit 10 """
-movies genre scifi;description ~"robot";year :grp:asc;% lim 10;;
+movies genre scifi;description ~"robot";year :grp:asc;%lim=10;;
 
 """ Top 15 latest drama or comedy films that mention heist """
-movies genre drama,comedy;description ~"heist";year :des;% lim 15;;
+movies genre drama,comedy;description ~"heist";year :des;%lim=15;;
 
 """ Roles by actors whose name includes Lee in releases from 2002 through 2010 with ratings 2.5 to 4.8 """
 movies year >2001;<2011;title _;roles movie @;actor ~"Lee";rating >=2.5;<=4.8;_;;
@@ -227,19 +227,19 @@ movies year <1965;description ~"ocean";title _;roles movie @;id :cnt;movie :grp;
 movies genre scifi;year >1990;<2005;title _;roles movie @;rating :avg;actor :grp;;
 
 """ Jurassic Park roles with rating up to 1.5, ordered low to high, first 5 """
-roles movie "Jurassic Park";rating :asc<=1.5;% lim 5;;
+roles movie "Jurassic Park";rating :asc<=1.5;%lim=5;;
 
 """ Keanu Reeves roles in 1994 releases, highest ratings first, top 5 """
-movies year 1994;title _;roles movie @;actor "Keanu Reeves";rating :des;% lim 5;;
+movies year 1994;title _;roles movie @;actor "Keanu Reeves";rating :des;%lim=5;;
 
 """ Comedies from 2005 with wedding in the description, titles A-Z """
 movies genre comedy;year 2005;description ~"wedding";title :asc;;
 
 """ People named Chris aged 30 to 45, sort by age high to low, show 10 starting at 10 """
-actors age :des>=30;<=45;name ~"Chris";% lim 10;% beg 10;;
+actors age :des>=30;<=45;name ~"Chris";%lim=10;%beg=10;;
 
 """ Drama films from 1985 to 1995 mentioning war, earliest 5 """
-movies genre drama;year :asc>=1985;<=1995;description ~"war";% lim 5;;
+movies genre drama;year :asc>=1985;<=1995;description ~"war";%lim=5;;
 
 """ Alien or Aliens roles rated under 2.5, include all fields """
 roles movie "Alien","Aliens";rating <2.5;_;;
@@ -251,16 +251,16 @@ roles rating :avg;actor :grp:asc;;
 movies year 1999;title _;roles movie @;id :cnt;actor :grp:asc;;
 
 """ Sci-fi movies in 1990 with robot in description, titles Z-A, 7 results """
-movies genre scifi;year 1990;description ~"robot";title :des;% lim 7;;
+movies genre scifi;year 1990;description ~"robot";title :des;%lim=7;;
 
 """ Actors named Ana or Ann aged 20-35, youngest first """
 actors age :asc>=20;<=35;name ~"Ana","Ann";;
 
 """ Movies with Galaxy in description released in 1977 or 1980, titles A-Z, next 3 after 3 """
-movies description ~"Galaxy";year 1977,1980;title :asc;% lim 3;% beg 3;;
+movies description ~"Galaxy";year 1977,1980;title :asc;%lim=3;%beg=3;;
 
 """ Sci-fi titles up to and including 2001, newest first, 12 results """
-movies genre scifi;year :des<=2001;% lim 12;;
+movies genre scifi;year :des<=2001;%lim=12;;
 
 """ Roles where actor contains Lee and rating >=3 but not 5, show everything """
 roles actor ~"Lee";rating >=3;!=5;_;;
@@ -272,22 +272,22 @@ actors id :des>100;name !~"Jeff";;
 movies genre drama,comedy;year 1999,2000;title ~"Love";_;;
 
 """ Actors age 33 named like Max, IDs ascending, first 5 """
-actors age 33;name ~"Max";id :asc;% lim 5;;
+actors age 33;name ~"Max";id :asc;%lim=5;;
 
 """ Mark Hamill in The Empire Strikes Back with ratings 3 to 5 inclusive """
 roles actor "Mark Hamill";movie "The Empire Strikes Back";rating >=3;<=5;_;;
 
 """ Documentaries from 1975-1990 that mention music, titles Z-A, take 10 """
-movies genre documentary;year >=1975;<=1990;description ~"music";title :des;% lim 10;;
+movies genre documentary;year >=1975;<=1990;description ~"music";title :des;%lim=10;;
 
 """ Youngest 8 actors aged at least 21 """
-actors age :asc>=21;% lim 8;;
+actors age :asc>=21;%lim=8;;
 
 """ Oldest six actors no more than 70 """
-actors age :des<=70;% lim 6;;
+actors age :des<=70;%lim=6;;
 
 """ Movies with ID >= 1000 and star in the title, newest releases first, 15 results """
-movies id >=1000;title ~"star";year :des;% lim 15;;
+movies id >=1000;title ~"star";year :des;%lim=15;;
 
 """ Role totals per actor with rating 4 or higher, group by actor A-Z """
 roles rating >=4;id :cnt;actor :grp:asc;;
@@ -299,7 +299,7 @@ movies year <1980;title _;roles movie @;rating :avg;actor :grp:asc;;
 actors age 18,21,25;name ~"Jo";id :des;;
 
 """ Sci-fi films from 1990 through 2005 mentioning galaxy, older first, top 20 """
-movies genre scifi;year :asc>=1990;<=2005;description ~"galaxy";% lim 20;;
+movies genre scifi;year :asc>=1990;<=2005;description ~"galaxy";%lim=20;;
 
 """ Sci-fi releases from 1984 with actors named Chris and role ratings 3.5 or higher """
 movies genre scifi;year 1984;title _;roles movie @;actor ~"Chris";rating >=3.5;_;;
@@ -311,7 +311,7 @@ movies genre documentary;year 2009;description ~"climate";title _;roles movie @;
 actors age >=30;<=40;name _;roles actor @;rating >=4.0;<=5.0;_;;
 
 """ Comedies from 2015 or 2016 with wedding in the description, titles A-Z, show 10 starting at 20 """
-movies genre comedy;year 2015,2016;description ~"wedding";title :asc;% lim 10;% beg 20;;
+movies genre comedy;year 2015,2016;description ~"wedding";title :asc;%lim=10;%beg=20;;
 
 """ Role totals per movie for dramas in 1994 """
 movies year 1994;genre drama;title _;roles movie @;id :cnt;movie :grp;;
@@ -320,10 +320,10 @@ movies year 1994;genre drama;title _;roles movie @;id :cnt;movie :grp;;
 movies year 2001;genre scifi;title _;roles movie @;rating :avg;actor :grp;;
 
 """ Oldest 12 actors aged at most 60 """
-actors age :des<=60;% lim 12;;
+actors age :des<=60;%lim=12;;
 
 """ Youngest 6 performers aged at least 21 """
-actors age :asc>=21;% lim 6;;
+actors age :asc>=21;%lim=6;;
 
 """ Non-scifi, non-documentary movies before 1970 that mention ocean, newest years first """
 movies genre !=scifi,documentary;year :des<1970;description ~"ocean";title _;;
@@ -332,7 +332,7 @@ movies genre !=scifi,documentary;year :des<1970;description ~"ocean";title _;;
 actors name :des~"Jo";age 18,25,40;;
 
 """ Movies 1999-2003 with robot in the description, titles Z-A, 5 results after 10 """
-movies year >=1999;<=2003;description ~"robot";title :des;% lim 5;% beg 10;;
+movies year >=1999;<=2003;description ~"robot";title :des;%lim=5;%beg=10;;
 
 """ Roles for Natalie Portman in 2016 releases with rating 3 or higher, show movie context """
 movies year 2016;title _;roles movie @;actor "Natalie Portman";rating >=3;_;;
@@ -341,7 +341,7 @@ movies year 2016;title _;roles movie @;actor "Natalie Portman";rating >=3;_;;
 actors name "Chris Evans";roles actor @;rating <2.5;_;;
 
 """ Drama or comedy films in 2000 with Love in the title, A-Z, show 7 starting at 14 """
-movies genre drama,comedy;year 2000;title :asc~"Love";% lim 7;% beg 14;;
+movies genre drama,comedy;year 2000;title :asc~"Love";%lim=7;%beg=14;;
 
 """ Count roles for each actor where rating is 4 or higher """
 roles rating >=4;id :cnt;actor :grp;;
@@ -353,16 +353,16 @@ roles actor "Keanu Reeves";rating :avg;movie :grp;;
 movies genre scifi;year >2010;title _;roles movie @;rating :sum;actor :grp;;
 
 """ Top 10 roles with ratings up to 2.2 (highest first) """
-roles rating :des<=2.2;% lim 10;;
+roles rating :des<=2.2;%lim=10;;
 
 """ First 8 roles rated at least 4.8, low to high """
-roles rating :asc>=4.8;% lim 8;;
+roles rating :asc>=4.8;%lim=8;;
 
 """ Titles most similar to 'star voyage', 5 results ordered by similarity """
-movies title "<=>" "star voyage" :des;% lim 5;;
+movies title <=>"star voyage":des;%lim=5;;
 
 """ Movies similar in title to 'king arthur' with similarity at least 0.6, sorted by similarity """
-movies title "<=>" "king arthur" :des>=0.6;;
+movies title <=>"king arthur":des>=0.6;;
 
 """ Drama releases in 1995 that mention galaxy;list roles rated 5 """
 movies genre drama;year 1995;description ~"galaxy";title _;roles movie @;rating 5;_;;

@@ -8,7 +8,7 @@ departments name ~"Marketing";id _;employees department_id @;hire_date :des;firs
 departments id :cnt:des>=3;location_id :grp;locations id @;name _;;
 
 """ Employees whose review comments similar to customer focus (>=0.88), show emails and review_date desc first 25 """
-performance_reviews comments <=>"customer focus"<=0.88;review_date :des;employee_id _;employees id @;email _;% lim 25;;
+performance_reviews comments <=>"customer focus"<=0.88;review_date :des;employee_id _;employees id @;email _;%lim=25;;
 
 """ Sum of net_pay per currency for entries with gross_pay >= 4000 and currency USD or EUR, sort sum desc """
 payroll_entries gross_pay >=4000;net_pay :sum:des;currency :grp="USD","EUR";;
@@ -20,7 +20,7 @@ employee_benefits coverage_level family;start_date <=2024-04-01;end_date >=2024-
 time_off_requests status approved;start_date >=2025-03-01;<=2025-03-31;hours :des;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Top 10 job grades by average of max_salary """
-jobs max_salary :avg:des;grade :grp;% lim 10;;
+jobs max_salary :avg:des;grade :grp;%lim=10;;
 
 """ Employees at US TX location Austin, list emails A-Z """
 locations country "US";region "TX";name "Austin";id _;departments location_id @;id _;employees department_id @;email :asc;_;;
@@ -50,7 +50,7 @@ payroll_runs status processed,paid;pay_date >=2025-06-01;<=2025-08-31;id _;payro
 performance_reviews rating >=4.5;review_date :des>=2024-01-01;employee_id _;employees id @;first_name _;last_name _;;
 
 """ 2021 hires with salary 70000..90000 by last name A-Z, first 50 """
-employees hire_date >=2021-01-01;<=2021-12-31;salary >=70000;<=90000;last_name :asc;_;% lim 50;;
+employees hire_date >=2021-01-01;<=2021-12-31;salary >=70000;<=90000;last_name :asc;_;%lim=50;;
 
 """ Active medical coverage on 2025-05-15 with member names """
 benefit_plans type medical;active 1;id _;employee_benefits benefit_plan_id @;start_date <=2025-05-15;end_date >=2025-05-15;employee_id _;employees id @;first_name _;last_name _;;
@@ -65,7 +65,7 @@ departments id :cnt>=5;location_id :grp;locations id @;country "CA";name _;;
 time_off_requests status denied;start_date <=2025-09-15;end_date >=2025-09-15;employee_id _;employees id @;first_name _;last_name _;phone _;;
 
 """ Top 5 currencies by average net_pay in 2025 Q1 """
-payroll_entries created >=2025-01-01;<=2025-03-31;net_pay :avg:des;currency :grp;% lim 5;;
+payroll_entries created >=2025-01-01;<=2025-03-31;net_pay :avg:des;currency :grp;%lim=5;;
 
 """ Manager headcounts with manager names, counts descending """
 employees id :cnt:des;manager_id :grp;employees id @;last_name _;first_name _;;
@@ -104,7 +104,7 @@ employees department_id 5;job_id _;jobs id @;title :grp:asc;;
 timesheets submitted 0;week_start 2025-03-03;hours_worked >=35;employee_id _;employees id @;first_name _;last_name _;;
 
 """ Processed runs with notes containing retro pay, pay_date ascending, first 5 """
-payroll_runs status processed;notes ~"retro pay";pay_date :asc;_;% lim 5;;
+payroll_runs status processed;notes ~"retro pay";pay_date :asc;_;%lim=5;;
 
 """ Full-time employees with emails not ending in @example.com, hire_date ascending """
 employees email !~"@example.com";full_time 1;hire_date :asc;_;;
@@ -122,7 +122,7 @@ jobs grade ~"S";title _;id _;employees job_id @;hire_date 2022-05-15;salary :des
 timesheets id :cnt:des>=3;approver_id :grp;employees id @;last_name _;first_name _;;
 
 """ Reviews about leadership (sim>=0.90) on 2025-01-10 ordered by rating, first 15 """
-performance_reviews comments <=>"leadership"<=0.9;review_date 2025-01-10;rating :des;_;% lim 15;;
+performance_reviews comments <=>"leadership"<=0.9;review_date 2025-01-10;rating :des;_;%lim=15;;
 
 """ Retirement benefit enrollments in 2024 with plan name and employee names """
 benefit_plans type retirement;name _;id _;employee_benefits benefit_plan_id @;start_date >=2024-01-01;<=2024-12-31;employee_id _;employees id @;first_name _;last_name _;;
@@ -143,7 +143,7 @@ time_off_requests status denied;request_date >=2024-10-01;<=2024-10-31;end_date 
 timesheets week_start >=2025-03-01;<=2025-03-31;overtime_hours :sum:des;employee_id :grp;employees id @;first_name _;last_name _;;
 
 """ Zero bonus target employees hired before 2020-01-01, sort by hire_date ascending, first 20 """
-employees bonus_target 0;hire_date :asc<2020-01-01;_;% lim 20;;
+employees bonus_target 0;hire_date :asc<2020-01-01;_;%lim=20;;
 
 """ Employee counts per job within department 40, include job title where count >= 2 """
 employees department_id 40;id :cnt>=2;job_id :grp;jobs id @;title _;;
@@ -155,10 +155,10 @@ performance_reviews review_date :max>=2024-01-01;:max<=2024-12-31;employee_id :g
 time_off_requests type parental;status approved;start_date >=2025-02-01;<=2025-02-28;employee_id _;employees id @;first_name _;last_name _;email _;;
 
 """ EUR payroll entries with zero tax withheld, sort net_pay desc limit 5 """
-payroll_entries tax_withheld 0;currency "EUR";net_pay :des;_;% lim 5;;
+payroll_entries tax_withheld 0;currency "EUR";net_pay :des;_;%lim=5;;
 
 """ Top 10 departments by average salary with department names """
-employees salary :avg:des;department_id :grp;departments id @;name _;% lim 10;;
+employees salary :avg:des;department_id :grp;departments id @;name _;%lim=10;;
 
 """ Active staff with phone numbers containing 212, order by first_name A-Z """
 employees phone ~"212";status active;first_name :asc;_;;
@@ -185,7 +185,7 @@ time_off_requests status approved;start_date >=2025-01-01;<=2025-01-31;hours :su
 employee_benefits end_date 2025-12-31;employee_id _;employees id @;first_name _;last_name _;benefit_plan_id _;benefit_plans id @;type _;;
 
 """ Top 5 employees by total gross pay in July 2025 with names """
-payroll_runs pay_date >=2025-07-01;<=2025-07-31;id _;payroll_entries payroll_run_id @;gross_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;% lim 5;;
+payroll_runs pay_date >=2025-07-01;<=2025-07-31;id _;payroll_entries payroll_run_id @;gross_pay :sum:des;employee_id :grp;employees id @;first_name _;last_name _;%lim=5;;
 
 """ Skill counts per category ascending """
 skills id :cnt;category :grp:asc;;
@@ -242,13 +242,13 @@ employees created 2023-07-01;email ~"@corp.com";created :des;_;;
 payroll_entries id :cnt>=5;employee_id :grp;employees id @;first_name _;last_name _;;
 
 """ Top 20 skills by number of employees with level advanced or expert """
-employee_skills level advanced,expert;id :cnt:des;skill_id :grp;skills id @;name _;% lim 20;;
+employee_skills level advanced,expert;id :cnt:des;skill_id :grp;skills id @;name _;%lim=20;;
 
 """ Employees in departments named like HR at CA region locations, list last names """
 locations region "CA";id _;departments location_id @;name ~"HR";id _;employees department_id @;first_name _;last_name _;;
 
 """ Reviews similar to project management ordered by similarity, first 12 """
-performance_reviews comments <=>"project management":des;_;% lim 12;;
+performance_reviews comments <=>"project management":des;_;%lim=12;;
 
 """ Active staff in department 40 with job titles, ordered by hire_date ascending """
 employees department_id 40;status active;hire_date :asc;job_id _;jobs id @;title _;;
@@ -266,7 +266,7 @@ skills name "Kubernetes";id _;employee_skills skill_id @;employee_id _;employees
 employees hire_date >=2022-01-01;<=2022-12-31;salary >=70000;<=100000;last_name :asc;first_name :asc;_;;
 
 """ Top 10 payroll entries on 2025-01-15 by currency then gross_pay with last names """
-payroll_runs pay_date 2025-01-15;id _;payroll_entries payroll_run_id @;currency :asc;gross_pay :des;employee_id _;employees id @;first_name _;last_name _;% lim 10;;
+payroll_runs pay_date 2025-01-15;id _;payroll_entries payroll_run_id @;currency :asc;gross_pay :des;employee_id _;employees id @;first_name _;last_name _;%lim=10;;
 
 """ Departments created in 2024 with location and department names """
 departments created >=2024-01-01;<=2024-12-31;name _;location_id _;locations id @;name _;;

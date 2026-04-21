@@ -17,13 +17,13 @@ invoices invoice_date >=2025-10-01;<=2025-10-31;id :cnt:des>=25;status :grp;;
 invoices invoice_date >=2025-07-01;<=2025-09-30;total :min>=200;customer_id :grp;customers id @;name :asc;;
 
 """ Earliest 12 invoices by due_date with tax = 0 and totals < 200 """
-invoices tax 0;total <200;due_date :asc;_;% lim 12;;
+invoices tax 0;total <200;due_date :asc;_;%lim=12;;
 
 """ 'Apex LLC' paid invoices on 2025-05-05 with items described like 'setup' (products A-Z) """
 customers name "Apex LLC";id _;invoices customer_id @;status paid;invoice_date 2025-05-05;id _;invoice_items invoice_id @;description ~"setup";product_id _;products id @;name :asc;;
 
 """ Top 10 invoice dates by sum of totals where sum >= 2000 in 2025-09 """
-invoices total :sum:des>=2000;invoice_date :grp>=2025-09-01;<=2025-09-30;% lim 10;;
+invoices total :sum:des>=2000;invoice_date :grp>=2025-09-01;<=2025-09-30;%lim=10;;
 
 """ Customers whose name includes Diaz, phone begins 212-, and created on or after 2024-01-01 """
 customers name ~"Diaz";phone ~"212-";created >=2024-01-01;_;;
@@ -180,7 +180,7 @@ invoices invoice_date 2025-04-12;id _;invoice_items invoice_id @;description ~"C
 invoices invoice_date 2025-03-03;subtotal :sum:des>=2000;due_date :grp;;
 
 """ Customers with email at @contoso.com whose invoices are paid on 2025-06-06, totals ascending, first 10 """
-customers email ~"@contoso.com";id _;invoices customer_id @;status paid;invoice_date 2025-06-06;total :asc;_;% lim 10;;
+customers email ~"@contoso.com";id _;invoices customer_id @;status paid;invoice_date 2025-06-06;total :asc;_;%lim=10;;
 
 """ Open invoices on 2025-01-01 with totals above 250, order by due date ascending """
 invoices status open;invoice_date 2025-01-01;total >250;due_date :asc;_;;
@@ -201,7 +201,7 @@ invoices invoice_date 2024-12-24;id _;invoice_items invoice_id @;product_id 2400
 invoices invoice_date 2025-07-01;total :sum:des;status :grp;;
 
 """ Top 10 customers by count of invoices on 2024-05-15, include names """
-invoices invoice_date 2024-05-15;id :cnt:des;customer_id :grp;customers id @;name _;% lim 10;;
+invoices invoice_date 2024-05-15;id :cnt:des;customer_id :grp;customers id @;name _;%lim=10;;
 
 """ Average item unit price by product for Dock mentions on 2024-02-29, sort high to low with product name """
 invoices invoice_date 2024-02-29;id _;invoice_items invoice_id @;description ~"Dock";unit_price :avg:des;product_id :grp;products id @;name _;;
@@ -231,13 +231,13 @@ products unit_price >=10;<=20;created 2025-09-09;sku :asc;_;;
 customers name <=>"Northwind Trading Inc"<=0.7;created 2025-05-05;_;;
 
 """ Top 5 invoice numbers by average tax in 2024-03 """
-invoices invoice_date >=2024-03-01;<=2024-03-31;tax :avg:des;invoice_no :grp;% lim 5;;
+invoices invoice_date >=2024-03-01;<=2024-03-31;tax :avg:des;invoice_no :grp;%lim=5;;
 
 """ Counts of open invoices per customer on 2025-08-08, include customer names, highest first """
 invoices status open;invoice_date 2025-08-08;id :cnt:des;customer_id :grp;customers id @;name _;;
 
 """ On 2025-02-20, sum of item line totals by invoice, top 10 """
-invoices invoice_date 2025-02-20;id _;invoice_items invoice_id @;line_total :sum:des;invoice_id :grp;% lim 10;;
+invoices invoice_date 2025-02-20;id _;invoice_items invoice_id @;line_total :sum:des;invoice_id :grp;%lim=10;;
 
 """ Overdue invoices for customer 505 due on 2025-10-01, sort totals high to low """
 invoices customer_id 505;status overdue;due_date 2025-10-01;total :des;_;;
@@ -252,7 +252,7 @@ products name <=>"wireless keyboard":des>=0.8;active 1;created 2024-02-02;_;;
 invoices id :cnt:des>=20;invoice_date :grp>=2025-01-01;<=2025-01-31;;
 
 """ For customers with emails ending @contoso.com, first 15 invoices on 2025-10-10 """
-customers email ~"@contoso.com";id _;invoices customer_id @;invoice_date 2025-10-10;_;% lim 15;;
+customers email ~"@contoso.com";id _;invoices customer_id @;invoice_date 2025-10-10;_;%lim=15;;
 
 """ Average quantity per product for SKUs starting XYZ on 2025-12-01, highest first """
 invoices invoice_date 2025-12-01;id _;invoice_items invoice_id @;quantity :avg:des;product_id :grp;products id @;sku ~"XYZ";name _;;

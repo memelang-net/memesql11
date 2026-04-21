@@ -269,19 +269,19 @@ customers phone ~"+81";id _;invoices customer_id @;invoice_date 2025-12-24;id _;
 customers created >2025-01-01;id _;invoices customer_id @;status paid;invoice_date >=2025-08-01;<=2025-08-31;id _;invoice_items invoice_id @;product_id _;products id @;name :asc;_;;
 
 """ Open invoices in 2025-09 with totals at least 500, ordered by total desc (first 10) """
-invoices status open;invoice_date >=2025-09-01;<=2025-09-30;total :des>=500;_;% lim 10;;
+invoices status open;invoice_date >=2025-09-01;<=2025-09-30;total :des>=500;_;%lim=10;;
 
 """ Products with SKU like 'PRO' created 2024-01-01..2024-06-30, active only, name A-Z """
 products sku ~"PRO";created >=2024-01-01;<=2024-06-30;active 1;name :asc;_;;
 
 """ Customers with '.net' emails created before 2024-05-01, newest first (page 2 of 20) """
-customers email ~".net";created :des<2024-05-01;_;% lim 20;% beg 20;;
+customers email ~".net";created :des<2024-05-01;_;%lim=20;%beg=20;;
 
 """ Paid invoices on 2025-08-15 that include items qty >= 2 for products named like 'Cable' """
 products name ~"Cable";id _;invoice_items product_id @;quantity >=2;invoice_id _;invoices id @;status paid;invoice_date 2025-08-15;_;;
 
 """ Top 5 customers by sum of totals for open invoices in 2025-10 """
-invoices status open;invoice_date >=2025-10-01;<=2025-10-31;total :sum:des;customer_id :grp;customers id @;name _;% lim 5;;
+invoices status open;invoice_date >=2025-10-01;<=2025-10-31;total :sum:des;customer_id :grp;customers id @;name _;%lim=5;;
 
 """ Average unit price per product for items on invoices 2025-07-01..2025-07-31 (desc) with product name A-Z """
 invoices invoice_date >=2025-07-01;<=2025-07-31;id _;invoice_items invoice_id @;unit_price :avg:des;product_id :grp;products id @;name :asc;;
@@ -296,5 +296,5 @@ invoice_items unit_price >=100;product_id :$x;invoice_id _;invoices id @;invoice
 invoices invoice_date >=2025-06-01;<=2025-06-30;id :cnt:des>=3;customer_id :grp;customers id @;name _;;
 
 """ Invoices including inactive products in 2024, totals low-to-high (first 15) """
-products active 0;id _;invoice_items product_id @;invoice_id _;invoices id @;invoice_date >=2024-01-01;<=2024-12-31;total :asc;_;% lim 15;;
+products active 0;id _;invoice_items product_id @;invoice_id _;invoices id @;invoice_date >=2024-01-01;<=2024-12-31;total :asc;_;%lim=15;;
 
