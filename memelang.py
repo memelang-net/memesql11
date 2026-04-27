@@ -4,7 +4,7 @@
 # Whitespaces are syntactic and trigger "new Cell"
 # Never space between operator/comparator/comma/flag and values
 
-MEMELANG_VER = 11.05
+MEMELANG_VER = 11.06
 
 basic_syntax = '[table WS] [column WS]  ["<=>" "\"" string "\""] [":$" var][":" ("min"|"max"|"cnt"|"sum"|"avg"|"last"|"grp")] [":" ("asc"|"des")] [("="|"!="|">"|"<"|">="|"<="|"~"|"!~") (string|int|float|("$" var)|"@"|"_")] ";"'
 
@@ -221,19 +221,25 @@ class Cell:
 		if i != n: raise Err(f'E_EXPR_TRAIL {toks[i:]}')
 
 	# PLACEHOLDER: OVERWRITE WITH YOUR EMBEDDING FUNCTION
-	def vectorize(self, tok: Tok) -> Tok:
-		if tok.kind == 'EMB': return tok
-		if tok.kind not in {'QUO', 'ALN'}: raise Err('E_EMBED')
-		return Tok('EMB', json.dumps([0.1, 0.2]))
+	def vectorize(self, v: str) -> list[float]:
+		return [0.1, 0.2]
 
 	@property
 	def single(self) -> Tok:
 		return self.right[0] if self.comp.canon == '=' and len(self.right) == 1 else TOK_NULL
 
 	@property
+	def kind(self) -> Tok: return self.single.kind
+
+	@property
+	def dat(self) -> Tok: return self.single.dat
+
+	@property
+	def canon(self) -> Tok: return self.single.canon
+
+	@property
 	def literal(self) -> Tok:
-		tok = self.single
-		return tok if tok.kind in LIT_KINDS else TOK_NULL
+		return self.single if self.kind in LIT_KINDS else TOK_NULL
 
 	def find(self, kind:str) -> Tok:
 		return next((flag for flag in self.flag if flag.kind == kind), TOK_NULL)
@@ -311,6 +317,7 @@ class Axis1(Axis):
 	sep = ';'
 	sub = Axis0
 
+
 # OR-joined sequence of Axis1
 class Axis2(Axis):
 	sep = ';;'
@@ -347,16 +354,16 @@ class Axis2(Axis):
 				if bool(axis0[0].find('EVAR')):
 					for cell in axis0:
 						if not bool(cell.find('EVAR')): raise Err('E_AXIS_MET')
-						env[cell.find('EVAR').canon[1:]] = cell.single.dat
+						env[cell.find('EVAR').canon[1:]] = cell.dat
 					continue
 
 				#SLOT #SLOT #SLOT
-				if axis0[0].single.kind=='SLOT':
+				if axis0[0].kind=='SLOT':
 					slots=[]
 					for cell in axis0:
-						if cell.single.kind!='SLOT': raise Err('E_AXIS_SLOT')
-						if cell.single.canon[1]=='%': slots.append(Tok('EVAR', '', cell.single.canon[1:]))
-						else: slots.append(Tok('ASSN','',':'+cell.single.canon))
+						if cell.kind!='SLOT': raise Err('E_AXIS_SLOT')
+						if cell.canon[1]=='%': slots.append(Tok('EVAR', '', cell.canon[1:]))
+						else: slots.append(Tok('ASSN','',':'+cell.canon))
 					continue
 	
 				if env['mode'] not in PAD_MODES: continue
@@ -390,6 +397,7 @@ class Axis2(Axis):
 							name = '$'+'_'.join(map(str, coords)).replace('-1','E')
 							seq[n] = Tok('VAR', '', name)
 							src.bind(Tok('BIND', '', ':'+name))
+
 
 ### PG SQL ###
 
@@ -458,9 +466,17 @@ class CellSQL(Cell):
 
 	def sql_value(self, grouped: bool = False, alias: bool = False, order: bool = False, with_agg: bool = True) -> SQL:
 		sql, param = self.base, list(self.param)
+
 		if self.left.opr.kind == 'MOD':
-			sql = f'({sql}{self.left.opr.canon}{PH}::VECTOR)'
-			param.append(self.vectorize(self.left[1]).canon)
+			sql = f'({sql}{self.left.opr.canon}{PH}::vector)'
+			tok = self.left[1]
+			if tok.kind == 'EMB': param.append(tok.dat)
+			elif hasattr(tok, 'emb'): param.append(tok.emb)
+			elif tok.kind in {'QUO', 'ALN'}:
+				tok.emb=self.vectorize(tok.dat)
+				param.append(tok.emb)
+			else: raise Err('E_EMBED')
+
 		agg = self.agg or ('MAX' if grouped and not self.grouped else '') if with_agg else ''
 		if agg: sql = f'{agg}({sql})'
 		if alias and self.alias: sql = f'{sql} AS {self.alias}'
@@ -468,7 +484,7 @@ class CellSQL(Cell):
 		return SQL(sql, param)
 
 	def sql_clause(self, bind: dict[str, SQL]) -> Optional[tuple[str, SQL]]:
-		if not self.right or self.single.canon == '_': return None
+		if not self.right or self.canon == '_': return None
 
 		left = self.sql_value()
 		rights = list(self.deref(bind, with_agg=bool(self.agg)))
@@ -490,19 +506,80 @@ class CellSQL(Cell):
 		return ('having' if self.agg else 'where'), SQL(f"{left.sql}{sqlcomp}{beg}{','.join(items)}{end}", left.param + params)
 
 
-class Grid(Axis2):
+# Row("tab col1 val; col2=val")
+# Row(tab=val, col1=val, col2=val)
+# Row({tab:val, col1:val, col2:val})
+class Row(Axis1):
+	def __init__(self, src: Any = '', **kwargs: Any):
+		def strcell(v: Any) -> str:
+			if hasattr(v, 'meme'): return v.meme
+			if isinstance(v, str): return json.dumps(v)
+			return str(v)
 
-	def select(self) -> List[SQL]:
+		if kwargs and src == '': src = kwargs
+		elif kwargs and isinstance(src, dict): src = {**src, **kwargs}
+		elif kwargs: raise Err('E_ROW_ARG')
+
+		if isinstance(src, str):
+			super().__init__(src)
+			return
+
+		if not isinstance(src, dict): raise Err('E_ROW_ARG')
+
+		tabcell = None
+		for col, val in src.items():
+			if strcell(col) in ('tab','"tab"'): tabcell=strcell(val)
+
+		axis1=[]
+		for col, val in src.items():
+			if strcell(col) in ('tab','"tab"'): continue
+
+			axis0=[] if tabcell is None else [tabcell]
+			axis0.extend([strcell(col),strcell(val)])
+			axis1.append(Axis0.sep.join(axis0))
+			tabcell = None
+
+		super().__init__(self.sep.join(axis1))
+
+	@property
+	def dat(self) -> dict[str, Any]:
+		out = {}
+		for axis0 in self:
+			if len(axis0) < 2 or not all(cell.kind for cell in axis0): raise Err('E_AXIS1_DICT')
+			if len(axis0) > 2: out['tab'] = axis0[-3].dat
+			out[str(axis0[-2].dat)] = axis0[-1].dat
+		return out
+
+	def insert(self) -> "SQL":
+		row = self.dat
+		if not row: raise Err('E_ROW_EMP')
+
+		tab = row.pop('tab', None)
+		if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', str(tab)): raise Err('E_ROW_TAB')
+
+		cols, params = [], []
+		for col, val in row.items():
+			if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', col): raise Err('E_ROW_COL')
+			cols.append(col)
+			params.append(val)
+
+		sql = f"INSERT INTO {tab} ({', '.join(cols)}) VALUES ({', '.join([PH] * len(cols))})"
+		return SQL(sql, params)
+
+
+class Grid(Axis2):
+	sub = Row
+
+	def select(self) -> List[tuple[str,list]]:
 		self.rect()
 		out = []
-		env = {'mode':'qry', 'sim':0.5, 'joint':2, 'tab':'', 'taba':'t0', 'cola':''}
+		env = {'mode':'qry', 'sim':0.5, 'joint':2, 'tab':'', 'taba':'t0', 'cola':'','all':0}
 
 		for axis1 in self:
 			env['lim'], env['beg'] = 0, 0
 			bind = {k: SQL(PH, [v]) for k, v in env.items()}
 			qry = {'select':[], 'from':[], 'fromall':[], 'groupby':[], 'where':[], 'having':[], 'orderby':[]}
 			grouped = False
-			allselected = False
 
 			for axis0 in axis1:
 				joint = False
@@ -511,20 +588,20 @@ class Grid(Axis2):
 				if env['mode']!='qry': continue
 
 				if axis0.src == '_':
-					allselected = True
+					env['all'] = True
 					continue
 	
 				for idx0, cell in enumerate(axis0):
 					#print(repr(cell))
-					single = cell.single.dat
-					if cell.padded or cell.single.kind=='SLOT': continue
+					single = cell.dat
+					if cell.padded or cell.kind=='SLOT': continue
 
 					# EVAR for TAB/COL
 					evarval = cell.find('EVAR').canon
 					if evarval=='%val': pass
 					elif evarval:
-						env[evarval[1:]] = cell.single.dat
-						bind[evarval[1:]]=SQL(PH, [cell.single.dat])
+						env[evarval[1:]] = cell.dat
+						bind[evarval[1:]]=SQL(PH, [cell.dat])
 
 						if evarval=='%tab':
 							if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_$]{0,62}', single): raise Err('E_TAB_NAME')
@@ -533,7 +610,7 @@ class Grid(Axis2):
 							joint=True
 
 						elif evarval=='%col':
-							if single == '_': allselected = True
+							if single == '_': env['all'] = True
 							elif not re.fullmatch(r'[A-Za-z_]+[A-Za-z0-9_$]{0,62}', single): raise Err('E_COL_NAME')
 							env['cola'] = single
 
@@ -578,7 +655,7 @@ class Grid(Axis2):
 				continue
 
 			parts = (
-				('SELECT', ', ', [SQL(f"{a}.*") for a in qry['fromall']] if allselected else SQL.uniq(t.sql_value(grouped, True) for t in qry['select'])),
+				('SELECT', ', ', [SQL(f"{a}.*") for a in qry['fromall']] if env['all'] else SQL.uniq(t.sql_value(grouped, True) for t in qry['select'])),
 				('FROM', ', ', qry['from']),
 				('WHERE', ' AND ', qry['where']),
 				('GROUP BY', ', ', SQL.uniq(t.sql_groupby for t in qry['groupby'])),
@@ -598,6 +675,14 @@ class Grid(Axis2):
 			out.append(SQL(' '.join(sql), param))
 
 		return out
+
+	def insert(self) -> List[SQL]:
+		return [row.insert() for row in self]
+
+	@property
+	def dat(self) -> List[SQL]:
+		return [row.dat for row in self]
+
 
 
 ### CLI ###
